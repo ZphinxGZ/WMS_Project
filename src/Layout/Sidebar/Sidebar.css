@@ -1,19 +1,18 @@
 /* Sidebar.css */
-.app-container {
-    display: flex;
-  }
-  
-  .sidebar {
+.sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    background-color: #343a40;
+    background-color: #473366;
     color: #fff;
     padding-top: 10px;
-    z-index: 1000;
+    z-index: 1050;
     transition: width 0.3s;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
   
   .sidebar-open {
@@ -25,23 +24,79 @@
   }
   
   .toggle-button {
-    margin-bottom: 20px;
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: x-large;
+    cursor: pointer;
+    padding: 10px;
+    margin: 0.5rem auto;
+    transition: all 0.3s;
+  }
+  
+  .toggle-button:hover {
+    background-color: #FD6E2B;
+    color: white;
+  }
+  
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+    height: 80%;
+    padding: 0.5rem;
+    justify-content: space-between;
+    padding: 5px auto;
   }
   
-  .sidebar-menu .sidebar-item {
-    background-color: #343a40;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  /* ไอคอนและข้อความใน Sidebar */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    margin: 5px 0; /* ลดระยะห่างบนและล่างของ icon */
+    transition: color 0.3s;
+    padding: 5px 0; /* เพิ่ม padding แนวตั้งเพื่อให้เว้นระยะพอดี */
   }
   
-  .content {
-    padding: 20px;
-    transition: margin-left 0.3s;
+  .sidebar-item i {
+    margin-right: 10px; /* ระยะห่างระหว่างไอคอนและข้อความ */
   }
   
-  .content-shifted {
-    margin-left: 260px;
+  /* ปรับขนาดไอคอนเมื่อ Sidebar เปิด */
+  .sidebar-open .sidebar-item i {
+    font-size: 24px; /* ขยายขนาดไอคอนเมื่อ Sidebar เปิด */
   }
+  
+  /* ขยายขนาดข้อความเมื่อ Sidebar เปิด */
+  .sidebar-open .sidebar-item span {
+    font-size: 18px; /* ขยายขนาดข้อความเมื่อ Sidebar เปิด */
+  }
+  
+  .sidebar-item:hover {
+    color: #FD6E2B;
+  }
+  
+  /* ขนาดและระยะห่างของข้อความ */
+  .sidebar-item span {
+    display: inline-block;
+  }
+  
+  .sidebar-closed .sidebar-item span {
+    display: none; /* ซ่อนข้อความเมื่อ sidebar ถูกปิด */
+  }
+  
+  .sidebar-closed .sidebar-item i {
+    font-size: 24px; /* ขนาดไอคอนเมื่อปิด sidebar */
+  }
+  
+  /* กำหนดสีและสไตล์ให้กับเมนูที่ถูกเลือก (active) */
+  .sidebar-item.active {
+    color: #FD6E2B; /* เปลี่ยนสีเป็น #FD6E2B เมื่อถูกเลือก */
+    font-weight: bold; /* ทำให้ข้อความหนาเมื่อถูกเลือก */
+  }
+  
+
   

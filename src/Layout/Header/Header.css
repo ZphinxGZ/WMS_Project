@@ -1,0 +1,31 @@
+.header-container {
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1040;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: margin-left 0.3s;
+
+    font-weight: bold;
+    font-size: large;
+
+  }
+  
+  .header-shifted {
+    margin-left: 250px;
+  }
+  
+  .header-closed {
+    margin-left: 100px;
+  }
+
+.header-logo img{
+    width: 100px;
+    background: #F2F2E6;
+}
+.header-container-content{
+    background: #F2F2E6;
+}
