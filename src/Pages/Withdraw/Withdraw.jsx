@@ -2,7 +2,9 @@ import React from 'react'
 
 function Withdraw() {
   return (
-    <div>Withdraw</div>
+    <div>
+      <h1>Withdraw</h1>
+    </div>
   )
 }
 

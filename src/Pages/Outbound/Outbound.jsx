@@ -2,7 +2,9 @@ import React from 'react'
 
 function Outbound() {
   return (
-    <div>Outbound</div>
+    <div>
+      <h1>Outbound</h1>
+    </div>
   )
 }
 

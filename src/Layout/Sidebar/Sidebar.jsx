@@ -5,10 +5,9 @@ import './Sidebar.css';
 
 function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
   const [selectedTab, setSelectedTab] = useState('');
-  const location = useLocation();  // ดึงข้อมูลเส้นทางปัจจุบัน
+  const location = useLocation();
 
   useEffect(() => {
-    // อัปเดต selectedTab เมื่อเส้นทางเปลี่ยน
     switch (location.pathname) {
       case '/dashboard':
         setSelectedTab('dashboard');
@@ -28,7 +27,7 @@ function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
       default:
         setSelectedTab('');
     }
-  }, [location]);  // เมื่อเส้นทางเปลี่ยน จะอัปเดต selectedTab
+  }, [location]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -45,46 +44,31 @@ function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
       </Button>
 
       <div className="sidebar-menu">
-        <Link 
-          to="/dashboard" 
-          className={`sidebar-item ${selectedTab === 'dashboard' ? 'active' : ''}`}
-        >
+        <Link to="/dashboard" className={`sidebar-item ${selectedTab === 'dashboard' ? 'active' : ''}`}>
           {isOpen && <i className="bi bi-bar-chart-line-fill"></i>}
           {isOpen && <span>Dashboard</span>}
           {!isOpen && <i className="bi bi-bar-chart-line-fill"></i>}
         </Link>
 
-        <Link 
-          to="/inbound" 
-          className={`sidebar-item ${selectedTab === 'inbound' ? 'active' : ''}`}
-        >
+        <Link to="/inbound" className={`sidebar-item ${selectedTab === 'inbound' ? 'active' : ''}`}>
           {isOpen && <i className="bi bi-arrow-down-circle-fill"></i>}
           {isOpen && <span>Inbound</span>}
           {!isOpen && <i className="bi bi-arrow-down-circle-fill"></i>}
         </Link>
 
-        <Link 
-          to="/outbound" 
-          className={`sidebar-item ${selectedTab === 'outbound' ? 'active' : ''}`}
-        >
+        <Link to="/outbound" className={`sidebar-item ${selectedTab === 'outbound' ? 'active' : ''}`}>
           {isOpen && <i className="bi bi-arrow-up-circle-fill"></i>}
           {isOpen && <span>Outbound</span>}
           {!isOpen && <i className="bi bi-arrow-up-circle-fill"></i>}
         </Link>
 
-        <Link 
-          to="/productlist" 
-          className={`sidebar-item ${selectedTab === 'productlist' ? 'active' : ''}`}
-        >
+        <Link to="/productlist" className={`sidebar-item ${selectedTab === 'productlist' ? 'active' : ''}`}>
           {isOpen && <i className="bi bi-list-ul"></i>}
           {isOpen && <span>Product List</span>}
           {!isOpen && <i className="bi bi-list-ul"></i>}
         </Link>
 
-        <Link 
-          to="/withdraw" 
-          className={`sidebar-item ${selectedTab === 'withdraw' ? 'active' : ''}`}
-        >
+        <Link to="/withdraw" className={`sidebar-item ${selectedTab === 'withdraw' ? 'active' : ''}`}>
           {isOpen && <i className="bi bi-box-arrow-down"></i>}
           {isOpen && <span>Withdraw</span>}
           {!isOpen && <i className="bi bi-box-arrow-down"></i>}

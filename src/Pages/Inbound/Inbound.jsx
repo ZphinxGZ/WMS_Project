@@ -3,7 +3,9 @@ import './Inbound.css'
 
 function Inbound() {
   return (
-    <div>Inbound</div>
+    <div>
+      <h1>Inbound</h1>
+    </div>
   )
 }
 
