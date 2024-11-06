@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 
 function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
   const [selectedTab, setSelectedTab] = useState('');
+  const location = useLocation();  // ดึงข้อมูลเส้นทางปัจจุบัน
+
+  useEffect(() => {
+    // อัปเดต selectedTab เมื่อเส้นทางเปลี่ยน
+    switch (location.pathname) {
+      case '/dashboard':
+        setSelectedTab('dashboard');
+        break;
+      case '/inbound':
+        setSelectedTab('inbound');
+        break;
+      case '/outbound':
+        setSelectedTab('outbound');
+        break;
+      case '/productlist':
+        setSelectedTab('productlist');
+        break;
+      case '/withdraw':
+        setSelectedTab('withdraw');
+        break;
+      default:
+        setSelectedTab('');
+    }
+  }, [location]);  // เมื่อเส้นทางเปลี่ยน จะอัปเดต selectedTab
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
-  };
-
-  const handleTabClick = (tabName) => {
-    setSelectedTab(tabName);
   };
 
   return (
@@ -28,7 +48,6 @@ function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
         <Link 
           to="/dashboard" 
           className={`sidebar-item ${selectedTab === 'dashboard' ? 'active' : ''}`}
-          onClick={() => handleTabClick('dashboard')}
         >
           {isOpen && <i className="bi bi-bar-chart-line-fill"></i>}
           {isOpen && <span>Dashboard</span>}
@@ -38,7 +57,6 @@ function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
         <Link 
           to="/inbound" 
           className={`sidebar-item ${selectedTab === 'inbound' ? 'active' : ''}`}
-          onClick={() => handleTabClick('inbound')}
         >
           {isOpen && <i className="bi bi-arrow-down-circle-fill"></i>}
           {isOpen && <span>Inbound</span>}
@@ -48,7 +66,6 @@ function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
         <Link 
           to="/outbound" 
           className={`sidebar-item ${selectedTab === 'outbound' ? 'active' : ''}`}
-          onClick={() => handleTabClick('outbound')}
         >
           {isOpen && <i className="bi bi-arrow-up-circle-fill"></i>}
           {isOpen && <span>Outbound</span>}
@@ -58,7 +75,6 @@ function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
         <Link 
           to="/productlist" 
           className={`sidebar-item ${selectedTab === 'productlist' ? 'active' : ''}`}
-          onClick={() => handleTabClick('productlist')}
         >
           {isOpen && <i className="bi bi-list-ul"></i>}
           {isOpen && <span>Product List</span>}
@@ -68,7 +84,6 @@ function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
         <Link 
           to="/withdraw" 
           className={`sidebar-item ${selectedTab === 'withdraw' ? 'active' : ''}`}
-          onClick={() => handleTabClick('withdraw')}
         >
           {isOpen && <i className="bi bi-box-arrow-down"></i>}
           {isOpen && <span>Withdraw</span>}
