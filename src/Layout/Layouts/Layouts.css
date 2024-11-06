@@ -1,0 +1,14 @@
+/* Layouts.css */
+.layout-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 250px; /* กำหนดความกว้างของ sidebar */
+  }
+  
+  .main-content {
+    flex-grow: 1; /* ทำให้ main-content เต็มพื้นที่ที่เหลือ */
+    padding: 20px;
+  }
+  

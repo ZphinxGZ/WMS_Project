@@ -1,9 +1,10 @@
 // Sidebar.js
 import React, { useState } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
-function Sidebar() {
+function Sidebar({ tab, setTab }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -11,39 +12,35 @@ function Sidebar() {
   };
 
   return (
-    <div className="app-container">
-      <div className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-        <Button
-          variant="primary"
-          onClick={toggleSidebar}
-          className="toggle-button"
-        >
-          {isOpen ? 'Close' : <i className="bi bi-list"></i>}
-        </Button>
+    <div className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+      <Button
+        variant="primary"
+        onClick={toggleSidebar}
+        className="toggle-button"
+      >
+        {isOpen ? 'Close' : <i className="bi bi-list"></i>}
+      </Button>
 
-        <ListGroup variant="flush" className="sidebar-menu">
-          <ListGroup.Item action href="#home" className="sidebar-item text-white">
-            Home
-          </ListGroup.Item>
-          <ListGroup.Item action href="#about" className="sidebar-item text-white">
-            About
-          </ListGroup.Item>
-          <ListGroup.Item action href="#services" className="sidebar-item text-white">
-            Services
-          </ListGroup.Item>
-          <ListGroup.Item action href="#contact" className="sidebar-item text-white">
-            Contact
-          </ListGroup.Item>
-        </ListGroup>
-      </div>
-
-      {/* Content */}
-      <div className={`content ${isOpen ? 'content-shifted' : ''}`}>
-        <h1>Welcome to My App</h1>
-        <p>This is a simple example of a sidebar using React and Bootstrap.</p>
-      </div>
+      <ListGroup variant="flush" className="sidebar-menu">
+        <ListGroup.Item as={Link} to="/dashboard" action className="sidebar-item">
+          Dashboard
+        </ListGroup.Item>
+        <ListGroup.Item as={Link} to="/inbound" action className="sidebar-item">
+          Inbound
+        </ListGroup.Item>
+        <ListGroup.Item as={Link} to="/outbound" action className="sidebar-item">
+          Outbound
+        </ListGroup.Item>
+        <ListGroup.Item as={Link} to="/productlist" action className="sidebar-item">
+          Product List
+        </ListGroup.Item>
+        <ListGroup.Item as={Link} to="/withdraw" action className="sidebar-item">
+          Withdraw
+        </ListGroup.Item>
+      </ListGroup>
     </div>
   );
 }
 
 export default Sidebar;
+
