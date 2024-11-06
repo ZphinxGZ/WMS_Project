@@ -1,0 +1,47 @@
+/* Sidebar.css */
+.app-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #343a40;
+    color: #fff;
+    padding-top: 10px;
+    z-index: 1000;
+    transition: width 0.3s;
+    overflow: hidden;
+  }
+  
+  .sidebar-open {
+    width: 250px;
+  }
+  
+  .sidebar-closed {
+    width: 100px;
+  }
+  
+  .toggle-button {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .sidebar-menu .sidebar-item {
+    background-color: #343a40;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .content {
+    padding: 20px;
+    transition: margin-left 0.3s;
+  }
+  
+  .content-shifted {
+    margin-left: 260px;
+  }
+  
