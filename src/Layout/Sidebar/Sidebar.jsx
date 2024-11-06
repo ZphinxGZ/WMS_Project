@@ -74,15 +74,6 @@ function Sidebar({ tab, setTab, isOpen, setIsOpen }) {
           {isOpen && <span>Withdraw</span>}
           {!isOpen && <i className="bi bi-box-arrow-down"></i>}
         </Link>
-        <Link 
-          to="/withdraw" 
-          className={`sidebar-item ${selectedTab === 'withdraw' ? 'active' : ''}`}
-          onClick={() => handleTabClick('withdraw')}
-        >
-          {isOpen && <i className="bi bi-box-arrow-down"></i>}
-          {isOpen && <span>Withdraw</span>}
-          {!isOpen && <i className="bi bi-box-arrow-down"></i>}
-        </Link>
       </div>
     </div>
   );
