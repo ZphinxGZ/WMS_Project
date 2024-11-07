@@ -9,6 +9,7 @@ import Inbound from './Pages/Inbound/Inbound'
 import Outbound from './Pages/Outbound/Outbound'
 import ProductList from './Pages/ProductList/ProductList'
 import Withdraw from './Pages/Withdraw/Withdraw'
+import Setting from './Pages/Setting/Setting'
 
 const initialTab = 'home'
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path='/outbound' element={<Outbound />}/>
             <Route path='/ProductList' element={<ProductList />}/>
             <Route path='/Withdraw' element={<Withdraw />}/>
+            <Route path='/settings' element={<Setting />}/>
           </Route>
         </Routes>
       </HashRouter>
