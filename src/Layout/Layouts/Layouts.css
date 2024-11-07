@@ -1,55 +1,15 @@
-.layout-container {
-  display: flex;
-}
 
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  background-color: #473366;
   color: #fff;
-  z-index: 1050;
-  transition: width 0.3s;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
 }
-
-/* ตัวปรับระยะของ content */
 .main-content {
-  margin-top: 69px; /* Add space for the fixed header */
-  margin-left: 100px; /* Space for sidebar when open */
+  margin-left: 78px;
   padding: 0;
-  transition: margin-left 0.3s;
+  transition: all 0.5s ease;
 }
 
-.header-container {
-  height: auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1040;
-  background-color: #f8f9fa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: margin-left 0.3s;
+.content-shifted{
+  margin-left: 240px;
+  transition: all 0.5s ease;
 }
 
-.header-shifted {
-  margin-left: 250px; /* Adjust the header when sidebar is open */
-}
-
-.header-closed {
-  margin-left: 100px; /* Adjust the header when sidebar is closed */
-}
-
-/* Adjust padding of the sidebar when it's closed to avoid content from shifting too much */
-.sidebar-closed {
-  width: 100px;
-}
-
-.sidebar-open {
-  width: 250px;
-}
