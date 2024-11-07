@@ -3,7 +3,7 @@ import React from 'react'
 function Outbound() {
   return (
     <div>
-      <h1>Outboundd</h1>
+      <h1>Outbound</h1>
     </div>
   )
 }
