@@ -4,7 +4,7 @@ import './Inbound.css'
 function Inbound() {
   return (
     <div>
-      <h1>InboundD</h1>
+      <h1>Inbound</h1>
     </div>
   )
 }
