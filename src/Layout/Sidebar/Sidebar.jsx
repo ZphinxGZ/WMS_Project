@@ -24,6 +24,9 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
       case '/withdraw':
         setTab('withdraw');
         break;
+      case '/settings':
+        setTab('settings');
+        break;
       default:
         setTab('');
     }
