@@ -1,102 +1,245 @@
-/* Sidebar.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    background-color: #473366;
-    color: #fff;
-    padding-top: 10px;
-    z-index: 1050;
-    transition: width 0.3s;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-  
-  .sidebar-open {
-    width: 250px;
-  }
-  
-  .sidebar-closed {
-    width: 100px;
-  }
-  
-  .toggle-button {
-    background-color: transparent;
-    border: none;
-    color: #ffffff;
-    font-size: x-large;
-    cursor: pointer;
-    padding: 10px;
-    margin: 0.5rem auto;
-    transition: all 0.3s;
-  }
-  
-  .toggle-button:hover {
-    background-color: #FD6E2B;
-    color: white;
-  }
-  
-  .sidebar-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 80%;
-    padding: 0.5rem;
-    justify-content: space-between;
-    padding: 5px auto;
-  }
-  
-  /* ไอคอนและข้อความใน Sidebar */
-.sidebar-item {
-    display: flex;
-    align-items: center;
-    color: #fff;
-    text-decoration: none;
-    margin: 5px 0; /* ลดระยะห่างบนและล่างของ icon */
-    transition: color 0.3s;
-    padding: 5px 0; /* เพิ่ม padding แนวตั้งเพื่อให้เว้นระยะพอดี */
-  }
-  
-  .sidebar-item i {
-    margin-right: 10px; /* ระยะห่างระหว่างไอคอนและข้อความ */
-  }
-  
-  /* ปรับขนาดไอคอนเมื่อ Sidebar เปิด */
-  .sidebar-open .sidebar-item i {
-    font-size: 24px; /* ขยายขนาดไอคอนเมื่อ Sidebar เปิด */
-  }
-  
-  /* ขยายขนาดข้อความเมื่อ Sidebar เปิด */
-  .sidebar-open .sidebar-item span {
-    font-size: 18px; /* ขยายขนาดข้อความเมื่อ Sidebar เปิด */
-  }
-  
-  .sidebar-item:hover {
-    color: #FD6E2B;
-  }
-  
-  /* ขนาดและระยะห่างของข้อความ */
-  .sidebar-item span {
-    display: inline-block;
-  }
-  
-  .sidebar-closed .sidebar-item span {
-    display: none; /* ซ่อนข้อความเมื่อ sidebar ถูกปิด */
-  }
-  
-  .sidebar-closed .sidebar-item i {
-    font-size: 24px; /* ขนาดไอคอนเมื่อปิด sidebar */
-  }
-  
-  /* กำหนดสีและสไตล์ให้กับเมนูที่ถูกเลือก (active) */
-  .sidebar-item.active {
-    color: #FD6E2B; /* เปลี่ยนสีเป็น #FD6E2B เมื่อถูกเลือก */
-    font-weight: bold; /* ทำให้ข้อความหนาเมื่อถูกเลือก */
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 78px;
+  background: #473366;
+  padding: 6px 14px;
+  transition: all 0.5s ease;
+  z-index: 9999;
+}
+.sidebar.active {
+  width: 240px;
+}
 
-  
+.sidebar .logo_content .logo {
+  color: #fff;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  background-color: #473366;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+.sidebar.active .logo_content .logo {
+  opacity: 1;
+}
+
+.logo_content .logo i {
+  font-size: 28px;
+  margin-right: 5px;
+}
+.logo_content .logo .logo_name {
+  font-size: 20px;
+  font-weight: 400;
+}
+.sidebar #btn {
+  position: absolute;
+  color: #fff;
+  left: 50%;
+  top: 6px;
+  font-size: 20px;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 50px;
+  transform: translateX(-50%);
+}
+.sidebar.active #btn {
+  left: 90%;
+}
+.sidebar ul {
+  margin-top: 20px;
+  padding: 0;
+}
+.sidebar ul li {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  margin: 0 5px;
+  list-style: none;
+  line-height: 50px;
+}
+.sidebar ul li .tooltip {
+  position: absolute;
+  left: 122px;
+  top: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 6px;
+  height: 35px;
+  width: 122px;
+  background: #1d1b31;
+  line-height: 35px;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: 0s;
+  opacity: 0;
+  pointer-events: none;
+  display: block;
+}
+.sidebar.active ul li .tooltip {
+  display: none;
+}
+
+.sidebar ul li:hover .tooltip {
+  transition: all 0.5s ease;
+  opacity: 1;
+  top: 50%;
+}
+
+.sidebar ul li input {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 12px;
+  outline: none;
+  border: none;
+  background: #1d1b31;
+  padding-left: 50px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.sidebar ul li .bi-search {
+  position: absolute;
+  z-index: 99;
+  color: #fff;
+  font-size: 22px;
+  top: 5%;
+}
+
+.sidebar:active ul li .bi-search:hover {
+  background: #fff;
+  color: #1d1b31;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.sidebar ul li a:hover {
+  color: #11101d;
+  background: #fd6e2b;
+}
+
+.sidebar .nav_list li.active a {
+  background-color: #fd6e2b; 
+  color: #fff;
+}
+
+.sidebar ul li i {
+  height: 50px;
+  min-width: 50px;
+  border-radius: 12px;
+  line-height: 50px;
+  text-align: center;
+}
+.sidebar .link_name {
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+.sidebar.active .link_name {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar .profile_content {
+  position: absolute;
+  color: #fff;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.sidebar .profile_content .profile {
+  position: relative;
+  padding: 10px 6px;
+  height: 60px;
+  background: none;
+  transition: all 0.4s ease;
+}
+.sidebar.active .profile_content .profile {
+  background: #1d1b31;
+}
+
+.profile_content .profile .profile_details {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.sidebar.active .profile .profile_details {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.profile .profile_details img {
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.profile .profile_details .name_job {
+  margin-left: 10px;
+}
+
+.profile .profile_details .name {
+  font-size: 15px;
+  font-weight: 400;
+}
+.profile .profile_details .job {
+  font-size: 12px;
+}
+
+.profile #log_out {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.4s ease;
+  background: #1d1b31;
+}
+
+.sidebar.active .profile #log_out {
+  left: 88%;
+}
+.sidebar.active .profile #log_out {
+  background: none;
+}
+
+.profile #log_out:hover {
+  background: #fff;
+  color: #1d1b31;
+}
