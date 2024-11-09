@@ -6,6 +6,7 @@ function Inbound() {
     <div>
       <h1>Inbound</h1>
     </div>
+    
   )
 }
 
