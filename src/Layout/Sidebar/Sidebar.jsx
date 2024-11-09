@@ -45,6 +45,8 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
         </div>
         <i className="bi bi-list" id="btn" onClick={toggleSidebar}></i>
       </div>
+
+      {/* Sidebar Menu */}
       <ul className="nav_list">
         <li className={tab === 'dashboard' ? 'active' : ''}>
           <Link to="/dashboard">
@@ -53,6 +55,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
           </Link>
           <span className="tooltip">Dashboard</span>
         </li>
+
         <li className={tab === 'inbound' ? 'active' : ''}>
           <Link to="/inbound">
             <i className="bi bi-box-seam-fill"></i>
@@ -60,6 +63,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
           </Link>
           <span className="tooltip">Inbound</span>
         </li>
+
         <li className={tab === 'outbound' ? 'active' : ''}>
           <Link to="/outbound">
             <i className="bi bi-box-arrow-up"></i>
@@ -67,20 +71,23 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
           </Link>
           <span className="tooltip">Outbound</span>
         </li>
-        <li className={tab === 'productlist' ? 'active' : ''}>
-          <Link to="/productlist">
+
+        <li className={tab === 'log' ? 'active' : ''}>
+          <Link to="/log">
             <i className="bi bi-file-earmark-spreadsheet-fill"></i>
             <span className="link_name">Log</span>
           </Link>
           <span className="tooltip">Log</span>
         </li>
-        <li className={tab === 'withdraw' ? 'active' : ''}>
-          <Link to="/withdraw">
+
+        <li className={tab === 'personel' ? 'active' : ''}>
+          <Link to="/personel">
             <i className="bi bi-person-fill"></i>
-            <span className="link_name">Personnel Information</span>
+            <span className="link_name">Personel Information</span>
           </Link>
-          <span className="tooltip">Personnel Information</span>
+          <span className="tooltip">Personel Information</span>
         </li>
+
         <li className={tab === 'settings' ? 'active' : ''}>
           <Link to="/settings">
             <i className="bi bi-gear-fill"></i>
@@ -89,6 +96,8 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
           <span className="tooltip">Setting</span>
         </li>
       </ul>
+
+      {/* Profile */}
       <div className="profile_content">
         <div className="profile">
           <div className="profile_details">
