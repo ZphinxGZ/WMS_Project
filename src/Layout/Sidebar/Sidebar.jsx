@@ -72,12 +72,12 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
           <span className="tooltip">Outbound</span>
         </li>
 
-        <li className={tab === 'log' ? 'active' : ''}>
-          <Link to="/log">
+        <li className={tab === 'datahistory' ? 'active' : ''}>
+          <Link to="/datahistory">
             <i className="bi bi-file-earmark-spreadsheet-fill"></i>
-            <span className="link_name">Log</span>
+            <span className="link_name">DataHistory</span>
           </Link>
-          <span className="tooltip">Log</span>
+          <span className="tooltip">DataHistory</span>
         </li>
 
         <li className={tab === 'personel' ? 'active' : ''}>
