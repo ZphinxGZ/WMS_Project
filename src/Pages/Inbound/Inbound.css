@@ -1,0 +1,94 @@
+/* custom.css */
+.container {
+    background-color: #F2F2E6;
+    border: 0.1px solid #000000;
+    border-radius: 10px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 650px;
+    gap: 16px;
+    
+  }
+
+
+.button-green {
+    background-color: #38a169; /* Green */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    padding: 10px 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    height: 100px;
+    align-items: center;
+
+}
+
+.button-red {
+    background-color: #e53e3e; /* Red */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    padding: 10px 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    height: 100px;
+}
+
+.button-blue {
+    background-color: #3182ce; /* Blue */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    padding: 10px 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    height: 100px;
+}
+
+/* .container{
+  background-color: #d3d3d3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-attachment: fixed;
+}
+.button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 32px;
+    margin:px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+  }
+  .button:hover {
+    background-color: #45a049;
+  } */
