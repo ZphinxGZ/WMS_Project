@@ -1,0 +1,30 @@
+.table-container {
+overflow-x: auto;
+padding: 20px;
+
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table th, .table td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #f2f2e6; 
+  font-weight: bold;
+}
+
+/* กำหนดความกว้างสำหรับแต่ละคอลัมน์ */
+.table th:nth-child(1), .table td:nth-child(1) { width: 5%; } /* ID */
+.table th:nth-child(2), .table td:nth-child(2) { width: 45%; } /* Name */
+.table th:nth-child(3), .table td:nth-child(3) { width: 20%; } /* Role */
+.table th:nth-child(4), .table td:nth-child(4) { width: 10%; } /* Password */
+.table th:nth-child(5), .table td:nth-child(5) { width: 10%; } /* Edit */
+.table th:nth-child(6), .table td:nth-child(6) { width: 10%; } /* Delete */
