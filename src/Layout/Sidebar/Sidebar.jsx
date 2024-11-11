@@ -18,11 +18,11 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
       case '/outbound':
         setTab('outbound');
         break;
-      case '/productlist':
-        setTab('productlist');
+      case '/datahistory':
+        setTab('datahistory');
         break;
-      case '/withdraw':
-        setTab('withdraw');
+      case '/personel':
+        setTab('personel');
         break;
       case '/settings':
         setTab('settings');
@@ -34,7 +34,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
 
   const toggleSidebar = () => {
     setIsActive(!isActive);
-  };
+  };  
 
   return (
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
