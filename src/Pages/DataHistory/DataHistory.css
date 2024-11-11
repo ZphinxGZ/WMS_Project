@@ -1,0 +1,48 @@
+/* กำหนดความกว้างของแต่ละคอลัมน์ */
+.table .col-id {
+  width: 10%;
+}
+
+.table .col-date {
+  width: 15%;
+}
+
+.table .col-item {
+  width: 25%;
+}
+
+.table .col-qty {
+  width: 10%;
+}
+
+.table .col-approver {
+  width: 15%;
+}
+
+.table .col-status {
+  width: 10%;
+}
+
+.table .col-action {
+  width: 15%;
+}
+
+/* ทำให้ตารางเป็น responsive */
+.table-responsive {
+  overflow-x: auto;
+  height: 600px; /* กำหนดความสูงคงที่ */
+  overflow-y: auto;  /* เลื่อนในแนวตั้ง */
+}
+.data-history-container{
+  margin: 3rem 5rem;
+}
+/* ปรับให้หน้าจอเล็กลง (เช่น มือถือ) ซ่อนบางคอลัมน์ */
+@media (max-width: 768px) {
+  .table .col-qty,
+  .table .col-approver,
+  .table .col-status {
+    display: none;
+  }
+}
+
+
