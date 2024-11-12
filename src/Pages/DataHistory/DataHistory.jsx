@@ -116,7 +116,7 @@ function DataHistory() {
       </div>
 
       <div className="table-responsive">
-        <table className="table table-bordered">
+        <table className="table table-bordered table-striped">
           <thead>
             <tr>
               <th className="col-id">ID</th>
