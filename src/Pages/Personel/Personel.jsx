@@ -1,26 +1,56 @@
-import { fetchPersonels } from '../../Data/Personels'
-import React, { useEffect, useState } from 'react'
-import './Personel.css'
+import { fetchPersonels } from "../../Data/Personels";
+import React, { useEffect, useState } from "react";
+import "./Personel.css";
+
+const initsuperadmin = false;
 
 function Personel() {
+  
+  const [PersonelsRaw, setPersonelsRaw] = useState([]);
 
-  const [PersonelsRaw, setPersonelsRaw] = useState([])
+  const [superadmin, setSuperadmin] = useState([initsuperadmin]);
 
-  const [Personels, setPersonels] = useState([])
+  const [Personels, setPersonels] = useState([]);
+
 
   useEffect(() => {
-    setPersonelsRaw( fetchPersonels())
-  }, [])
+    console.log(`superadmin: ${superadmin}`);
+  }, [superadmin]);
 
   useEffect(() => {
-    // console.log(personelsRaw)
-    setPersonels( PersonelsRaw)
-  }, [PersonelsRaw])
+    setPersonelsRaw(fetchPersonels());
+  }, []);
+
+  useEffect(() => {
+    if (superadmin) {
+      setPersonels(PersonelsRaw.filter((Personel) =>Personel.completed ));
+    } else {
+
+      setPersonels(PersonelsRaw);
+    }
+  }, [PersonelsRaw, superadmin]);
 
   return (
-    <div>
-      <div className="table-container">
-        <table className="table">
+    <div className="table-container">
+      <div>
+        <div className="form-check form-switch">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckChecked"
+            
+            onChange={(e) => {
+              setSuperadmin(e.target.checked);
+            }}
+          />
+          <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
+            Show only Super Admin
+          </label>
+        </div>
+      </div>
+      <div className="table-wrapper">
+        <table className="table ">
           <thead className="table-head">
             <tr>
               <th>ID</th>
@@ -32,9 +62,7 @@ function Personel() {
             </tr>
           </thead>
           <tbody>
-
-
-{/*
+            {/*
             <tr>
               <td>1</td>
               <td>John Doe</td>
@@ -45,31 +73,30 @@ function Personel() {
             </tr>
 */}
 
-        {Personels.map( (Personel) => {
-          return (
-            <tr key ={Personel.id}>
-              <td>{Personel.id}</td>
-              <td>{Personel.title}</td>
-              <td>{Personel.completed ? "Super Admin" : 'Admin'}</td>
-              <td>
-                <button className="btn btn-outline-success">
-                  <span className="bi bi-check2"></span>
-                </button>
-              </td>
-              <td>
-                <button className="btn btn-outline-warning">
-                  <span className="bi bi-pencil-fill"></span>
-                </button>
-              </td>
-              <td>
-                <button className="btn btn-outline-danger">
-                  <span className="bi bi-trash3-fill"></span>
-                </button>
-              </td>
-            </tr>
-          );
-        })}
-
+            {Personels.map((Personel) => {
+              return (
+                <tr key={Personel.id}>
+                  <td>{Personel.id}</td>
+                  <td>{Personel.title}</td>
+                  <td>{Personel.completed ? "Super Admin" : "Admin"}</td>
+                  <td>
+                    <button className="btn btn-outline-success">
+                      <span className="bi bi-check2"></span>
+                    </button>
+                  </td>
+                  <td>
+                    <button className="btn btn-outline-warning">
+                      <span className="bi bi-pencil-fill"></span>
+                    </button>
+                  </td>
+                  <td>
+                    <button className="btn btn-outline-danger">
+                      <span className="bi bi-trash3-fill"></span>
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -77,4 +104,4 @@ function Personel() {
   );
 }
 
-export default Personel
+export default Personel;
