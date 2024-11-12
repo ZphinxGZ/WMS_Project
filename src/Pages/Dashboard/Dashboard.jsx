@@ -148,7 +148,7 @@ function Dashboard() {
           <div className="card card-3">
             <div className="card-details">
               <p className="text-title">13</p>
-              <p className="text-body">จำนวนการยืมสินค้าที่มีS/n</p>
+              <p className="text-body">จำนวนการยืมสินค้าที่มีS/N</p>
             </div>
             <i class="bi bi-laptop"></i>
             <button className="card-button">More info</button>
