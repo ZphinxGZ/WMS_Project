@@ -30,8 +30,8 @@
 /* ทำให้ตารางเป็น responsive */
 .table-responsive {
   overflow-x: auto;
-  height: 600px; /* กำหนดความสูงคงที่ */
-  overflow-y: auto;  /* เลื่อนในแนวตั้ง */
+  height: 600px;
+  overflow-y: auto; 
 }
 .data-history-container{
   margin: 3rem 5rem;
@@ -41,7 +41,6 @@
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-/* ปรับให้หน้าจอเล็กลง (เช่น มือถือ) ซ่อนบางคอลัมน์ */
 @media (max-width: 768px) {
   .table .col-qty,
   .table .col-approver,
@@ -74,7 +73,6 @@
     display: flex;
     margin-right: 0.5rem;
   }
-
   .data-history-menu-bar-status{
     display: flex;
     align-items: center;
@@ -82,12 +80,10 @@
     width: 10rem;
     margin-right: 2rem;
   }
-
   .status-label{
     margin-right: 0.5rem;
   }
 }
-
 .data-history-menu-bar-search{
   width: 20rem;
 }
