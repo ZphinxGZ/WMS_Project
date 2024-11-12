@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
 import './Sidebar.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 

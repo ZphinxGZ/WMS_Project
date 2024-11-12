@@ -62,22 +62,22 @@ function Dashboard() {
           },
           {
             name: "ประเภท E",
-            y: 34,
+            y: 23,
             drilldown: "E"
           },
           {
             name: "ประเภท F",
-            y: 34,
+            y: 21,
             drilldown: "F"
           },
           {
             name: "ประเภท G",
-            y: 34,
+            y: 27,
             drilldown: "G"
           },
           {
             name: "ประเภท H",
-            y: 34,
+            y: 44,
             drilldown: "H"
           },
           {
@@ -87,12 +87,12 @@ function Dashboard() {
           },
           {
             name: "ประเภท J",
-            y: 34,
+            y: 25,
             drilldown: "J"
           },
           {
             name: "ประเภท K",
-            y: 34,
+            y: 12,
             drilldown: "K"
           }
         ]
@@ -132,7 +132,7 @@ function Dashboard() {
           <div className="card card-1">
             <div className="card-details">
               <p className="text-title">13</p>
-              <p className="text-body">จำนวนครุภัณฑ์</p>
+              <p className="text-body">จำนวนสินค้าที่มีS/N</p>
             </div>
             <i className="bi bi-archive-fill"></i>
             <button className="card-button">More info</button>
@@ -140,7 +140,7 @@ function Dashboard() {
           <div className="card card-2">
             <div className="card-details">
               <p className="text-title">13</p>
-              <p className="text-body">จำนวนครุภัณฑ์</p>
+              <p className="text-body">จำนวนสินค้าที่ไม่มีS/N</p>
             </div>
             <i className="bi bi-archive-fill"></i>
             <button className="card-button">More info</button>
@@ -148,17 +148,17 @@ function Dashboard() {
           <div className="card card-3">
             <div className="card-details">
               <p className="text-title">13</p>
-              <p className="text-body">จำนวนครุภัณฑ์</p>
+              <p className="text-body">จำนวนการยืมสินค้าที่มีS/n</p>
             </div>
-            <i className="bi bi-archive-fill"></i>
+            <i class="bi bi-laptop"></i>
             <button className="card-button">More info</button>
           </div>
           <div className="card card-4">
             <div className="card-details">
               <p className="text-title">13</p>
-              <p className="text-body">จำนวนครุภัณฑ์</p>
+              <p className="text-body">จำนวนการยืมสินค้าที่ไม่มีS/N</p>
             </div>
-            <i className="bi bi-archive-fill"></i>
+            <i class="bi bi-boxes"></i>
             <button className="card-button">More info</button>
           </div>
           {/* เพิ่มการ์ดอื่น ๆ ตามที่คุณต้องการ */}
