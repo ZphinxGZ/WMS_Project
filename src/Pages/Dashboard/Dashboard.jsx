@@ -1,4 +1,3 @@
-// Dashboard.js
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -9,13 +8,13 @@ import "./Dashboard.css";
 drilldown(Highcharts);
 
 function Dashboard() {
-  // การตั้งค่ากราฟที่ 1: Column with Drilldown
+  // การตั้งค่าของ Highcharts สำหรับ Column with Drilldown
   const columnOptions = {
     chart: {
       type: "column"
     },
     title: {
-      text: "จำนวนครุภัณฑ์ (Column Chart)"
+      text: "จำนวนครุภัณฑ์"
     },
     xAxis: {
       type: "category"
@@ -41,53 +40,49 @@ function Dashboard() {
         name: "ครุภัณฑ์",
         colorByPoint: true,
         data: [
-          { name: "ประเภท A", y: 13, drilldown: "A" },
-          { name: "ประเภท B", y: 12, drilldown: "B" },
-          { name: "ประเภท C", y: 23, drilldown: "C" },
-          { name: "ประเภท D", y: 34, drilldown: "D" }
+          {
+            name: "ประเภท A",
+            y: 13,
+            drilldown: "A"
+          },
+          {
+            name: "ประเภท B",
+            y: 12,
+            drilldown: "B"
+          },
+          {
+            name: "ประเภท C",
+            y: 23,
+            drilldown: "C"
+          },
+          {
+            name: "ประเภท D",
+            y: 34,
+            drilldown: "D"
+          }
         ]
       }
     ],
     drilldown: {
       series: [
-        { id: "A", data: [["Sub A1", 5], ["Sub A2", 8]] },
-        { id: "B", data: [["Sub B1", 6], ["Sub B2", 6]] },
-        { id: "C", data: [["Sub C1", 11], ["Sub C2", 12]] },
-        { id: "D", data: [["Sub D1", 15], ["Sub D2", 19]] }
+        {
+          id: "A",
+          data: [["Sub A1", 5], ["Sub A2", 8]]
+        },
+        {
+          id: "B",
+          data: [["Sub B1", 6], ["Sub B2", 6]]
+        },
+        {
+          id: "C",
+          data: [["Sub C1", 11], ["Sub C2", 12]]
+        },
+        {
+          id: "D",
+          data: [["Sub D1", 15], ["Sub D2", 19]]
+        }
       ]
     }
-  };
-
-  // การตั้งค่ากราฟที่ 2: Pie Chart
-  const pieOptions = {
-    chart: {
-      type: "pie"
-    },
-    title: {
-      text: "สัดส่วนครุภัณฑ์ (Pie Chart)"
-    },
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: "pointer",
-        dataLabels: {
-          enabled: true,
-          format: "<b>{point.name}</b>: {point.percentage:.1f} %"
-        }
-      }
-    },
-    series: [
-      {
-        name: "สัดส่วน",
-        colorByPoint: true,
-        data: [
-          { name: "ประเภท A", y: 13 },
-          { name: "ประเภท B", y: 12 },
-          { name: "ประเภท C", y: 23 },
-          { name: "ประเภท D", y: 34 }
-        ]
-      }
-    ]
   };
 
   return (
@@ -107,17 +102,20 @@ function Dashboard() {
             <i className="bi bi-archive-fill"></i>
             <button className="card-button">More info</button>
           </div>
+          <div className="card card-2">
+            <div className="card-details">
+              <p className="text-title">12</p>
+              <p className="text-body">จำนวนครุภัณฑ์</p>
+            </div>
+            <i className="bi bi-laptop-fill"></i>
+            <button className="card-button">More info</button>
+          </div>
           {/* เพิ่มการ์ดอื่น ๆ ตามที่คุณต้องการ */}
         </div>
 
-        {/* กราฟที่ 1: Column with Drilldown */}
+        {/* กราฟ Column with Drilldown */}
         <div className="chart-container">
           <HighchartsReact highcharts={Highcharts} options={columnOptions} />
-        </div>
-
-        {/* กราฟที่ 2: Pie Chart */}
-        <div className="chart-container">
-          <HighchartsReact highcharts={Highcharts} options={pieOptions} />
         </div>
       </div>
     </div>
