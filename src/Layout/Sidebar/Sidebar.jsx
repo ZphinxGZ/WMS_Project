@@ -22,7 +22,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
         setTab('datahistory');
         break;
       case '/personel':
-        setTab('personel');
+        setTab('personel'); 
         break;
       case '/settings':
         setTab('settings');
@@ -41,7 +41,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
       <div className="logo_content">
         <div className="logo">
           <img src="../../public/img/metthier logo without tg-01.png" alt="Metthier Logo" style={{ height: '50px' }} />
-          <div className="logo_name">Metthier</div>
+          <div className="logo_name"></div>
         </div>
         <i className="bi bi-list" id="btn" onClick={toggleSidebar}></i>
       </div>

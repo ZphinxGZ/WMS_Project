@@ -12,7 +12,9 @@ function Layouts({ tab, setTab }) {
       <Sidebar tab={tab} setTab={setTab} isActive={isActive} setIsActive={setIsActive} />
       <div className={`main-content ${isActive ? 'content-shifted' : ''}`}>
         <Header isActive={isActive} />
+        <div className='body-content'>
         <Outlet />
+        </div>
       </div>
     </div>
   );

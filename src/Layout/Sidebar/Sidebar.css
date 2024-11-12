@@ -131,6 +131,7 @@ body {
 }
 
 .sidebar ul li a {
+  margin-top: 5px;
   color: #fff;
   display: flex;
   align-items: center;
