@@ -62,6 +62,7 @@ function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
             {/* ข้อมูลรายการ */}
             <div className="mb-4">
               <h5><strong>รายการ:</strong> {item ? item.item : ''}</h5>
+              <h5><strong>จํานวน:</strong> {item ? item.qty : ''}</h5>
               <p><strong>ID:</strong> {item ? item.id : ''}</p>
               <p><strong>วันที่เบิก:</strong> {item ? item.date_borrowed : ''}</p>
               <p><strong>ผู้ทำรายการ:</strong> {item ? item.approver : ''}</p>
