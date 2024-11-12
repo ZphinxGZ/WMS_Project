@@ -6,7 +6,7 @@ import React from "react";
 import "./Dashboard.css";
 
 // เรียกใช้ Drilldown module
-drilldown(Highcharts);
+// drilldown(Highcharts);
 
 function Dashboard() {
   const options = {
