@@ -119,7 +119,7 @@ function DataHistory() {
 
       {/* ตารางแสดงผล */}
       <div className="table-responsive">
-        <table className="table table-bordered table-striped">
+        <table className="table  table-striped">
           <thead>
             <tr>
               <th className="col-id">ID</th>
