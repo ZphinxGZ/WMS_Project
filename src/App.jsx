@@ -1,6 +1,7 @@
 // React
 import React, { useEffect, useState } from 'react'
 import { HashRouter,Routes,Route } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Pages
 import Layouts from './Layout/Layouts/Layouts'
