@@ -96,11 +96,4 @@
   opacity: 1;
 }
 
-.chart-container {
-  display: flex;
-  gap: 15rem;
-  padding: 1rem;
-  justify-content: center;
-}
-
 
