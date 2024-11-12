@@ -1,61 +1,63 @@
-import React, { useState } from 'react';
-import datahistory from '../../Data/datahistory';
-import './DataHistory.css';
+import React, { useState } from 'react'
+
+import datahistory from '../../Data/datahistory'
+
+import './DataHistory.css'
 
 function DataHistory() {
   // State สำหรับจำนวนรายการที่จะแสดง
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(10)
 
   // State สำหรับคำค้นหา
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("")
 
   // State สำหรับการคำนวณหน้า
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
 
   // State สำหรับสถานะที่เลือก
-  const [selectedStatus, setSelectedStatus] = useState(""); // ค่าที่เริ่มต้นเป็นค่าว่าง
+  const [selectedStatus, setSelectedStatus] = useState("") // ค่าที่เริ่มต้นเป็นทั้งหมด
 
   // ฟังก์ชันสำหรับการค้นหาข้อมูล
   const filteredData = datahistory.filter(item => {
     // กรองตามคำค้นหา
     const matchesSearchTerm = item.id.toString().includes(searchTerm) ||
       item.date_borrowed.includes(searchTerm) ||
-      item.approver.includes(searchTerm);
+      item.approver.includes(searchTerm)
 
     // กรองตามสถานะ
-    const matchesStatus = selectedStatus ? item.status === selectedStatus : true;
+    const matchesStatus = selectedStatus ? item.status === selectedStatus : true
 
-    return matchesSearchTerm && matchesStatus;
-  });
+    return matchesSearchTerm && matchesStatus
+  })
 
   // เลือกข้อมูลที่จะแสดงตามจำนวนที่เลือกและหน้าปัจจุบัน
-  const totalItems = filteredData.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const dataToDisplay = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const totalItems = filteredData.length
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
+  const dataToDisplay = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
   // ฟังก์ชันสำหรับการเปลี่ยนแปลงจำนวนรายการ
   const handleItemsPerPageChange = (e) => {
-    setItemsPerPage(Number(e.target.value));
-    setCurrentPage(1); // รีเซ็ตหน้ากลับไปที่หน้าแรกเมื่อเปลี่ยนจำนวนรายการ
-  };
+    setItemsPerPage(Number(e.target.value))
+    setCurrentPage(1) // รีเซ็ตหน้ากลับไปที่หน้าแรกเมื่อเปลี่ยนจำนวนรายการ
+  }
 
   // ฟังก์ชันสำหรับการค้นหาคำค้นหา
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-    setCurrentPage(1); // รีเซ็ตหน้ากลับไปที่หน้าแรกเมื่อมีการค้นหาข้อมูลใหม่
-  };
+    setSearchTerm(e.target.value)
+    setCurrentPage(1) // รีเซ็ตหน้ากลับไปที่หน้าแรกเมื่อมีการค้นหาข้อมูลใหม่
+  }
 
-  // ฟังก์ชันสำหรับการเปลี่ยนหน้าที่ต้องการ
+  // ฟังก์ชันสำหรับการเปลี่ยนหน้าที่เลือก
   const handlePageChange = (pageNumber, e) => {
-    e.preventDefault(); // ป้องกันการเลื่อนหน้า
-    setCurrentPage(pageNumber);
-  };
+    e.preventDefault()
+    setCurrentPage(pageNumber)
+  }
 
-  // ฟังก์ชันสำหรับการเปลี่ยนสถานะ
+  // ฟังก์ชันสำหรับการเปลี่ยนหน้า
   const handleStatusChange = (e) => {
-    setSelectedStatus(e.target.value);
-    setCurrentPage(1); // รีเซ็ตหน้ากลับไปที่หน้าแรกเมื่อเลือกสถานะ
-  };
+    setSelectedStatus(e.target.value)
+    setCurrentPage(1) // รีเซ็ตหน้ากลับไปหน้าแรกเมื่อเลือก
+  }
 
   return (
     <div className="data-history-container">
@@ -77,7 +79,7 @@ function DataHistory() {
           </select>
         </div>
 
-        {/* ช่องค้นหา และ สถานะ อยู่ขวาสุด */}
+        {/* ช่องค้นหา และ สถานะ*/}
         <div className="d-flex align-items-center">
           {/* สถานะ */}
           <div className="mr-2 data-history-menu-bar-status">
@@ -115,6 +117,7 @@ function DataHistory() {
         </div>
       </div>
 
+      {/* ตารางแสดงผล */}
       <div className="table-responsive">
         <table className="table table-bordered table-striped">
           <thead>
@@ -222,4 +225,4 @@ function DataHistory() {
   );
 }
 
-export default DataHistory;
+export default DataHistory
