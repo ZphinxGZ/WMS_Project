@@ -5,8 +5,12 @@
   padding: 0.5rem;
 }
 
+.filter {
+  margin-bottom: 1.5rem
+}
+
 .table-wrapper {
-  max-height: 50rem; 
+  max-height: 600px; 
   overflow-y: auto;
   overflow-x: auto;
 }
@@ -17,16 +21,24 @@
   table-layout: fixed;
 }
 
-.table th, .table td {
-  border: 1px solid black;
+.table th{
+  /* border: 1px solid black; */
   padding: 8px;
   text-align: center;
+  position: sticky;
+  top: 0;
+  background-color: #f2f2e6; /* ตั้งสีพื้นหลังเพื่อให้แยกแถวหัวกับแถวข้อมูล */
+  font-weight: bold;
+  
 }
 
-.table th {
-  background-color: #f2f2e6; 
-  font-weight: bold;
-}
+.table td {
+  /* border: 1px solid black; */
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+} 
+
 
 /* กำหนดความกว้างสำหรับแต่ละคอลัมน์ */
 .table th:nth-child(1), .table td:nth-child(1) { width: 5%; } /* ID */

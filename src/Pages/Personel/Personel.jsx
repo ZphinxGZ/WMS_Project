@@ -2,56 +2,54 @@ import { fetchPersonels } from "../../Data/Personels";
 import React, { useEffect, useState } from "react";
 import "./Personel.css";
 
-const initsuperadmin = false;
+const initadmin = false;
 
 function Personel() {
   
   const [PersonelsRaw, setPersonelsRaw] = useState([]);
 
-  const [superadmin, setSuperadmin] = useState([initsuperadmin]);
+  const [admin, setadmin] = useState(initadmin);
 
   const [Personels, setPersonels] = useState([]);
 
 
   useEffect(() => {
-    console.log(`superadmin: ${superadmin}`);
-  }, [superadmin]);
+    console.log(`admin: ${admin}`);
+  }, [admin]);
 
   useEffect(() => {
     setPersonelsRaw(fetchPersonels());
   }, []);
 
   useEffect(() => {
-    if (superadmin) {
-      setPersonels(PersonelsRaw.filter((Personel) =>Personel.completed ));
+    if (admin) {
+      setPersonels(PersonelsRaw.filter((Personel) =>Personel.role === "admin"));
     } else {
-
       setPersonels(PersonelsRaw);
     }
-  }, [PersonelsRaw, superadmin]);
+  }, [PersonelsRaw, admin]);
 
   return (
     <div className="table-container">
-      <div>
+      <div className="filter">
         <div className="form-check form-switch">
           <input
             className="form-check-input"
             type="checkbox"
             role="switch"
             id="flexSwitchCheckChecked"
-            
             onChange={(e) => {
-              setSuperadmin(e.target.checked);
+              setadmin(e.target.checked);
             }}
           />
           <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
-            Show only Super Admin
+            <span class="badge text-bg-secondary">Show only Admin</span>
           </label>
         </div>
       </div>
       <div className="table-wrapper">
-        <table className="table ">
-          <thead className="table-head">
+        <table className="table table-striped ">
+          <thead>
             <tr>
               <th>ID</th>
               <th>Name</th>
@@ -77,8 +75,8 @@ function Personel() {
               return (
                 <tr key={Personel.id}>
                   <td>{Personel.id}</td>
-                  <td>{Personel.title}</td>
-                  <td>{Personel.completed ? "Super Admin" : "Admin"}</td>
+                  <td>{Personel.name}</td>
+                  <td>{Personel.role}</td>
                   <td>
                     <button className="btn btn-outline-success">
                       <span className="bi bi-check2"></span>
