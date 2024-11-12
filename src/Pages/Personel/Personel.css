@@ -1,7 +1,13 @@
 .table-container {
-overflow-x: auto;
-padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem 5rem;
+}
 
+.table-wrapper {
+  max-height: 400px; 
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .table {
