@@ -161,22 +161,7 @@ function Dashboard() {
             <i class="bi bi-boxes"></i>
             <button className="card-button">More info</button>
           </div>
-          <div className="card card-2">
-            <div className="card-details">
-              <p className="text-title">12</p>
-              <p className="text-body">จำนวนครุภัณฑ์</p>
-            </div>
-            <i className="bi bi-laptop-fill"></i>
-            <button className="card-button">More info</button>
-          </div>
-          <div className="card card-2">
-            <div className="card-details">
-              <p className="text-title">12</p>
-              <p className="text-body">จำนวนครุภัณฑ์</p>
-            </div>
-            <i className="bi bi-laptop-fill"></i>
-            <button className="card-button">More info</button>
-          </div>
+          
           {/* เพิ่มการ์ดอื่น ๆ ตามที่คุณต้องการ */}
         </div>
 
