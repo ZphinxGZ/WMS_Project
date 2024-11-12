@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 import './Sidebar.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -7,7 +9,6 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
   const location = useLocation();
 
   useEffect(() => {
-    // Update selected tab based on current route
     switch (location.pathname) {
       case '/dashboard':
         setTab('dashboard');
