@@ -15,7 +15,7 @@ function Dashboard() {
               <p className="text-title">13</p>
               <p className="text-body">จำนวนครุภัณฑ์</p>
             </div>
-            <i class="bi bi-archive"></i>
+            <i class="bi bi-archive-fill"></i>
             <button className="card-button">More info</button>
           </div>
           <div className="card card-2">
@@ -23,7 +23,7 @@ function Dashboard() {
               <p className="text-title">12</p>
               <p className="text-body">จำนวนครุภัณฑ์</p>
             </div>
-            <i class="bi bi-archive"></i>
+            <i class="bi bi-laptop-fill"></i>
             <button className="card-button">More info</button>
           </div>
           <div className="card card-3">
