@@ -165,10 +165,10 @@ function Dashboard() {
         </div>
 
         {/* เพิ่มกราฟ Column with Drilldown ที่นี่ */}
-        <div className="chart-container">
+        {/* <div className="chart-container">
           <HighchartsReact highcharts={Highcharts} options={options} />
           <HighchartsReact highcharts={Highcharts} options={options} />
-        </div>
+        </div> */}
         
       </div>
     </div>
