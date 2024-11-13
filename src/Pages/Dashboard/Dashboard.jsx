@@ -99,24 +99,24 @@ function Dashboard() {
       }
     ],
     drilldown: {
-      series: [
-        {
-          id: "A",
-          data: [["Sub A1", 5], ["Sub A2", 8]]
-        },
-        {
-          id: "B",
-          data: [["Sub B1", 6], ["Sub B2", 6]]
-        },
-        {
-          id: "C",
-          data: [["Sub C1", 11], ["Sub C2", 12]]
-        },
-        {
-          id: "D",
-          data: [["Sub D1", 15], ["Sub D2", 19]]
-        }
-      ]
+      // series: [
+      //   {
+      //     id: "A",
+      //     data: [["Sub A1", 5], ["Sub A2", 8]]
+      //   },
+      //   {
+      //     id: "B",
+      //     data: [["Sub B1", 6], ["Sub B2", 6]]
+      //   },
+      //   {
+      //     id: "C",
+      //     data: [["Sub C1", 11], ["Sub C2", 12]]
+      //   },
+      //   {
+      //     id: "D",
+      //     data: [["Sub D1", 15], ["Sub D2", 19]]
+      //   }
+      // ]
     }
   };
 
