@@ -162,10 +162,8 @@ function Dashboard() {
             <button className="card-button">More info</button>
           </div>
           
-          {/* เพิ่มการ์ดอื่น ๆ ตามที่คุณต้องการ */}
         </div>
-
-        {/* เพิ่มกราฟ Column with Drilldown ที่นี่ */}
+        
         <div className="chart-container">
           <HighchartsReact highcharts={Highcharts} options={options} />
           <HighchartsReact highcharts={Highcharts} options={options} />
