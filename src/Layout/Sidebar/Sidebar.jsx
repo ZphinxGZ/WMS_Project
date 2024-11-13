@@ -87,13 +87,13 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
           <span className="tooltip">Personel Information</span>
         </li>
 
-        <li className={tab === 'settings' ? 'active' : ''}>
+        {/* <li className={tab === 'settings' ? 'active' : ''}>
           <Link to="/settings">
             <i className="bi bi-gear-fill"></i>
             <span className="link_name">Setting</span>
           </Link>
           <span className="tooltip">Setting</span>
-        </li>
+        </li> */}
       </ul>
 
       {/* Profile */}
