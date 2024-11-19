@@ -10,7 +10,14 @@
 }
 
 .filter {
-  margin-bottom: 1.5rem
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-button {
+  margin-left: auto;
 }
 
 .table-wrapper {
@@ -22,7 +29,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .table th{
@@ -51,3 +58,12 @@
 .table th:nth-child(4), .table td:nth-child(4) { width: 10%; } /* Password */
 .table th:nth-child(5), .table td:nth-child(5) { width: 10%; } /* Edit */
 .table th:nth-child(6), .table td:nth-child(6) { width: 10%; } /* Delete */
+
+/* Modals */
+
+.modal-body, .modal-header {
+  display: flex;
+  justify-content: center;  /* จัดตำแหน่งในแนวนอน */
+  align-items: center;      /* จัดตำแหน่งในแนวตั้ง */
+  text-align: center;       /* จัดให้ข้อความอยู่กลาง */
+}
