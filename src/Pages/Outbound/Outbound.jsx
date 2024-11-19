@@ -1,140 +1,112 @@
 import React, { useState } from 'react';
 import './Outbound.css';
 import { Button } from 'react-bootstrap';
+import { FaShoppingCart, FaSearch } from 'react-icons/fa'; // ไอคอนตะกร้าและค้นหา
 
 function Outbound() {
-  // ตัวอย่างข้อมูลสินค้า
   const initialItems = [
-    { id: 1, name: 'Product A', quantity: 10, date: '2024-11-10', confirmed: false },
-    { id: 2, name: 'Product B', quantity: 5, date: '2024-11-11', confirmed: false },
-    { id: 3, name: 'Product C', quantity: 20, date: '2024-11-12', confirmed: false },
+    { id: 1, name: 'Product A', quantity: 10, unit: 'kg', category: 'ประเภท A', date: '2024-11-10', confirmed: false },
+    { id: 2, name: 'Product B', quantity: 5, unit: 'pcs', category: 'ประเภท B', date: '2024-11-11', confirmed: false },
+    { id: 3, name: 'Product C', quantity: 20, unit: 'ltr', category: 'ประเภท C', date: '2024-11-12', confirmed: false },
   ];
 
   const [outboundItems, setOutboundItems] = useState(initialItems);
-  const [editingItem, setEditingItem] = useState(null); // กำหนดสถานะแก้ไข
-  const [editForm, setEditForm] = useState({ name: '', quantity: '', date: '' });
+  const [cart, setCart] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(''); // state สำหรับเลือกประเภทสินค้า
 
-  // เริ่มแก้ไขข้อมูล
-  const handleEditClick = (item) => {
-    setEditingItem(item.id);
-    setEditForm({ name: item.name, quantity: item.quantity, date: item.date });
+  const handleAddToCart = (item) => {
+    if (!cart.some(cartItem => cartItem.id === item.id)) {
+      setCart([...cart, item]);
+    }
   };
 
-  // อัปเดตค่าฟอร์มเมื่อพิมพ์ข้อมูลใหม่
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditForm({ ...editForm, [name]: value });
-  };
-
-  // บันทึกข้อมูลที่แก้ไขแล้ว
-  const handleSave = () => {
-    setOutboundItems(outboundItems.map(item =>
-      item.id === editingItem ? { ...item, ...editForm } : item
-    ));
-    setEditingItem(null); // ออกจากโหมดแก้ไข
-  };
-
-  // ยกเลิกการแก้ไข
-  const handleCancel = () => {
-    setEditingItem(null); // ยกเลิกและออกจากโหมดแก้ไข
-  };
-
-  // ยืนยันสินค้า
-  const handleConfirm = (id) => {
-    setOutboundItems(outboundItems.map(item =>
-      item.id === id ? { ...item, confirmed: true } : item
-    ));
-  };
+  const filteredItems = outboundItems.filter(
+    (item) =>
+      (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.id.toString().includes(searchQuery)) &&
+      (selectedCategory === '' || item.category === selectedCategory) // ฟิลเตอร์ตามประเภทสินค้า
+  );
 
   return (
     <div className="outbound-container">
-      {/* Sticky Header Section */}
       <div className="outbound-header">
-        <h1>Outbound - การส่งออกสินค้า</h1>
+        <h1>การเลือกสินค้า</h1>
       </div>
 
-      {/* Table Section */}
+      {/* ค้นหา ไอคอนตะกร้า และปุ่มรายการ */}
+      <div className="search-cart-row">
+        {/* ตัวเลือกประเภทสินค้า */}
+        <div className="category-select">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="form-select"
+          >
+            <option value="">ประเภททั้งหมด</option>
+            <option value="ประเภท A">ประเภท  A</option>
+            <option value="ประเภท B">ประเภท  B</option>
+            <option value="ประเภท C">ประเภท  C</option>
+          </select>
+        </div>
+
+        {/* ช่องค้นหา */}
+        <div className="search-bar">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="ค้นหาสินค้า..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <FaSearch className="search-icon" />
+        </div>
+
+        {/* ปุ่มรายการ */}
+        <button className="item-list-button">รายการ</button>
+
+        {/* ไอคอนตะกร้า */}
+        <div className="cart-icon-container">
+          <FaShoppingCart size={28} color="#007bff" />
+          {cart.length > 0 && (
+            <span className="badge bg-danger">
+              {cart.length}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* ตารางสินค้า */}
       <table className="outbound-table">
         <thead>
           <tr>
+            <th>ลำดับ</th>
             <th>รหัสสินค้า</th>
-            <th>ชื่อสินค้า</th>
+            <th>รายการ</th>
             <th>จำนวน</th>
-            <th>วันที่ส่งออก</th>
-            <th>การดำเนินการ</th>
-            <th>ยืนยันสินค้า</th>
+            <th>หน่วย</th>
+            <th>ประเภทสินค้า</th>
+            <th>เลือก</th>
           </tr>
         </thead>
         <tbody>
-          {outboundItems.map((item) => (
+          {filteredItems.map((item) => (
             <tr key={item.id}>
               <td>{item.id}</td>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.quantity}</td>
+              <td>{item.unit}</td>
+              <td>{item.category}</td>
               <td>
-                {editingItem === item.id ? (
-                  <input
-                    type="text"
-                    name="name"
-                    value={editForm.name}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  item.name
-                )}
-              </td>
-              <td>
-                {editingItem === item.id ? (
-                  <input
-                    type="number"
-                    name="quantity"
-                    value={editForm.quantity}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  item.quantity
-                )}
-              </td>
-              <td>
-                {editingItem === item.id ? (
-                  <input
-                    type="date"
-                    name="date"
-                    value={editForm.date}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  item.date
-                )}
-              </td>
-              <td>
-                {/* แสดงปุ่มแก้ไข แต่ทำให้ปุ่มกดไม่ได้ถ้าสินค้าได้รับการยืนยันแล้ว */}
-                {editingItem === item.id ? (
-                  <>
-                    <Button onClick={handleSave} variant="success" size="sm" className="me-2">
-                      บันทึก
-                    </Button>
-                    <Button onClick={handleCancel} variant="danger" size="sm">
-                      ยกเลิก
-                    </Button>
-                  </>
-                ) : (
-                  <Button
-                    onClick={() => handleEditClick(item)}
-                    variant="warning"
-                    size="sm"
-                    disabled={item.confirmed} // ปิดการใช้งานปุ่มหากยืนยันแล้ว
-                  >
-                    แก้ไข
-                  </Button>
-                )}
-              </td>
-              <td>
-                {item.confirmed ? (
-                  <span className="text-success">ยืนยันแล้ว</span>
-                ) : (
-                  <Button onClick={() => handleConfirm(item.id)} variant="primary" size="sm">
-                    ยืนยัน
-                  </Button>
-                )}
+                <Button
+                  onClick={() => handleAddToCart(item)}
+                  variant="primary"
+                  size="sm"
+                  disabled={cart.some(cartItem => cartItem.id === item.id)}
+                >
+                  การเลือกสินค้า
+                </Button>
               </td>
             </tr>
           ))}

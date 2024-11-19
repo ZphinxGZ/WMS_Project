@@ -1,50 +1,159 @@
 /* Container ของ Outbound */
 .outbound-container {
-    width: 100%;
-    padding: 20px;
-    background-color: #f9f9f9;
-    box-sizing: border-box;
-  }
-  
-  /* Header แบบ Sticky */
-  .outbound-header {
-    position: sticky;
-    top: 0;
-    background-color: #ffffff;
-    padding: 15px 0;
-    border-bottom: 2px solid #007bff;
-    z-index: 10;
-    text-align: center;
-    font-size: 2rem;
-    color: #2c3e50;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Table Styling */
-  .outbound-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .outbound-table th,
-  .outbound-table td {
-    padding: 15px;
-    border: 1px solid #ddd;
-    text-align: center;
-  }
-  
-  .outbound-table th {
-    background-color: #979b9f;
-    color: #ffffff;
-    font-weight: bold;
-  }
-  
-  .outbound-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .outbound-table tr:hover {
-    background-color: #eaf2ff;
-  }
-  
+  margin: 3rem 5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Header แบบ Sticky */
+.outbound-header {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  padding: 15px 0;
+  z-index: 10;
+  text-align: center;
+  font-size: 2rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.category-select {
+  margin-right: auto; /* ดันตัวเลือกไปซ้ายสุด */
+  margin-left: 10px; /* ระยะห่างจากขอบซ้าย */
+}
+
+/* การจัดวางแถวค้นหา ไอคอนตะกร้า และปุ่มรายการ */
+.search-cart-row {
+  display: flex;
+  justify-content: flex-end; /* ชิดขวา */
+  align-items: center;
+  margin-top: 15px; /* ระยะห่างจากด้านบน */
+}
+
+/* ช่องค้นหา */
+.search-bar {
+  position: relative;
+}
+
+.search-bar input {
+  width: 250px; /* ขนาดช่องค้นหาที่เล็กลง */
+  padding: px 10px 5px 30px; /* เพิ่ม padding ด้านซ้ายเพื่อเว้นที่สำหรับไอคอน */
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ไอคอนค้นหา */
+.search-bar .search-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #007bff;
+}
+
+/* ไอคอนตะกร้า */
+.cart-icon-container {
+  position: relative;
+  margin-left: 4px; /* ให้มีระยะห่างจากปุ่มรายการ */
+}
+
+/* ตำแหน่งของ Badge บนไอคอน */
+.cart-icon-container .badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  font-size: 0.8rem;
+  padding: 4px 6px;
+  border-radius: 50%;
+}
+
+/* ปุ่มรายการ */
+.item-list-button {
+  margin-left: 15px;
+  padding: 5px 15px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.item-list-button:hover {
+  background-color: #0056b3;
+}
+
+/* Table Styling */
+.outbound-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.outbound-table th,
+.outbound-table td {
+  padding: 15px;
+  border: 1px solid #dbdbdb;
+  text-align: center;
+}
+
+.outbound-table th {
+  background-color: #f2f2e6;
+  color: #060303;
+  font-weight: bold;
+}
+
+.outbound-table tr:nth-child(even) {
+  background-color: #eeefeff5;
+}
+
+.outbound-table tr:hover {
+  background-color: #e1e2e7;
+}
+/* ตัวเลือกจำนวนรายการ */
+.items-per-page {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* เพิ่มระยะห่าง */
+}
+
+.items-label {
+  margin-right: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.items-per-page select {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* การจัดวางใหม่ให้ทั้งแถวจัดวางจากซ้ายไปขวา */
+.search-cart-row {
+  display: flex;
+  justify-content: flex-start; /* ชิดซ้าย */
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* ช่องว่างระหว่างตัวเลือกประเภทและการค้นหา */
+.category-select {
+  margin-left: 15px;
+}
+
+.category-label {
+  margin-right: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* ช่องค้นหา */
+.search-bar {
+  position: relative;
+  margin-left: 15px;
+}
