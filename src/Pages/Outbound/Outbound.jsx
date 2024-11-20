@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import './Outbound.css';
 import { Button } from 'react-bootstrap';
-import { FaShoppingCart, FaSearch } from 'react-icons/fa'; // ไอคอนตะกร้าและค้นหา
+import { FaShoppingCart, FaSearch } from 'react-icons/fa';
+import { fetchProducts } from '../../Data/DataOutbound';  // นำเข้าฟังก์ชัน fetchProducts
 
 function Outbound() {
-  const initialItems = [
-    { id: 1, name: 'Product A', quantity: 10, unit: 'kg', category: 'ประเภท A', date: '2024-11-10', confirmed: false },
-    { id: 2, name: 'Product B', quantity: 5, unit: 'pcs', category: 'ประเภท B', date: '2024-11-11', confirmed: false },
-    { id: 3, name: 'Product C', quantity: 20, unit: 'ltr', category: 'ประเภท C', date: '2024-11-12', confirmed: false },
-  ];
-
-  const [outboundItems, setOutboundItems] = useState(initialItems);
+  // ใช้ข้อมูลที่นำเข้ามาใน state
+  const [outboundItems, setOutboundItems] = useState(fetchProducts());
   const [cart, setCart] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(''); // state สำหรับเลือกประเภทสินค้า
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const handleAddToCart = (item) => {
     if (!cart.some(cartItem => cartItem.id === item.id)) {
@@ -21,12 +18,20 @@ function Outbound() {
     }
   };
 
+  // กรองข้อมูลตามคำค้นหาและประเภท
   const filteredItems = outboundItems.filter(
     (item) =>
       (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.id.toString().includes(searchQuery)) &&
-      (selectedCategory === '' || item.category === selectedCategory) // ฟิลเตอร์ตามประเภทสินค้า
+      (selectedCategory === '' || item.category === selectedCategory)
   );
+
+  // กรองข้อมูลตามจำนวนที่ต้องการแสดงต่อหน้า
+  const currentItems = filteredItems.slice(0, itemsPerPage);
+
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(Number(e.target.value));
+  };
 
   return (
     <div className="outbound-container">
@@ -34,9 +39,23 @@ function Outbound() {
         <h1>การเลือกสินค้า</h1>
       </div>
 
-      {/* ค้นหา ไอคอนตะกร้า และปุ่มรายการ */}
+      {/* ค้นหาและการตั้งค่า */}
       <div className="search-cart-row">
-        {/* ตัวเลือกประเภทสินค้า */}
+        {/* เลือกจำนวนรายการต่อหน้า */}
+        <div className="items-per-page-select">
+          <label htmlFor="itemsPerPage">แสดง:</label>
+          <select
+            id="itemsPerPage"
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            className="form-select"
+          >
+            <option value={10}>10 รายการ</option>
+            <option value={20}>20 รายการ</option>
+            <option value={50}>50 รายการ</option>
+          </select>
+        </div>
+
         <div className="category-select">
           <select
             value={selectedCategory}
@@ -44,13 +63,12 @@ function Outbound() {
             className="form-select"
           >
             <option value="">ประเภททั้งหมด</option>
-            <option value="ประเภท A">ประเภท  A</option>
-            <option value="ประเภท B">ประเภท  B</option>
-            <option value="ประเภท C">ประเภท  C</option>
+            <option value="ประเภท A">ประเภท A</option>
+            <option value="ประเภท B">ประเภท B</option>
+            <option value="ประเภท C">ประเภท C</option>
           </select>
         </div>
 
-        {/* ช่องค้นหา */}
         <div className="search-bar">
           <input
             type="text"
@@ -62,10 +80,8 @@ function Outbound() {
           <FaSearch className="search-icon" />
         </div>
 
-        {/* ปุ่มรายการ */}
         <button className="item-list-button">รายการ</button>
 
-        {/* ไอคอนตะกร้า */}
         <div className="cart-icon-container">
           <FaShoppingCart size={28} color="#007bff" />
           {cart.length > 0 && (
@@ -90,9 +106,9 @@ function Outbound() {
           </tr>
         </thead>
         <tbody>
-          {filteredItems.map((item) => (
+          {currentItems.map((item, index) => (
             <tr key={item.id}>
-              <td>{item.id}</td>
+              <td>{index + 1}</td>
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.quantity}</td>
