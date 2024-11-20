@@ -160,3 +160,8 @@
   position: relative;
   margin-left: 15px;
 }
+.outbound-table-container {
+  max-height: 550px;  /* กำหนดความสูงสูงสุดสำหรับ container ของตาราง */
+  overflow-y: auto;   /* เปิดการเลื่อนในแนวตั้ง */
+  margin-top: 20px;    /* เพิ่มระยะห่างจากด้านบน */
+}

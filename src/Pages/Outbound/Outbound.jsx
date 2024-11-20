@@ -92,42 +92,44 @@ function Outbound() {
         </div>
       </div>
 
-      {/* ตารางสินค้า */}
-      <table className="outbound-table">
-        <thead>
-          <tr>
-            <th>ลำดับ</th>
-            <th>รหัสสินค้า</th>
-            <th>รายการ</th>
-            <th>จำนวน</th>
-            <th>หน่วย</th>
-            <th>ประเภทสินค้า</th>
-            <th>เลือก</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((item, index) => (
-            <tr key={item.id}>
-              <td>{index + 1}</td>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.quantity}</td>
-              <td>{item.unit}</td>
-              <td>{item.category}</td>
-              <td>
-                <Button
-                  onClick={() => handleAddToCart(item)}
-                  variant="primary"
-                  size="sm"
-                  disabled={cart.some(cartItem => cartItem.id === item.id)}
-                >
-                  การเลือกสินค้า
-                </Button>
-              </td>
+      {/* แสดงตารางสินค้า พร้อมการเลื่อน */}
+      <div className="outbound-table-container">
+        <table className="outbound-table">
+          <thead>
+            <tr>
+              <th>ลำดับ</th>
+              <th>รหัสสินค้า</th>
+              <th>รายการ</th>
+              <th>จำนวน</th>
+              <th>หน่วย</th>
+              <th>ประเภทสินค้า</th>
+              <th>เลือก</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentItems.map((item, index) => (
+              <tr key={item.id}>
+                <td>{index + 1}</td>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>{item.quantity}</td>
+                <td>{item.unit}</td>
+                <td>{item.category}</td>
+                <td>
+                  <Button
+                    onClick={() => handleAddToCart(item)}
+                    variant="primary"
+                    size="sm"
+                    disabled={cart.some(cartItem => cartItem.id === item.id)}
+                  >
+                    การเลือกสินค้า
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
