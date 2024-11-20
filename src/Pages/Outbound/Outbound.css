@@ -97,7 +97,7 @@
 .outbound-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 5px;  /* เพิ่มระยะห่างจากด้านบน*/
 }
 
 .outbound-table th,

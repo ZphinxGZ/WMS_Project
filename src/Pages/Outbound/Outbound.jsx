@@ -1,24 +1,49 @@
 import React, { useState } from 'react';
 import './Outbound.css';
-import { Button } from 'react-bootstrap';
+import { Button, Modal, Table } from 'react-bootstrap';
 import { FaShoppingCart, FaSearch } from 'react-icons/fa';
-import { fetchProducts } from '../../Data/DataOutbound';  // นำเข้าฟังก์ชัน fetchProducts
+import { fetchProducts } from '../../Data/DataOutbound';
 
 function Outbound() {
-  // ใช้ข้อมูลที่นำเข้ามาใน state
   const [outboundItems, setOutboundItems] = useState(fetchProducts());
   const [cart, setCart] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItemsForConfirmation, setSelectedItemsForConfirmation] = useState([]);
 
+  // ฟังก์ชันการเพิ่มสินค้าลงในตะกร้า
   const handleAddToCart = (item) => {
     if (!cart.some(cartItem => cartItem.id === item.id)) {
-      setCart([...cart, item]);
+      setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
 
-  // กรองข้อมูลตามคำค้นหาและประเภท
+  // ฟังก์ชันการแสดงรายการสินค้าที่เลือก
+  const handleShowCart = () => {
+    setSelectedItemsForConfirmation(cart);
+    setShowModal(true);
+  };
+
+  // ฟังก์ชันการยืนยันการเลือกสินค้า
+  const handleConfirm = () => {
+    alert("สินค้าถูกยืนยันแล้ว");
+    setShowModal(false);
+    setCart([]);
+  };
+
+  // ฟังก์ชันการลบสินค้าออกจากรายการ
+  const handleCancelItem = (item) => {
+    const updatedCart = selectedItemsForConfirmation.filter(
+      (cartItem) => cartItem.id !== item.id
+    );
+    setSelectedItemsForConfirmation(updatedCart); // อัปเดตรายการใน Modal
+    setCart(updatedCart); // อัปเดตตะกร้า
+    alert(`สินค้าชื่อ "${item.name}" ถูกลบออกจากตะกร้า`); // แจ้งเตือนการลบสินค้า
+  };
+
+  // ฟังก์ชันการกรองสินค้า
   const filteredItems = outboundItems.filter(
     (item) =>
       (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -26,11 +51,18 @@ function Outbound() {
       (selectedCategory === '' || item.category === selectedCategory)
   );
 
-  // กรองข้อมูลตามจำนวนที่ต้องการแสดงต่อหน้า
   const currentItems = filteredItems.slice(0, itemsPerPage);
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(Number(e.target.value));
+  };
+
+  // ฟังก์ชันการจัดการการเปลี่ยนแปลงจำนวนสินค้า
+  const handleQuantityChange = (itemId, newQuantity) => {
+    const updatedItems = selectedItemsForConfirmation.map((item) =>
+      item.id === itemId ? { ...item, quantity: newQuantity } : item
+    );
+    setSelectedItemsForConfirmation(updatedItems);
   };
 
   return (
@@ -39,9 +71,7 @@ function Outbound() {
         <h1>การเลือกสินค้า</h1>
       </div>
 
-      {/* ค้นหาและการตั้งค่า */}
       <div className="search-cart-row">
-        {/* เลือกจำนวนรายการต่อหน้า */}
         <div className="items-per-page-select">
           <label htmlFor="itemsPerPage">แสดง:</label>
           <select
@@ -53,6 +83,7 @@ function Outbound() {
             <option value={10}>10 รายการ</option>
             <option value={20}>20 รายการ</option>
             <option value={50}>50 รายการ</option>
+            <option value={100}>100 รายการ</option>
           </select>
         </div>
 
@@ -80,25 +111,24 @@ function Outbound() {
           <FaSearch className="search-icon" />
         </div>
 
-        <button className="item-list-button">รายการ</button>
+        <Button className="item-list-button" onClick={handleShowCart}>
+          รายการ
+        </Button>
 
         <div className="cart-icon-container">
           <FaShoppingCart size={28} color="#007bff" />
           {cart.length > 0 && (
-            <span className="badge bg-danger">
-              {cart.length}
-            </span>
+            <span className="badge bg-danger">{cart.length}</span>
           )}
         </div>
       </div>
 
-      {/* แสดงตารางสินค้า พร้อมการเลื่อน */}
       <div className="outbound-table-container">
         <table className="outbound-table">
           <thead>
             <tr>
               <th>ลำดับ</th>
-              <th>รหัสสินค้า</th>
+              <th style={{ width: '10%' }}>รหัสสินค้า</th>
               <th>รายการ</th>
               <th>จำนวน</th>
               <th>หน่วย</th>
@@ -130,6 +160,87 @@ function Outbound() {
           </tbody>
         </table>
       </div>
+
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        centered
+        size="lg"
+        style={{
+          maxWidth: '100%',
+          marginTop: '2%',
+        }}
+      >
+        <Modal.Header closeButton className="bg-primary text-white">
+          <Modal.Title>ยืนยันการเลือกสินค้า</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th style={{ width: '25%' }}>รายการ</th>
+                <th style={{ width: '5%' }}>รหัสสินค้า</th>
+                <th style={{ width: '10%' }}>ประเภท</th>
+                <th style={{ width: '10%' }}>หน่วย</th>
+                <th style={{ width: '15%' }}>จำนวน</th>
+                <th style={{ width: '10%' }}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedItemsForConfirmation.length > 0 ? (
+                selectedItemsForConfirmation.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.name}</td>
+                    <td style={{ width: '7%' }}>{item.id}</td>
+                    <td style={{ width: '10%' }}>{item.category}</td>
+                    <td>{item.unit}</td>
+                    <td>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                        disabled={item.quantity <= 1}
+                      >
+                        -
+                      </Button>
+                      <span className="mx-3">{item.quantity}</span>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                      >
+                        +
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleCancelItem(item)} // ฟังก์ชันยกเลิกสินค้า
+                      >
+                        ยกเลิก
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center text-muted">ไม่มีสินค้าที่เลือก</td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)} className="px-4">
+            ยกเลิก
+          </Button>
+          <Button variant="success" onClick={handleConfirm} className="px-4">
+            ยืนยัน
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

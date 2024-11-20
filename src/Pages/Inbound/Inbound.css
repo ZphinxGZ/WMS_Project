@@ -44,4 +44,8 @@
   padding: 1rem;
   cursor: pointer;
 }
+.modal-dialog {
+  max-width: 60%;  /* กำหนดขนาดของ Modal ให้กว้างขึ้น */
+}
+
 
