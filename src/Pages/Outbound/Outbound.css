@@ -13,6 +13,7 @@
   padding: 3px ;
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 .category-select {
   margin-right: auto; /* ดันตัวเลือกไปซ้ายสุด */
@@ -97,10 +98,10 @@
 .outbound-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 5px;  /* เพิ่มระยะห่างจากด้านบน*/
+  
 }
 
-.outbound-table th,
+
 .outbound-table td {
   padding: 8px;
   border: 1px solid #dbdbdb;
@@ -108,9 +109,14 @@
 }
 
 .outbound-table th {
+  padding: 10px;
+  text-align: center;
   background-color: #f2f2e6;
   color: #060303;
   font-weight: bold;
+  position: sticky; /* ทำให้ส่วนหัวของตารางติดค้าง */
+  top: 0; /* ระยะห่างจากด้านบน */
+  z-index: 10; /* เพื่อให้หัวตารางอยู่ด้านหน้า */
 }
 
 .outbound-table tr:nth-child(even) {
@@ -164,4 +170,5 @@
   max-height: 550px;  /* กำหนดความสูงสูงสุดสำหรับ container ของตาราง */
   overflow-y: auto;   /* เปิดการเลื่อนในแนวตั้ง */
   margin-top: 20px;    /* เพิ่มระยะห่างจากด้านบน */
+  
 }
