@@ -59,10 +59,25 @@ function Outbound() {
 
   // ฟังก์ชันการจัดการการเปลี่ยนแปลงจำนวนสินค้า
   const handleQuantityChange = (itemId, newQuantity) => {
-    const updatedItems = selectedItemsForConfirmation.map((item) =>
-      item.id === itemId ? { ...item, quantity: newQuantity } : item
-    );
-    setSelectedItemsForConfirmation(updatedItems);
+    // หาอ็อบเจ็กต์สินค้าจาก outboundItems ที่ตรงกับ itemId
+    const item = outboundItems.find(item => item.id === itemId);
+
+    // ถ้ามีสินค้าในตาราง และจำนวนใหม่ไม่เกินสินค้าคงเหลือ
+    if (item && newQuantity <= item.quantity) {
+      const updatedItems = selectedItemsForConfirmation.map((cartItem) =>
+        cartItem.id === itemId ? { ...cartItem, quantity: newQuantity } : cartItem
+      );
+
+      setSelectedItemsForConfirmation(updatedItems);
+
+      // อัปเดตตะกร้าให้ตรงกับรายการที่เปลี่ยนแปลง
+      setCart(cart.map((cartItem) =>
+        cartItem.id === itemId ? { ...cartItem, quantity: newQuantity } : cartItem
+      ));
+    } else {
+      // หากจำนวนที่เลือกเกินสินค้าคงเหลือให้แจ้งเตือน
+      alert("ไม่สามารถเพิ่มจำนวนได้เกินสินค้าคงเหลือ");
+    }
   };
 
   return (
@@ -152,7 +167,7 @@ function Outbound() {
                     size="sm"
                     disabled={cart.some(cartItem => cartItem.id === item.id)}
                   >
-                    การเลือกสินค้า
+                    เลือกสินค้า
                   </Button>
                 </td>
               </tr>
@@ -183,6 +198,7 @@ function Outbound() {
                 <th style={{ width: '10%' }}>ประเภท</th>
                 <th style={{ width: '10%' }}>หน่วย</th>
                 <th style={{ width: '15%' }}>จำนวน</th>
+                <th style={{ width: '10%' }}>สินค้าคงเหลือ</th>
                 <th style={{ width: '10%' }}></th>
               </tr>
             </thead>
@@ -212,6 +228,7 @@ function Outbound() {
                         +
                       </Button>
                     </td>
+                    <td>{outboundItems.find(o => o.id === item.id)?.quantity}</td> {/* แสดงสินค้าคงเหลือจากข้อมูลสินค้า */}
                     <td>
                       <Button
                         variant="danger"
@@ -225,18 +242,19 @@ function Outbound() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="text-center text-muted">ไม่มีสินค้าที่เลือก</td>
+                  <td colSpan="7" className="text-center">
+                    ไม่มีสินค้าในรายการ
+                  </td>
                 </tr>
               )}
             </tbody>
           </Table>
         </Modal.Body>
-
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)} className="px-4">
-            ยกเลิก
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            ปิด
           </Button>
-          <Button variant="success" onClick={handleConfirm} className="px-4">
+          <Button variant="primary" onClick={handleConfirm}>
             ยืนยัน
           </Button>
         </Modal.Footer>
