@@ -1,11 +1,9 @@
-// Dashboard.js
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import drilldown from "highcharts/modules/drilldown";
 import "./Dashboard.css";
 
-// เรียกใช้ Drilldown module
 drilldown(Highcharts);
 
 function Dashboard() {

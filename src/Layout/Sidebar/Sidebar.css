@@ -242,12 +242,30 @@ body {
 .sidebar.active .profile #log_out {
   left: 88%;
 }
-.sidebar.active .profile #log_out {
-  background: none;
+.sidebar.active .profile #log_out:hover {
+  background-color: #fd6e2b;
+  transition: all 0.5s ease;
 }
 
 .profile #log_out:hover {
   background: #fd6e2b;
   color: #ffffff;
   cursor: pointer;
+}
+
+.modal-logout{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-logout .modal-dialog {
+  max-width: 400px; 
+  width: 400px;
 }
