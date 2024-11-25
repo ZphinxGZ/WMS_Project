@@ -82,10 +82,6 @@ function Outbound() {
 
   return (
     <div className="outbound-container">
-      <div className="outbound-header">
-        <h1>การเลือกสินค้า</h1>
-      </div>
-
       <div className="search-cart-row">
         <div className="items-per-page-select">
           <label htmlFor="itemsPerPage">แสดง:</label>
