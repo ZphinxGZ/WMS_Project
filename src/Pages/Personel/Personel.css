@@ -61,9 +61,19 @@
 
 /* Modals */
 
-/* .modal-body, .modal-header {
-  display: flex;
-  justify-content: center;  /* จัดตำแหน่งในแนวนอน */
-  align-items: center;      /* จัดตำแหน่งในแนวตั้ง */
-  text-align: center;       /* จัดให้ข้อความอยู่กลาง */
-} */
+/* .modal-body, .modal-header { */
+  /* display: flex; */
+  /* justify-content: center;  จัดตำแหน่งในแนวนอน */
+  /* align-items: center;      จัดตำแหน่งในแนวตั้ง */
+  /* text-align: center;       จัดให้ข้อความอยู่กลาง */
+/* } */
+
+.rounded-circle{
+  width: 10rem;
+  height: 10rem;
+}
+.search-container {
+  margin-right: 10px;
+  margin-left: 70rem;
+  flex-grow: 1;
+}

@@ -31,5 +31,9 @@ const Personels = [
   { id: 30, name: "Suda Yammee", role: "superadmin", completed: false },
 ];
 export function fetchPersonels() {
-  return Personels;
+  return Personels.map((personel) => ({ 
+    ...personel,
+    username: `user${personel.id}`,
+    password: "123456789", 
+  }));
 }
