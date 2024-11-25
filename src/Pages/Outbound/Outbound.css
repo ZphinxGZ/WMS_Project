@@ -6,7 +6,6 @@
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 /* Header แบบ Sticky */
 .outbound-header {
   background-color: #ffffff;
@@ -160,7 +159,6 @@
   font-size: 1rem;
   color: #333;
 }
-
 /* ช่องค้นหา */
 .search-bar {
   position: relative;
@@ -170,5 +168,4 @@
   max-height: 550px;  /* กำหนดความสูงสูงสุดสำหรับ container ของตาราง */
   overflow-y: auto;   /* เปิดการเลื่อนในแนวตั้ง */
   margin-top: 20px;    /* เพิ่มระยะห่างจากด้านบน */
-  
 }
