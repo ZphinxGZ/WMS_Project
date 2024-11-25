@@ -11,40 +11,58 @@ function Personel() {
   const [Personels, setPersonels] = useState([]);
   const [editingPersonel, setEditingPersonel] = useState(null); // State to hold personel data for editing
   const [show, setShow] = useState(false); // Modal visibility
+   const [searchQuery, setSearchQuery] = useState("");
 
-  const newIdRef = useRef();
-  const newNameRef = useRef();
-  const newUsernameRef = useRef();
-  const newPasswordRef = useRef();
-  const newTelRef = useRef();
-  const newRoleRef = useRef();
+  const [newId, setNewId] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newUsername, setNewUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("123456789");
+  const [newTel, setNewTel] = useState("");
+  const [newRole, setNewRole] = useState("Select Role");
 
   useEffect(() => {
-    setPersonelsRaw(fetchPersonels());
+    // กรองข้อมูลตามสถานะ admin และคำค้นหา
+    const filtered = PersonelsRaw.filter((personel) => {
+      const matchesRole = admin ? personel.role === "admin" : true;
+      const matchesSearch = personel.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()); // ตรวจสอบคำค้นหา
+      return matchesRole && matchesSearch;
+    });
+    setPersonels(filtered);
+  }, [PersonelsRaw, admin, searchQuery]);
+
+  useEffect(() => {
+    // เรียกข้อมูลเมื่อคอมโพเนนต์โหลดครั้งแรก
+    const data = fetchPersonels(); // ดึงข้อมูลจาก fetchPersonels
+    setPersonelsRaw(data); // ตั้งค่า state ของข้อมูลทั้งหมด
+    setPersonels(data); // ตั้งค่า state ของข้อมูลแสดงในตาราง
   }, []);
 
   useEffect(() => {
+    // กรองข้อมูลตาม role (admin หรือทั้งหมด)
     if (admin) {
       setPersonels(
-        PersonelsRaw.filter((Personel) => Personel.role === "admin")
+        PersonelsRaw.filter((personel) => personel.role === "admin")
       );
     } else {
       setPersonels(PersonelsRaw);
     }
-  }, [PersonelsRaw, admin]);
+  }, [PersonelsRaw, admin]); // จะทำงานใหม่เมื่อ PersonelsRaw หรือ admin เปลี่ยน
 
   // Add new personel
   function addClick(id, name, username, password, tel, role) {
     const newItem = {
-      id,
+      id: PersonelsRaw.length + 1, // กำหนด ID ใหม่ให้เป็นลำดับถัดไป
       name,
       username,
       password,
       tel,
       role,
       completed: false,
-      userId: "U001",
+      userId: "U001", // กำหนดค่า userId ถ้าต้องการ
     };
+
     setPersonelsRaw((prevPersonels) => [...prevPersonels, newItem]);
   }
 
@@ -55,40 +73,49 @@ function Personel() {
   };
 
   // Modal show handler
-  const handleShow = () => setShow(true);
-
+  const handleShow = () => {
+    setEditingPersonel(null);
+    setNewId(PersonelsRaw.length + 1); // Set new ID
+    setNewName("");
+    setNewUsername("");
+    setNewPassword("123456789");
+    setNewTel("");
+    setNewRole("Select Role");
+    setShow(true);
+  };
   // Handle edit click
   function handleEditClick(personel) {
-    setEditingPersonel(personel); // Set the personel to edit
-    setShow(true); // Show the modal
+    setEditingPersonel(personel);
+    setNewId(personel.id);
+    setNewName(personel.name);
+    setNewTel(personel.tel);
+    setNewRole(personel.role);
+
+    // Clear username and password for edit mode (not required)
+    setNewUsername("");
+    setNewPassword("");
+    setShow(true);
   }
 
   // Handle save edit
   function handleSaveEdit() {
-    const id = newIdRef.current.value;
-    const name = newNameRef.current.value.trim();
-    const username = newUsernameRef.current.value.trim();
-    const password = newPasswordRef.current.value.trim();
-    const tel = newTelRef.current.value.trim();
-    const role = newRoleRef.current.value;
-
-    if (name === "") {
+    if (newName === "") {
       alert("Please enter name");
-      newNameRef.current.focus();
-    } else if (username === "") {
-      alert("Please enter username");
-      newUsernameRef.current.focus();
-    } else if (tel === "") {
+    } else if  (newTel === "") {
       alert("Please enter telephone number");
-      newTelRef.current.focus();
-    } else if (role === "Select Role") {
+    } else if (newRole === "Select Role") {
       alert("Please select role");
-      newRoleRef.current.focus();
     } else {
-      // Update the personel data
       const updatedPersonels = PersonelsRaw.map((personel) => {
         if (personel.id === editingPersonel.id) {
-          return { ...personel, name, username, password, tel, role };
+          return {
+            ...personel,
+            name: newName,
+            username: newUsername,
+            password: newPassword,
+            tel: newTel,
+            role: newRole,
+          };
         }
         return personel;
       });
@@ -115,13 +142,10 @@ function Personel() {
           <div className="text-center">
             <div className="profile-picture mb-3">
               <img
-                src="https://via.placeholder.com/100"
+                src="public/img/personalIMG/personalpic.png"
                 alt="Profile"
                 className="rounded-circle"
               />
-              <p className="mt-2 text-muted">
-                <button className="btn btn-primary">Add Picture</button>
-              </p>
             </div>
             <Form>
               <Row>
@@ -130,16 +154,7 @@ function Personel() {
                     <Form.Label>
                       <span className="badge bg-secondary">ID</span>
                     </Form.Label>
-                    <Form.Control
-                      type="text"
-                      disabled
-                      value={
-                        editingPersonel
-                          ? editingPersonel.id
-                          : PersonelsRaw.length + 1
-                      }
-                      ref={newIdRef}
-                    />
+                    <Form.Control type="text" disabled value={newId} />
                   </Form.Group>
                 </Col>
                 <Col md={6}>
@@ -150,37 +165,42 @@ function Personel() {
                     <Form.Control
                       type="text"
                       placeholder="Name"
-                      ref={newNameRef}
-                      defaultValue={editingPersonel ? editingPersonel.name : ""}
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
                     />
                   </Form.Group>
                 </Col>
               </Row>
-              <Form.Group controlId="newUsername">
-                <Form.Label>
-                  <span className="badge bg-secondary">Username</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  ref={newUsernameRef}
-                  defaultValue={editingPersonel ? editingPersonel.username : ""}
-                />
-              </Form.Group>
-              <Form.Group controlId="newPassword">
-                <Form.Label>
-                  <span className="badge bg-secondary">Password</span>
-                </Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  ref={newPasswordRef}
-                  value={
-                    editingPersonel ? editingPersonel.password : "123456789"
-                  }
-                  disabled
-                />
-              </Form.Group>
+
+              {/* Username and Password: Show only for adding new users */}
+              {!editingPersonel && (
+                <>
+                  <Form.Group controlId="newUsername">
+                    <Form.Label>
+                      <span className="badge bg-secondary">Username</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Username"
+                      value={newUsername}
+                      onChange={(e) => setNewUsername(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="newPassword">
+                    <Form.Label>
+                      <span className="badge bg-secondary">Password</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      disabled
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                  </Form.Group>
+                </>
+              )}
+
               <Form.Group controlId="newTel">
                 <Form.Label>
                   <span className="badge bg-secondary">Telephone</span>
@@ -188,8 +208,8 @@ function Personel() {
                 <Form.Control
                   type="text"
                   placeholder="Telephone Number"
-                  ref={newTelRef}
-                  defaultValue={editingPersonel ? editingPersonel.tel : ""}
+                  value={newTel}
+                  onChange={(e) => setNewTel(e.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="newRole">
@@ -197,10 +217,8 @@ function Personel() {
                   <span className="badge bg-secondary">Role</span>
                 </Form.Label>
                 <Form.Select
-                  ref={newRoleRef}
-                  defaultValue={
-                    editingPersonel ? editingPersonel.role : "Select Role"
-                  }
+                  value={newRole}
+                  onChange={(e) => setNewRole(e.target.value)}
                 >
                   <option>Select Role</option>
                   <option>Admin</option>
@@ -218,38 +236,35 @@ function Personel() {
           <button
             className="btn btn-outline-success"
             onClick={() => {
-              const id = newIdRef.current.value;
-              const name = newNameRef.current.value.trim();
-              const username = newUsernameRef.current.value.trim();
-              const password = newPasswordRef.current.value.trim();
-              const tel = newTelRef.current.value.trim();
-              const role = newRoleRef.current.value;
-
-              if (name === "") {
+              if (newName === "") {
                 alert("Please enter name");
-                newNameRef.current.focus();
-                newNameRef.current.value = "";
-              }
-              if (username === "") {
-                alert("Please enter username");
-                newUsernameRef.current.focus();
-              }
-              if (tel === "") {
+              } else if (newTel === "") {
                 alert("Please enter telephone number");
-                newTelRef.current.focus();
-                newTelRef.current.value = "";
-              }
-              if (role === "Select Role") {
+              } else if (newRole === "Select Role") {
                 alert("Please select role");
-                newRoleRef.current.focus();
               } else {
-                addClick(id, name, username, password, tel, role);
+                addClick(
+                  newId,
+                  newName,
+                  newUsername,
+                  newPassword,
+                  newTel,
+                  newRole
+                );
                 handleClose();
+
+                // Reset state for new input
+                setNewId("");
+                setNewName("");
+                setNewUsername("");
+                setNewPassword("123456789");
+                setNewTel("");
+                setNewRole("Select Role");
               }
             }}
           >
-            
-          Add</button>
+            Add
+          </button>
         </Modal.Footer>
       </Modal>
 
@@ -265,6 +280,15 @@ function Personel() {
           <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
             <span className="badge text-bg-secondary">Show only Admin</span>
           </label>
+        </div>
+        <div className="search-container">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by Name"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // อัปเดตค่าการค้นหา
+          />
         </div>
         <div className="add-button">
           <button className="btn btn-primary" onClick={handleShow}>
