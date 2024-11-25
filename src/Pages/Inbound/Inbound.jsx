@@ -4,7 +4,7 @@ import './Inbound.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import HaveSN from './Have S.N/HaveSN';
-
+import DonthaveSN from './Dont have S.N/DonthaveSN';
 function Inbound() {
 
 
@@ -12,11 +12,9 @@ function Inbound() {
     <div className='Inbound-container'>
       
       <HaveSN />
-      <div className='DonthaveSN-Link'>
-        <span>เพิ่มสินค้าที่ไม่มี S/N <span><i className="bi bi-file-plus"></i></span></span>
-      </div>
-
+      <DonthaveSN />
       
+     
     </div>
   );
 }
