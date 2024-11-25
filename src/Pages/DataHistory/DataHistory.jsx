@@ -3,7 +3,7 @@ import datahistory from "../../Data/datahistory";
 import ModalDataHistory from "./ModalDataHistory/ModalDataHistory";
 import "./DataHistory.css";
 
-function DataHistory({ data_product }) {
+function DataHistory() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -306,7 +306,6 @@ function DataHistory({ data_product }) {
         item={selectedItem}
         onClose={closeModal}
         onConfirm={handleStatusUpdate}
-        data_product={ProductData}
       />
     </div>
   );

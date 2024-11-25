@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap'; // ใช้ Bootstrap Component
 
-function ModalDataHistory({ isOpen, item, onClose, onConfirm, data_product }) {
+function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [note, setNote] = useState(''); // State สำหรับหมายเหตุ
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false); // State สำหรับเปิด/ปิด Modal รหัสผ่าน
