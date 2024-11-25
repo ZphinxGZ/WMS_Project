@@ -15,7 +15,8 @@ import Setting from './Pages/Setting/Setting'
 // style
 import './App.css'
 
-
+// datd
+import ProductData from './Data/ProductData';
 
 const initialTab = 'home'
 function App() {
@@ -30,13 +31,13 @@ function App() {
       <HashRouter>
         <Routes>
           <Route element={<Layouts tab={tab} setTab={setTab}/>}>
-            <Route path='/' element={<Dashboard />}/>
-            <Route path='/dashboard' element={<Dashboard />}/>
-            <Route path='/inbound' element={<Inbound />}/>
-            <Route path='/outbound' element={<Outbound />}/>
-            <Route path='/datahistory' element={<DataHistory />}/>
-            <Route path='/personel' element={<Personel />}/>
-            <Route path='/settings' element={<Setting />}/>
+            <Route path='/' element={<Dashboard />} data_product={ProductData}/>
+            <Route path='/dashboard' element={<Dashboard />} data_product={ProductData}/>
+            <Route path='/inbound' element={<Inbound />} data_product={ProductData}/>
+            <Route path='/outbound' element={<Outbound />} data_product={ProductData}/>
+            <Route path='/datahistory' element={<DataHistory />} data_product={ProductData}/>
+            <Route path='/personel' element={<Personel />} data_product={ProductData}/>
+            <Route path='/settings' element={<Setting />} data_product={ProductData}/>
           </Route>
         </Routes>
       </HashRouter>
