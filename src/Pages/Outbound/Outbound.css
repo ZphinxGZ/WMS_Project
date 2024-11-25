@@ -169,16 +169,3 @@
   overflow-y: auto;   /* เปิดการเลื่อนในแนวตั้ง */
   margin-top: 20px;    /* เพิ่มระยะห่างจากด้านบน */
 }
-.sort-select {
-  display: flex;
-  align-items: center;
-  margin-left: 1rem;
-}
-
-.sort-select label {
-  margin-right: 0.5rem;
-}
-
-.sort-select .form-select {
-  max-width: 200px;
-}
