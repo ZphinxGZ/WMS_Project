@@ -1,30 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap'; // ใช้ Bootstrap Component
+import { Modal, Button, Form } from 'react-bootstrap';
 
-function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
+function ModalDataHistory({ isOpen, item, onClose, onConfirm, onDelete }) {
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [note, setNote] = useState(''); // State สำหรับหมายเหตุ
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false); // State สำหรับเปิด/ปิด Modal รหัสผ่าน
-  const [password, setPassword] = useState(''); // State สำหรับเก็บรหัสผ่าน
+  const [note, setNote] = useState('');
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [password, setPassword] = useState('');
 
-  // ตั้งค่า default value ของ selectedStatus เมื่อมีการเปิด modal
   useEffect(() => {
     if (item) {
-      setSelectedStatus(item.status);
+      setSelectedStatus(item.status || '');
     }
   }, [item]);
 
   useEffect(() => {
-    // เมื่อ modal สำหรับการกรอกรหัสผ่านเปิด จะรีเซ็ตค่ารหัสผ่าน
     if (isPasswordModalOpen) {
       setPassword('');
     }
-  }, [isPasswordModalOpen]); // จะทำงานทุกครั้งที่ isPasswordModalOpen เปลี่ยนค่า
+  }, [isPasswordModalOpen]);
 
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);
     if (e.target.value !== 'ไม่อนุมัติ') {
-      setNote(''); // ถ้าไม่ได้เลือก "ไม่อนุมัติ" ให้ลบหมายเหตุ
+      setNote('');
     }
   };
 
@@ -33,21 +31,25 @@ function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
   };
 
   const handleConfirm = () => {
-    // ถ้าเลือก "อนุมัติ" ให้แสดง Modal สำหรับกรอกรหัสผ่าน
     if (selectedStatus === 'อนุมัติ') {
       setIsPasswordModalOpen(true);
     } else {
-      // ส่งค่ากลับไปยัง DataHistory ถ้าไม่ได้เลือก "อนุมัติ"
       onConfirm(item.id, selectedStatus, note);
-      onClose(); // ปิด modal
+      onClose();
     }
   };
 
   const handlePasswordSubmit = () => {
-    // เมื่อกรอกรหัสผ่านแล้ว กดยืนยัน
-    onConfirm(item.id, selectedStatus, note, password); // ส่งรหัสผ่านด้วย
-    setIsPasswordModalOpen(false); // ปิด modal รหัสผ่าน
-    onClose(); // ปิด modal หลัก
+    onConfirm(item.id, selectedStatus, note, password);
+    setIsPasswordModalOpen(false);
+    onClose();
+  };
+
+  const handleDelete = () => {
+    if (window.confirm("คุณแน่ใจที่จะลบข้อมูลนี้?")) {
+      onDelete(item.id);
+      onClose();  // ปิด modal หลังจากลบ
+    }
   };
 
   return (
@@ -58,30 +60,21 @@ function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
         </Modal.Header>
 
         <Modal.Body>
-          <div className="text-left">
-            {/* ข้อมูลรายการ */}
-            <div className="mb-4">
-              <h5><strong>รายการ:</strong> {item ? item.item : ''}</h5>
-              <h5><strong>จํานวน:</strong> {item ? item.qty : ''}</h5>
-              <p><strong>ID:</strong> {item ? item.id : ''}</p>
-              <p><strong>วันที่เบิก:</strong> {item ? item.date_borrowed : ''}</p>
-              <p><strong>ผู้ทำรายการ:</strong> {item ? item.approver : ''}</p>
-            </div>
+          <div>
+            {/* แสดงข้อมูลสินค้าจาก item */}
+            <h5><strong>ชื่อสินค้า:</strong> {item?.product_name || 'N/A'}</h5>
+            <h5><strong>รหัสสินค้า :</strong> {item?.haveSN ? item?.series_number : item?.product_number || 'N/A'}</h5>
+            <p><strong>ID:</strong> {item?.id || 'N/A'}</p>
+            <p><strong>วันที่ทำรายการ:</strong> {item?.outbound_date || 'N/A'}</p>
+            <p><strong>ผู้ทำรายการ:</strong> {item?.approve_name || 'N/A'}</p>
+            <p><strong>จำนวนสินค้าที่เบิก:</strong> {item?.QTY || 'N/A'}</p>
 
-            {/* Dropdown สำหรับการเลือกสถานะ */}
             <Form.Group controlId="statusSelect" className="my-3">
               <Form.Label><strong>สถานะ</strong></Form.Label>
-              <Form.Control 
-                as="select" 
-                value={selectedStatus} 
+              <Form.Control
+                as="select"
+                value={selectedStatus}
                 onChange={handleStatusChange}
-                custom
-                style={{
-                  backgroundColor: '#f7f7f7', 
-                  borderColor: '#ccc', 
-                  fontSize: '1rem', 
-                  padding: '10px'
-                }}
               >
                 <option value="อนุมัติ">อนุมัติ</option>
                 <option value="รออนุมัติ">รออนุมัติ</option>
@@ -89,21 +82,19 @@ function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
               </Form.Control>
             </Form.Group>
 
-            {/* ช่องกรอกหมายเหตุ (จะแสดงเมื่อเลือก "ไม่อนุมัติ") */}
             {selectedStatus === 'ไม่อนุมัติ' && (
               <Form.Group controlId="note" className="my-3">
                 <Form.Label><strong>หมายเหตุ</strong></Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows={3} 
-                  value={note} 
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={note}
                   onChange={handleNoteChange}
                   placeholder="กรุณากรอกหมายเหตุ"
                 />
               </Form.Group>
             )}
 
-            {/* แสดงข้อความผู้ทำการอนุมัติ เมื่อเลือกสถานะเป็น "อนุมัติ" */}
             {selectedStatus === 'อนุมัติ' && (
               <div className="mt-3" style={{ fontWeight: 'bold', color: '#28a745' }}>
                 ผู้ทำการอนุมัติ: Kunakorn (SA)
@@ -112,9 +103,12 @@ function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
           </div>
         </Modal.Body>
 
-        <Modal.Footer className="d-flex justify-content-between">
+        <Modal.Footer>
           <Button variant="secondary" onClick={onClose}>
             ยกเลิก
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            ลบ
           </Button>
           <Button variant="success" onClick={handleConfirm}>
             ยืนยัน
@@ -122,7 +116,7 @@ function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
         </Modal.Footer>
       </Modal>
 
-      {/* Modal สำหรับกรอกรหัสผ่านเมื่อเลือก "อนุมัติ" */}
+      {/* Modal สำหรับกรอกรหัสผ่าน */}
       <Modal show={isPasswordModalOpen} onHide={() => setIsPasswordModalOpen(false)} centered>
         <Modal.Header closeButton style={{ backgroundColor: '#473366', color: '#fff' }}>
           <Modal.Title>กรอกรหัสผ่าน</Modal.Title>
@@ -131,16 +125,16 @@ function ModalDataHistory({ isOpen, item, onClose, onConfirm }) {
         <Modal.Body>
           <Form.Group controlId="password" className="my-3">
             <Form.Label><strong>รหัสผ่าน</strong></Form.Label>
-            <Form.Control 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="กรุณากรอกรหัสผ่าน"
             />
           </Form.Group>
         </Modal.Body>
 
-        <Modal.Footer className="d-flex justify-content-between">
+        <Modal.Footer>
           <Button variant="secondary" onClick={() => setIsPasswordModalOpen(false)}>
             ยกเลิก
           </Button>

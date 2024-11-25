@@ -1,23 +1,27 @@
-import React, { useState } from "react";
-import datahistory from "../../Data/datahistory";
+import React, { useState, useEffect } from "react";
 import ModalDataHistory from "./ModalDataHistory/ModalDataHistory";
 import "./DataHistory.css";
 
-function DataHistory() {
+function DataHistory({ data_product }) {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [tableData, setTableData] = useState(datahistory); // สร้าง state สำหรับเก็บข้อมูลในตาราง
+  const [tableData, setTableData] = useState([]);
 
-  // ฟังก์ชันสำหรับการค้นหาข้อมูล
+  useEffect(() => {
+    setTableData(data_product); // รับข้อมูลที่ส่งผ่าน props และตั้งค่าเริ่มต้น
+  }, [data_product]);
+
   const filteredData = tableData.filter((item) => {
+    const productCode = item.haveSN ? item.series_number : item.product_number;
     const matchesSearchTerm =
       item.id.toString().includes(searchTerm) ||
-      item.date_borrowed.includes(searchTerm) ||
-      item.approver.includes(searchTerm);
+      productCode.includes(searchTerm) ||
+      item.product_name.includes(searchTerm) ||
+      item.approve_name.includes(searchTerm);
     const matchesStatus = selectedStatus
       ? item.status === selectedStatus
       : true;
@@ -61,20 +65,21 @@ function DataHistory() {
     setSelectedItem(null);
   };
 
-  // ฟังก์ชันสำหรับการอัปเดตสถานะ
   const handleStatusUpdate = (id, newStatus) => {
-    const updatedData = tableData.map((item) => {
-      if (item.id === id) {
-        return { ...item, status: newStatus }; // อัปเดตสถานะของรายการ
-      }
-      return item;
-    });
-    setTableData(updatedData); // อัปเดต state ของ tableData
+    const updatedData = tableData.map((item) =>
+      item.id === id ? { ...item, status: newStatus } : item
+    );
+    setTableData(updatedData);
+  };
+
+  const handleDelete = (id) => {
+    const updatedData = tableData.filter(item => item.id !== id);
+    setTableData(updatedData);  // อัปเดต state หลังจากลบ
   };
 
   const getPaginationRange = () => {
     const range = [];
-    const maxVisiblePages = 5; // จำนวนหน้าที่แสดงพร้อมกัน
+    const maxVisiblePages = 5;
     let start = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let end = Math.min(totalPages, start + maxVisiblePages - 1);
 
@@ -88,12 +93,10 @@ function DataHistory() {
 
     return range;
   };
-
+  
   return (
     <div className="data-history-container">
-      {/* ส่วนของเมนูด้านบน */}
       <div className="data-history-menu-bar">
-        {/* จำนวนรายการต่อหน้า */}
         <div className="data-history-menu-bar-page-items">
           <label htmlFor="items-per-page" className="mr-2 page-items-label">
             จำนวนรายการต่อหน้า
@@ -111,9 +114,7 @@ function DataHistory() {
           </select>
         </div>
 
-        {/* ช่องค้นหา และ สถานะ */}
         <div className="d-flex align-items-center">
-          {/* สถานะ */}
           <div className="mr-2 data-history-menu-bar-status">
             <label
               htmlFor="status-filter"
@@ -134,13 +135,12 @@ function DataHistory() {
             </select>
           </div>
 
-          {/* ช่องค้นหา */}
           <div className="data-history-menu-bar-search">
             <div className="input-group">
               <input
                 type="text"
                 className="form-control"
-                placeholder="ค้นหา ID, วันที่ หรือ ผู้อนุมัติ"
+                placeholder="ค้นหา ID, รหัสสินค้า, ชื่อสินค้า หรือ ผู้ทำรายการ"
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
@@ -154,36 +154,37 @@ function DataHistory() {
         </div>
       </div>
 
-      {/* ตารางแสดงผล */}
       <div className="table-responsive">
         <table className="table table-striped">
           <thead>
             <tr>
-              <th className="col-id">ID</th>
-              <th className="col-date">วันที่เบิก</th>
-              <th className="col-item">รายการ</th>
-              <th className="col-qty">QTY</th>
-              <th className="col-approver">ผู้ทำรายการ</th>
-              <th className="col-status">สถานะ</th>
-              <th className="col-action">เปิดดูรายการ</th>
+              <th>ID</th>
+              <th>ชื่อสินค้า</th>
+              <th>รหัสสินค้า</th>
+              <th>วันที่ทำรายการ</th>
+              <th>ผู้ทำรายการ</th>
+              <th>สถานะ</th>
+              <th>เปิดดู</th>
             </tr>
           </thead>
           <tbody>
             {dataToDisplay.length === 0 ? (
               <tr>
                 <td colSpan="7" className="text-center">
-                  ยังไม่มีรายการในขณะนี้...
+                  ไม่มีข้อมูล
                 </td>
               </tr>
             ) : (
               dataToDisplay.map((item) => (
                 <tr key={item.id}>
-                  <td className="col-id">{item.id}</td>
-                  <td className="col-date">{item.date_borrowed}</td>
-                  <td className="col-item">{item.item}</td>
-                  <td className="col-qty">{item.qty}</td>
-                  <td className="col-approver">{item.approver}</td>
-                  <td className="col-status">
+                  <td>{item.id}</td>
+                  <td>{item.product_name}</td>
+                  <td>
+                    {item.haveSN ? item.series_number : item.product_number}
+                  </td>
+                  <td>{item.outbound_date}</td>
+                  <td>{item.approve_name}</td>
+                  <td>
                     <span
                       className={`badge ${
                         item.status === "อนุมัติ"
@@ -196,12 +197,12 @@ function DataHistory() {
                       {item.status}
                     </span>
                   </td>
-                  <td className="col-action">
+                  <td>
                     <button
                       className="btn btn-info btn-sm"
                       onClick={() => openModal(item)}
                     >
-                      เปิดดู
+                      เปิด
                     </button>
                   </td>
                 </tr>
@@ -211,39 +212,23 @@ function DataHistory() {
         </table>
       </div>
 
-      {/* Pagination */}
-      <nav
-        aria-label="Page navigation example"
-        className="d-flex justify-content-center mt-3"
-      >
+      <nav className="d-flex justify-content-center mt-3">
         <ul className="pagination">
-          <li
-            className={`page-item ${
-              currentPage === 1 || totalItems === 0 ? "disabled" : ""
-            }`}
-          >
+          <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
             <a
               className="page-link"
               href="#"
-              onClick={(e) =>
-                currentPage > 1 && totalItems > 0 && handlePageChange(1, e)
-              }
+              onClick={(e) => currentPage > 1 && handlePageChange(1, e)}
             >
               First
             </a>
           </li>
-          <li
-            className={`page-item ${
-              currentPage === 1 || totalItems === 0 ? "disabled" : ""
-            }`}
-          >
+          <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
             <a
               className="page-link"
               href="#"
               onClick={(e) =>
-                currentPage > 1 &&
-                totalItems > 0 &&
-                handlePageChange(currentPage - 1, e)
+                currentPage > 1 && handlePageChange(currentPage - 1, e)
               }
             >
               Previous
@@ -255,7 +240,7 @@ function DataHistory() {
               className={`page-item ${currentPage === page ? "active" : ""}`}
             >
               <a
-                className="page-link pointer"
+                className="page-link"
                 href="#"
                 onClick={(e) => handlePageChange(page, e)}
               >
@@ -265,16 +250,14 @@ function DataHistory() {
           ))}
           <li
             className={`page-item ${
-              currentPage === totalPages || totalItems === 0 ? "disabled" : ""
+              currentPage === totalPages ? "disabled" : ""
             }`}
           >
             <a
               className="page-link"
               href="#"
               onClick={(e) =>
-                currentPage < totalPages &&
-                totalItems > 0 &&
-                handlePageChange(currentPage + 1, e)
+                currentPage < totalPages && handlePageChange(currentPage + 1, e)
               }
             >
               Next
@@ -282,16 +265,14 @@ function DataHistory() {
           </li>
           <li
             className={`page-item ${
-              currentPage === totalPages || totalItems === 0 ? "disabled" : ""
+              currentPage === totalPages ? "disabled" : ""
             }`}
           >
             <a
               className="page-link"
               href="#"
               onClick={(e) =>
-                currentPage < totalPages &&
-                totalItems > 0 &&
-                handlePageChange(totalPages, e)
+                currentPage < totalPages && handlePageChange(totalPages, e)
               }
             >
               Last
@@ -300,12 +281,13 @@ function DataHistory() {
         </ul>
       </nav>
 
-      {/* เปิด Modal */}
       <ModalDataHistory
         isOpen={isModalOpen}
         item={selectedItem}
         onClose={closeModal}
         onConfirm={handleStatusUpdate}
+        onDelete={handleDelete} // ส่งฟังก์ชันลบไปยัง Modal
+        dataProduct={data_product}
       />
     </div>
   );

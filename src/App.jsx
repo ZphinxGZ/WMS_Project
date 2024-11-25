@@ -15,7 +15,8 @@ import Setting from './Pages/Setting/Setting'
 // style
 import './App.css'
 
-
+// data
+import ProductData from './Data/ProductData';
 
 const initialTab = 'home'
 function App() {
@@ -34,7 +35,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />}/>
             <Route path='/inbound' element={<Inbound />}/>
             <Route path='/outbound' element={<Outbound />}/>
-            <Route path='/datahistory' element={<DataHistory />}/>
+            <Route path='/datahistory' element={<DataHistory data_product={ProductData}/>}/>
             <Route path='/personel' element={<Personel />}/>
             <Route path='/settings' element={<Setting />}/>
           </Route>
