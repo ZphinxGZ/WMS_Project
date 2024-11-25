@@ -1,29 +1,35 @@
-import React, { useState } from 'react';
-import datahistory from '../../Data/datahistory';
-import ModalDataHistory from './ModalDataHistory/ModalDataHistory';
-import './DataHistory.css';
+import React, { useState } from "react";
+import datahistory from "../../Data/datahistory";
+import ModalDataHistory from "./ModalDataHistory/ModalDataHistory";
+import "./DataHistory.css";
 
 function DataHistory() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [tableData, setTableData] = useState(datahistory);  // สร้าง state สำหรับเก็บข้อมูลในตาราง
+  const [tableData, setTableData] = useState(datahistory); // สร้าง state สำหรับเก็บข้อมูลในตาราง
 
   // ฟังก์ชันสำหรับการค้นหาข้อมูล
-  const filteredData = tableData.filter(item => {
-    const matchesSearchTerm = item.id.toString().includes(searchTerm) ||
+  const filteredData = tableData.filter((item) => {
+    const matchesSearchTerm =
+      item.id.toString().includes(searchTerm) ||
       item.date_borrowed.includes(searchTerm) ||
       item.approver.includes(searchTerm);
-    const matchesStatus = selectedStatus ? item.status === selectedStatus : true;
+    const matchesStatus = selectedStatus
+      ? item.status === selectedStatus
+      : true;
     return matchesSearchTerm && matchesStatus;
   });
 
   const totalItems = filteredData.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const dataToDisplay = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const dataToDisplay = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(Number(e.target.value));
@@ -57,24 +63,41 @@ function DataHistory() {
 
   // ฟังก์ชันสำหรับการอัปเดตสถานะ
   const handleStatusUpdate = (id, newStatus) => {
-    const updatedData = tableData.map(item => {
+    const updatedData = tableData.map((item) => {
       if (item.id === id) {
-        return { ...item, status: newStatus };  // อัปเดตสถานะของรายการ
+        return { ...item, status: newStatus }; // อัปเดตสถานะของรายการ
       }
       return item;
     });
-    setTableData(updatedData);  // อัปเดต state ของ tableData
+    setTableData(updatedData); // อัปเดต state ของ tableData
   };
 
+  const getPaginationRange = () => {
+    const range = [];
+    const maxVisiblePages = 5; // จำนวนหน้าที่แสดงพร้อมกัน
+    let start = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let end = Math.min(totalPages, start + maxVisiblePages - 1);
 
-  
+    if (end - start + 1 < maxVisiblePages) {
+      start = Math.max(1, end - maxVisiblePages + 1);
+    }
+
+    for (let i = start; i <= end; i++) {
+      range.push(i);
+    }
+
+    return range;
+  };
+
   return (
     <div className="data-history-container">
       {/* ส่วนของเมนูด้านบน */}
       <div className="data-history-menu-bar">
         {/* จำนวนรายการต่อหน้า */}
         <div className="data-history-menu-bar-page-items">
-          <label htmlFor="items-per-page" className="mr-2 page-items-label">จำนวนรายการต่อหน้า</label>
+          <label htmlFor="items-per-page" className="mr-2 page-items-label">
+            จำนวนรายการต่อหน้า
+          </label>
           <select
             id="items-per-page"
             className="form-select"
@@ -92,7 +115,12 @@ function DataHistory() {
         <div className="d-flex align-items-center">
           {/* สถานะ */}
           <div className="mr-2 data-history-menu-bar-status">
-            <label htmlFor="status-filter" className="form-label mr-2 status-label">สถานะ</label>
+            <label
+              htmlFor="status-filter"
+              className="form-label mr-2 status-label"
+            >
+              สถานะ
+            </label>
             <select
               id="status-filter"
               className="form-select"
@@ -143,7 +171,9 @@ function DataHistory() {
           <tbody>
             {dataToDisplay.length === 0 ? (
               <tr>
-                <td colSpan="7" className="text-center">ยังไม่มีรายการในขณะนี้...</td>
+                <td colSpan="7" className="text-center">
+                  ยังไม่มีรายการในขณะนี้...
+                </td>
               </tr>
             ) : (
               dataToDisplay.map((item) => (
@@ -154,12 +184,23 @@ function DataHistory() {
                   <td className="col-qty">{item.qty}</td>
                   <td className="col-approver">{item.approver}</td>
                   <td className="col-status">
-                    <span className={`badge ${item.status === "อนุมัติ" ? "bg-success" : item.status === "รออนุมัติ" ? "bg-warning" : "bg-danger"}`}>
+                    <span
+                      className={`badge ${
+                        item.status === "อนุมัติ"
+                          ? "bg-success"
+                          : item.status === "รออนุมัติ"
+                          ? "bg-warning"
+                          : "bg-danger"
+                      }`}
+                    >
                       {item.status}
                     </span>
                   </td>
                   <td className="col-action">
-                    <button className="btn btn-info btn-sm" onClick={() => openModal(item)}>
+                    <button
+                      className="btn btn-info btn-sm"
+                      onClick={() => openModal(item)}
+                    >
                       เปิดดู
                     </button>
                   </td>
@@ -171,51 +212,87 @@ function DataHistory() {
       </div>
 
       {/* Pagination */}
-      <nav aria-label="Page navigation example" className="d-flex justify-content-center mt-3">
+      <nav
+        aria-label="Page navigation example"
+        className="d-flex justify-content-center mt-3"
+      >
         <ul className="pagination">
-          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <li
+            className={`page-item ${
+              currentPage === 1 || totalItems === 0 ? "disabled" : ""
+            }`}
+          >
             <a
-              className={`page-link ${currentPage !== 1 ? 'pointer' : ''}`}
+              className="page-link"
               href="#"
-              onClick={(e) => currentPage > 1 && handlePageChange(1, e)}
+              onClick={(e) =>
+                currentPage > 1 && totalItems > 0 && handlePageChange(1, e)
+              }
             >
               First
             </a>
           </li>
-          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <li
+            className={`page-item ${
+              currentPage === 1 || totalItems === 0 ? "disabled" : ""
+            }`}
+          >
             <a
-              className={`page-link ${currentPage !== 1 ? 'pointer' : ''}`}
+              className="page-link"
               href="#"
-              onClick={(e) => currentPage > 1 && handlePageChange(currentPage - 1, e)}
+              onClick={(e) =>
+                currentPage > 1 &&
+                totalItems > 0 &&
+                handlePageChange(currentPage - 1, e)
+              }
             >
               Previous
             </a>
           </li>
-          {[...Array(totalPages)].map((_, index) => (
-            <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+          {getPaginationRange().map((page) => (
+            <li
+              key={page}
+              className={`page-item ${currentPage === page ? "active" : ""}`}
+            >
               <a
                 className="page-link pointer"
                 href="#"
-                onClick={(e) => handlePageChange(index + 1, e)}
+                onClick={(e) => handlePageChange(page, e)}
               >
-                {index + 1}
+                {page}
               </a>
             </li>
           ))}
-          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <li
+            className={`page-item ${
+              currentPage === totalPages || totalItems === 0 ? "disabled" : ""
+            }`}
+          >
             <a
-              className={`page-link ${currentPage !== totalPages ? 'pointer' : ''}`}
+              className="page-link"
               href="#"
-              onClick={(e) => currentPage < totalPages && handlePageChange(currentPage + 1, e)}
+              onClick={(e) =>
+                currentPage < totalPages &&
+                totalItems > 0 &&
+                handlePageChange(currentPage + 1, e)
+              }
             >
               Next
             </a>
           </li>
-          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <li
+            className={`page-item ${
+              currentPage === totalPages || totalItems === 0 ? "disabled" : ""
+            }`}
+          >
             <a
-              className={`page-link ${currentPage !== totalPages ? 'pointer' : ''}`}
+              className="page-link"
               href="#"
-              onClick={(e) => currentPage < totalPages && handlePageChange(totalPages, e)}
+              onClick={(e) =>
+                currentPage < totalPages &&
+                totalItems > 0 &&
+                handlePageChange(totalPages, e)
+              }
             >
               Last
             </a>
@@ -224,11 +301,11 @@ function DataHistory() {
       </nav>
 
       {/* เปิด Modal */}
-      <ModalDataHistory 
-        isOpen={isModalOpen} 
-        item={selectedItem} 
-        onClose={closeModal} 
-        onConfirm={handleStatusUpdate} 
+      <ModalDataHistory
+        isOpen={isModalOpen}
+        item={selectedItem}
+        onClose={closeModal}
+        onConfirm={handleStatusUpdate}
       />
     </div>
   );
