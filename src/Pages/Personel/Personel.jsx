@@ -249,7 +249,7 @@ function Personel() {
             }}
           >
             
-          </button>
+          Add</button>
         </Modal.Footer>
       </Modal>
 
