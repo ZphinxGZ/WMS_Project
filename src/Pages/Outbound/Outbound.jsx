@@ -12,39 +12,42 @@ function Outbound() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [showModal, setShowModal] = useState(false);
   const [selectedItemsForConfirmation, setSelectedItemsForConfirmation] = useState([]);
+  const [sortOrder, setSortOrder] = useState('all'); // เพิ่ม state สำหรับการเรียงลำดับ
 
-  // ฟังก์ชันการเพิ่มสินค้าลงในตะกร้า
   const handleAddToCart = (item) => {
     if (!cart.some(cartItem => cartItem.id === item.id)) {
       setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
 
-  // ฟังก์ชันการแสดงรายการสินค้าที่เลือก
   const handleShowCart = () => {
     setSelectedItemsForConfirmation(cart);
     setShowModal(true);
   };
 
-  // ฟังก์ชันการยืนยันการเลือกสินค้า
   const handleConfirm = () => {
     alert("สินค้าถูกยืนยันแล้ว");
     setShowModal(false);
     setCart([]);
   };
 
-  // ฟังก์ชันการลบสินค้าออกจากรายการ
   const handleCancelItem = (item) => {
     const updatedCart = selectedItemsForConfirmation.filter(
       (cartItem) => cartItem.id !== item.id
     );
-    setSelectedItemsForConfirmation(updatedCart); // อัปเดตรายการใน Modal
-    setCart(updatedCart); // อัปเดตตะกร้า
-    alert(`สินค้าชื่อ "${item.name}" ถูกลบออกจากตะกร้า`); // แจ้งเตือนการลบสินค้า
+    setSelectedItemsForConfirmation(updatedCart);
+    setCart(updatedCart);
+    alert(`สินค้าชื่อ "${item.name}" ถูกลบออกจากตะกร้า`);
   };
 
-  // ฟังก์ชันการกรองสินค้า
-  const filteredItems = outboundItems.filter(
+  // การจัดเรียงสินค้า
+  const sortedItems = [...outboundItems].sort((a, b) => {
+    if (sortOrder === 'asc') return a.quantity - b.quantity;
+    if (sortOrder === 'desc') return b.quantity - a.quantity;
+    return 0; // 'all' ไม่เปลี่ยนลำดับ
+  });
+
+  const filteredItems = sortedItems.filter(
     (item) =>
       (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.id.toString().includes(searchQuery)) &&
@@ -55,29 +58,6 @@ function Outbound() {
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(Number(e.target.value));
-  };
-
-  // ฟังก์ชันการจัดการการเปลี่ยนแปลงจำนวนสินค้า
-  const handleQuantityChange = (itemId, newQuantity) => {
-    // หาอ็อบเจ็กต์สินค้าจาก outboundItems ที่ตรงกับ itemId
-    const item = outboundItems.find(item => item.id === itemId);
-
-    // ถ้ามีสินค้าในตาราง และจำนวนใหม่ไม่เกินสินค้าคงเหลือ
-    if (item && newQuantity <= item.quantity) {
-      const updatedItems = selectedItemsForConfirmation.map((cartItem) =>
-        cartItem.id === itemId ? { ...cartItem, quantity: newQuantity } : cartItem
-      );
-
-      setSelectedItemsForConfirmation(updatedItems);
-
-      // อัปเดตตะกร้าให้ตรงกับรายการที่เปลี่ยนแปลง
-      setCart(cart.map((cartItem) =>
-        cartItem.id === itemId ? { ...cartItem, quantity: newQuantity } : cartItem
-      ));
-    } else {
-      // หากจำนวนที่เลือกเกินสินค้าคงเหลือให้แจ้งเตือน
-      alert("ไม่สามารถเพิ่มจำนวนได้เกินสินค้าคงเหลือ");
-    }
   };
 
   return (
@@ -108,6 +88,20 @@ function Outbound() {
             <option value="ประเภท A">ประเภท A</option>
             <option value="ประเภท B">ประเภท B</option>
             <option value="ประเภท C">ประเภท C</option>
+          </select>
+        </div>
+
+        <div className="sort-select">
+          <label htmlFor="sortOrder">เรียงจำนวน:</label>
+          <select
+            id="sortOrder"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="form-select"
+          >
+            <option value="all">ทั้งหมด</option>
+            <option value="desc">จำนวนมากไปน้อย</option>
+            <option value="asc">จำนวนน้อยไปมาก</option>
           </select>
         </div>
 
@@ -171,90 +165,6 @@ function Outbound() {
           </tbody>
         </table>
       </div>
-
-      <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        centered
-        size="lg"
-        style={{
-          maxWidth: '100%',
-          marginTop: '2%',
-        }}
-      >
-        <Modal.Header closeButton className="bg-primary text-white">
-          <Modal.Title>ยืนยันการเลือกสินค้า</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th style={{ width: '25%' }}>รายการ</th>
-                <th style={{ width: '5%' }}>รหัสสินค้า</th>
-                <th style={{ width: '10%' }}>ประเภท</th>
-                <th style={{ width: '10%' }}>หน่วย</th>
-                <th style={{ width: '15%' }}>จำนวน</th>
-                <th style={{ width: '10%' }}>สินค้าคงเหลือ</th>
-                <th style={{ width: '10%' }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedItemsForConfirmation.length > 0 ? (
-                selectedItemsForConfirmation.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.name}</td>
-                    <td style={{ width: '7%' }}>{item.id}</td>
-                    <td style={{ width: '10%' }}>{item.category}</td>
-                    <td>{item.unit}</td>
-                    <td>
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                        disabled={item.quantity <= 1}
-                      >
-                        -
-                      </Button>
-                      <span className="mx-3">{item.quantity}</span>
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                      >
-                        +
-                      </Button>
-                    </td>
-                    <td>{outboundItems.find(o => o.id === item.id)?.quantity}</td> {/* แสดงสินค้าคงเหลือจากข้อมูลสินค้า */}
-                    <td>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleCancelItem(item)} // ฟังก์ชันยกเลิกสินค้า
-                      >
-                        ยกเลิก
-                      </Button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="7" className="text-center">
-                    ไม่มีสินค้าในรายการ
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            ปิด
-          </Button>
-          <Button variant="primary" onClick={handleConfirm}>
-            ยืนยัน
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 }
