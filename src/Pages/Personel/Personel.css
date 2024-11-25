@@ -61,9 +61,9 @@
 
 /* Modals */
 
-.modal-body, .modal-header {
+/* .modal-body, .modal-header {
   display: flex;
   justify-content: center;  /* จัดตำแหน่งในแนวนอน */
   align-items: center;      /* จัดตำแหน่งในแนวตั้ง */
   text-align: center;       /* จัดให้ข้อความอยู่กลาง */
-}
+} */
