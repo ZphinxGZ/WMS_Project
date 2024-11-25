@@ -73,8 +73,8 @@ function DataHistory({ data_product }) {
   };
 
   const handleDelete = (id) => {
-    const updatedData = tableData.filter(item => item.id !== id);
-    setTableData(updatedData);  // อัปเดต state หลังจากลบ
+    const updatedData = tableData.filter((item) => item.id !== id);
+    setTableData(updatedData); // อัปเดต state หลังจากลบ
   };
 
   const getPaginationRange = () => {
@@ -93,7 +93,7 @@ function DataHistory({ data_product }) {
 
     return range;
   };
-  
+
   return (
     <div className="data-history-container">
       <div className="data-history-menu-bar">
