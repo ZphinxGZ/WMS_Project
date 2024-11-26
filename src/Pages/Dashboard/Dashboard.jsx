@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import drilldown from "highcharts/modules/drilldown";
 import "./Dashboard.css";
 import productData from '../../Data/ProductData';
-import chartOptions from '../../Data/chartConfig';
+import { getChartData, chartOptionsHaveSN, chartOptionsNoSN } from '../../Data/chartConfig';
 
 drilldown(Highcharts);
 
@@ -17,6 +17,21 @@ function Dashboard() {
 
   const countNoSN = noSNData.length;
   const countApprovedNoSN = noSNData.filter(product => product.status === "อนุมัติ").length;
+
+  const [chartData, setChartData] = useState([]);
+  const [chartConfigHaveSN, setChartConfigHaveSN] = useState({});
+  const [chartConfigNoSN, setChartConfigNoSN] = useState({});
+
+  useEffect(() => {
+    // ดึงข้อมูล 15 วันล่าสุดจากฟังก์ชันใน chartConfig.js
+    const data = getChartData(productData);
+    setChartData(data);
+
+    // ตั้งค่ากราฟสำหรับ haveSN: true
+    setChartConfigHaveSN(chartOptionsHaveSN(data));
+    // ตั้งค่ากราฟสำหรับ haveSN: false
+    setChartConfigNoSN(chartOptionsNoSN(data));
+  }, []);
 
   return (
     <div className="dashboard-container">
@@ -58,12 +73,19 @@ function Dashboard() {
             <i class="bi bi-boxes"></i>
             <button className="card-button">More info</button>
           </div>
-          
         </div>
-        
+
         <div className="chart-container">
-          <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-          <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+          {/* กราฟสำหรับสินค้าที่มี S/N */}
+          <div className="chart">
+            <h3>สินค้าที่มีS/N</h3>
+            <HighchartsReact highcharts={Highcharts} options={chartConfigHaveSN} />
+          </div>
+          {/* กราฟสำหรับสินค้าที่ไม่มี S/N */}
+          <div className="chart">
+            <h3>สินค้าที่ไม่มีS/N</h3>
+            <HighchartsReact highcharts={Highcharts} options={chartConfigNoSN} />
+          </div>
         </div>
       </div>
     </div>
@@ -71,3 +93,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+  
