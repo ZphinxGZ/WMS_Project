@@ -11,7 +11,8 @@ function fetchProducts() {
     quantity: product.QTY,
     unit: product.unit,
     seriesNumber: product.series_number,
-    category: product.product_number,
+    productNumber: product.product_number,
+    haveSN: product.haveSN,
     price: product.price,
     warehouse: product.warehouse,
     status: product.status,
@@ -27,7 +28,8 @@ function Outbound() {
   const [showModal, setShowModal] = useState(false);
   const [selectedItemsForConfirmation, setSelectedItemsForConfirmation] =
     useState([]);
-  const [sortOrder, setSortOrder] = useState(""); // เพิ่มการจัดการเรียงลำดับสินค้า
+  const [sortOrder, setSortOrder] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleAddToCart = (item) => {
     if (!cart.some((cartItem) => cartItem.id === item.id)) {
@@ -55,31 +57,68 @@ function Outbound() {
     alert(`สินค้าชื่อ "${item.name}" ถูกลบออกจากตะกร้า`);
   };
 
-  // การกรองรายการสินค้า
+  const handleIncreaseQuantity = (item) => {
+    const availableItem = outboundItems.find((product) => product.id === item.id);
+    if (availableItem && item.quantity < availableItem.quantity) {
+      const updatedCart = cart.map((cartItem) =>
+        cartItem.id === item.id
+          ? { ...cartItem, quantity: cartItem.quantity + 1 }
+          : cartItem
+      );
+      setCart(updatedCart);
+      setSelectedItemsForConfirmation(updatedCart);
+    } else {
+      alert(`ไม่สามารถเพิ่มจำนวนได้ เนื่องจากจำนวนสินค้าในคลังมีไม่เพียงพอ`);
+    }
+  };
+
+  const handleDecreaseQuantity = (item) => {
+    const updatedCart = cart.map((cartItem) =>
+      cartItem.id === item.id && cartItem.quantity > 1
+        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+        : cartItem
+    );
+    setCart(updatedCart);
+    setSelectedItemsForConfirmation(updatedCart);
+  };
+
   const filteredItems = outboundItems.filter(
     (item) =>
       (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.id.toString().includes(searchQuery)) &&
       (selectedCategory === "" ||
-        (selectedCategory === "has-series" && item.seriesNumber) ||
-        (selectedCategory === "no-series" && !item.seriesNumber)) // เพิ่มกรองสำหรับไม่มี seriesNumber
+        (selectedCategory === "has-series" && item.haveSN) ||
+        (selectedCategory === "no-series" && !item.haveSN))
   );
 
-  // การเรียงลำดับสินค้า
   const sortedItems = [...filteredItems].sort((a, b) => {
     if (sortOrder === "asc") {
-      return a.quantity - b.quantity; // น้อยไปมาก
+      return a.quantity - b.quantity;
     } else if (sortOrder === "desc") {
-      return b.quantity - a.quantity; // มากไปน้อย
+      return b.quantity - a.quantity;
     }
-    return 0; // ไม่มีการเรียงลำดับ
+    return 0;
   });
 
-  const currentItems = sortedItems.slice(0, itemsPerPage);
+  const totalPages = Math.ceil(sortedItems.length / itemsPerPage);
+  const currentItems = sortedItems.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(Number(e.target.value));
+    setCurrentPage(1);
   };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <div className="outbound-container">
@@ -110,7 +149,7 @@ function Outbound() {
             <option value="no-series">ไม่มีหมายเลขซีรี่ส์</option>
           </select>
         </div>
-        {/* Dropdown สำหรับการเรียงลำดับ */}
+
         <div className="sort-select">
           <label htmlFor="itemsPerPage">จำนวน:</label>
           <select
@@ -156,7 +195,7 @@ function Outbound() {
               <th>รายการ</th>
               <th>จำนวน</th>
               <th>หน่วย</th>
-              <th>series number</th>
+              <th>ราคา/หน่วย</th>
               <th>เลือก</th>
             </tr>
           </thead>
@@ -164,11 +203,11 @@ function Outbound() {
             {currentItems.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item.category}</td>
+                <td>{item.haveSN ? item.seriesNumber : item.productNumber}</td>
                 <td>{item.name}</td>
                 <td>{item.quantity}</td>
                 <td>{item.unit}</td>
-                <td>{item.seriesNumber || "-"}</td> {/* เพิ่มแสดง "-" */}
+                <td>{item.price || "-"}</td>
                 <td>
                   <Button
                     onClick={() => handleAddToCart(item)}
@@ -185,7 +224,36 @@ function Outbound() {
         </table>
       </div>
 
-      {/* Modal for Cart */}
+      {/* เพิ่ม Pagination พร้อมตัวเลข */}
+      <div className="pagination-container">
+        <Button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          ก่อนหน้า
+        </Button>
+
+        {/* แสดงตัวเลขของหน้า */}
+        {pageNumbers.map((number) => (
+          <Button
+            key={number}
+            onClick={() => handlePageChange(number)}
+            className={`page-number-button ${
+              currentPage === number ? "active" : ""
+            }`}
+          >
+            {number}
+          </Button>
+        ))}
+
+        <Button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          ถัดไป
+        </Button>
+      </div>
+
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
@@ -204,108 +272,79 @@ function Outbound() {
             <thead>
               <tr>
                 <th style={{ width: "10%" }}>รหัสสินค้า</th>
-                <th style={{ width: "10%" }}>ชื่อสินค้า</th>
-                <th style={{ width: "10%" }}>series number</th>
-                <th style={{ width: "5%" }}>จำนวน</th>
+                <th>รายการ</th>
+                <th>จำนวน</th>
                 <th>หน่วย</th>
-                <th>ราคา</th>
-                <th style={{ width: "15%" }}>สต๊อก</th>
-                <th>ยกเลิก</th>
+                <th>ราคา/หน่วย</th>
+                <th>คลัง</th>
+                <th>จัดการ</th>
               </tr>
             </thead>
             <tbody>
               {selectedItemsForConfirmation.length > 0 ? (
-                selectedItemsForConfirmation.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.category}</td>
-                    <td>{item.name}</td>
-                    <td>{item.seriesNumber}</td>
-                    <td>
-                      <div className="quantity-control">
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          onClick={() => {
-                            if (item.quantity > 1) {
-                              const updatedItems =
-                                selectedItemsForConfirmation.map(
-                                  (selectedItem) =>
-                                    selectedItem.id === item.id
-                                      ? {
-                                          ...selectedItem,
-                                          quantity: selectedItem.quantity - 1,
-                                        }
-                                      : selectedItem
-                                );
-                              setSelectedItemsForConfirmation(updatedItems);
+                selectedItemsForConfirmation.map((item) => {
+                  const availableItem = outboundItems.find(
+                    (product) => product.id === item.id
+                  );
+                  return (
+                    <tr key={item.id}>
+                      <td>
+                        {item.haveSN ? item.seriesNumber : item.productNumber}
+                      </td>
+                      <td style={{ width: "20%" }}>{item.name}</td>
+                      <td style={{ width: "18%" }}>
+                        <div className="quantity-buttons-container">
+                          <Button
+                            variant="secondary"
+                            className="quantity-button"
+                            onClick={() => handleDecreaseQuantity(item)}
+                          >
+                            -
+                          </Button>
+                          {item.quantity}
+                          <Button
+                            variant="secondary"
+                            className="quantity-button"
+                            onClick={() => handleIncreaseQuantity(item)}
+                            disabled={
+                              availableItem &&
+                              item.quantity >= availableItem.quantity
                             }
-                          }}
-                        >
-                          -
-                        </Button>
-                        <span style={{ margin: "10px" }}>{item.quantity}</span>
+                          >
+                            +
+                          </Button>
+                        </div>
+                      </td>
+
+                      <td>{item.unit}</td>
+                      <td>{item.price}</td>
+                      <td>
+                        {availableItem ? availableItem.quantity : "ไม่มีข้อมูล"}
+                      </td>
+                      <td>
                         <Button
-                          variant="secondary"
-                          size="sm"
-                          onClick={() => {
-                            const availableQuantity = outboundItems.find(
-                              (oItem) => oItem.id === item.id
-                            )?.quantity;
-                            if (
-                              item.quantity < availableQuantity &&
-                              availableQuantity > 0
-                            ) {
-                              const updatedItems =
-                                selectedItemsForConfirmation.map(
-                                  (selectedItem) =>
-                                    selectedItem.id === item.id
-                                      ? {
-                                          ...selectedItem,
-                                          quantity: selectedItem.quantity + 1,
-                                        }
-                                      : selectedItem
-                                );
-                              setSelectedItemsForConfirmation(updatedItems);
-                            }
-                          }}
+                          variant="danger"
+                          onClick={() => handleCancelItem(item)}
                         >
-                          +
+                          ยกเลิก
                         </Button>
-                      </div>
-                    </td>
-                    <td>{item.unit}</td>
-                    <td>{item.price.toFixed(2)}</td>
-                    <td>
-                      {
-                        outboundItems.find((oItem) => oItem.id === item.id)
-                          ?.quantity
-                      }
-                    </td>
-                    <td>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleCancelItem(item)}
-                      >
-                        ยกเลิก
-                      </Button>
-                    </td>
-                  </tr>
-                ))
+                      </td>
+                    </tr>
+                  );
+                })
               ) : (
                 <tr>
-                  <td colSpan="8" className="text-center">
-                    ไม่มีสินค้าในรายการ
+                  <td colSpan="7" className="text-center">
+                    ไม่มีสินค้าในตะกร้า
                   </td>
                 </tr>
               )}
             </tbody>
           </Table>
         </Modal.Body>
-
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
-            ปิด
+            ยกเลิก
           </Button>
           <Button variant="primary" onClick={handleConfirm}>
             ยืนยัน

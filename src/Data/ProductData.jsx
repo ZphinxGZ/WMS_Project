@@ -13,7 +13,7 @@ const ProductData = [
       state: 9,
       approve_name: "เมธาพร",
       status: "ไม่อนุมัติ",
-      price: 4857.73,
+      price: 48.73,
       haveSN: false,
       approve: false,
     },
