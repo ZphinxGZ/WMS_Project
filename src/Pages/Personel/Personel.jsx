@@ -85,42 +85,42 @@ function Personel() {
   };
   // Handle edit click
   function handleEditClick(personel) {
-    setEditingPersonel(personel);
-    setNewId(personel.id);
-    setNewName(personel.name);
-    setNewTel(personel.tel);
-    setNewRole(personel.role);
+    setEditingPersonel(personel); // เก็บข้อมูลที่ต้องการแก้ไขใน State
+    setNewId(personel.id); // ใช้ ID เดิม
+    setNewName(personel.name); // ตั้งค่า Name เดิม
+    setNewTel(personel.tel); // ตั้งค่า Tel เดิม
+    setNewRole(personel.role); // ตั้งค่า Role เดิม
 
-    // Clear username and password for edit mode (not required)
+    // ไม่ตั้งค่า Username และ Password ใหม่ในโหมดแก้ไข
     setNewUsername("");
     setNewPassword("");
-    setShow(true);
+    setShow(true); // เปิด Modal
   }
 
   // Handle save edit
   function handleSaveEdit() {
     if (newName === "") {
       alert("Please enter name");
-    } else if  (newTel === "") {
+    } else if (newTel === "") {
       alert("Please enter telephone number");
     } else if (newRole === "Select Role") {
       alert("Please select role");
     } else {
       const updatedPersonels = PersonelsRaw.map((personel) => {
+        // Check if the current personel ID matches the editingPersonel ID
         if (personel.id === editingPersonel.id) {
           return {
             ...personel,
-            name: newName,
-            username: newUsername,
-            password: newPassword,
-            tel: newTel,
-            role: newRole,
+            name: newName, // Update name
+            tel: newTel, // Update telephone number
+            role: newRole, // Update role
           };
         }
-        return personel;
+        return personel; // Return unchanged personel
       });
-      setPersonelsRaw(updatedPersonels);
-      handleClose();
+
+      setPersonelsRaw(updatedPersonels); // Update the raw personels state
+      handleClose(); // Close the modal
     }
   }
 
@@ -243,27 +243,25 @@ function Personel() {
               } else if (newRole === "Select Role") {
                 alert("Please select role");
               } else {
-                addClick(
-                  newId,
-                  newName,
-                  newUsername,
-                  newPassword,
-                  newTel,
-                  newRole
-                );
+                if (editingPersonel) {
+                  // แก้ไขข้อมูล
+                  handleSaveEdit(); // เรียกใช้ฟังก์ชันแก้ไข
+                } else {
+                  // เพิ่มผู้ใช้ใหม่
+                  addClick(
+                    newId,
+                    newName,
+                    newUsername,
+                    newPassword,
+                    newTel,
+                    newRole
+                  );
+                }
                 handleClose();
-
-                // Reset state for new input
-                setNewId("");
-                setNewName("");
-                setNewUsername("");
-                setNewPassword("123456789");
-                setNewTel("");
-                setNewRole("Select Role");
               }
             }}
           >
-            Add
+            {editingPersonel ? "Save" : "Add"}
           </button>
         </Modal.Footer>
       </Modal>
