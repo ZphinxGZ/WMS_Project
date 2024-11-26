@@ -169,3 +169,14 @@
   overflow-y: auto;   /* เปิดการเลื่อนในแนวตั้ง */
   margin-top: 20px;    /* เพิ่มระยะห่างจากด้านบน */
 }
+.quantity-control {
+  display: flex;
+  align-items: center; /* ให้ปุ่มจัดแนวแนวนอนในแนวกลาง */
+  justify-content: space-around; /* ให้วางอยู่ตรงกลาง */
+   /* เพิ่มช่องว่างระหว่างปุ่ม */
+}
+.sort-select{
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
