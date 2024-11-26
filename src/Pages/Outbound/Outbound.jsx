@@ -145,8 +145,8 @@ function Outbound() {
             className="form-select"
           >
             <option value="">ทั้งหมด</option>
-            <option value="has-series">มีหมายเลขซีรี่ส์</option>
-            <option value="no-series">ไม่มีหมายเลขซีรี่ส์</option>
+            <option value="has-series">มีs/n</option>
+            <option value="no-series">ไม่มีs/n</option>
           </select>
         </div>
 
