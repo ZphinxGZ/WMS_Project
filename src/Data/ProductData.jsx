@@ -1799,8 +1799,6 @@ const ProductData = [
       haveSN: true,
       approve: false,
     },
-<<<<<<< HEAD
-=======
     {
       id: "101",
       product_number: "P0028",
@@ -1837,7 +1835,6 @@ const ProductData = [
       haveSN: true,
       approve: false,
     },
->>>>>>> 19db91b72b4d087ae1be48f15c626d639e90f647
   ];
   
   export default ProductData;
