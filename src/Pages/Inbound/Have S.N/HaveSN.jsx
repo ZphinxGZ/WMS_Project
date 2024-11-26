@@ -7,10 +7,12 @@ import './HaveSN.css';
 function HaveSN() {
   const [show, setShow] = useState(false);
   const [warehouse, setWarehouse] = useState('');
+  const [room, setRoom] = useState('');
+  const [rack, setRack] = useState('');
   const [productName, setProductName] = useState('');
-  const [serialNumber, setSerialNumber] = useState(''); // เปลี่ยนจาก productCode เป็น serialNumber
-  const [quantity, setQuantity] = useState(''); // เปลี่ยนจาก unitName เป็น quantity
-  const [price, setPrice] = useState(''); // เปลี่ยนจาก expiryDate เป็น price
+  const [serialNumber, setSerialNumber] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [price, setPrice] = useState('');
   const [formError, setFormError] = useState('');
 
   // Function to reset all form fields and error message
@@ -20,6 +22,8 @@ function HaveSN() {
     setQuantity('');
     setPrice('');
     setWarehouse('');
+    setRoom('');
+    setRack('');
     setFormError('');
   };
 
@@ -32,6 +36,15 @@ function HaveSN() {
     setShow(true);
   };
 
+  // Rack options (1-10)
+  const rackOptions = Array.from({ length: 10 }, (_, i) => i + 1);
+
+  // Room options (1-4)
+  const roomOptions = Array.from({ length: 4 }, (_, i) => i + 1);
+
+  // Warehouse options (1-2)
+  const warehouseOptions = [1, 2];
+
   // Format today's date as DD-MM-YYYY
   const today = new Date();
   const formattedToday = new Intl.DateTimeFormat('th-TH', {
@@ -39,15 +52,6 @@ function HaveSN() {
     month: '2-digit',
     year: 'numeric',
   }).format(today);
-
-  // Options for each warehouse
-  const warehouseOptions = {
-    'โกดัง1': ['A', 'B', 'C'],
-    'โกดัง2': ['AA', 'BB', 'CC'],
-  };
-
-  // Rack options (1-10)
-  const rackOptions = Array.from({ length: 10 }, (_, i) => i + 1);
 
   // Keyboard event handling for Esc and Enter keys
   useEffect(() => {
@@ -67,7 +71,7 @@ function HaveSN() {
 
   // Handle form submission (save data)
   const handleSave = () => {
-    if (!productName || !serialNumber || !quantity || !price || !warehouse) {
+    if (!productName || !serialNumber || !quantity || !price || !warehouse || !room || !rack) {
       setFormError('กรุณาใส่ข้อมูลให้ครบถ้วน');
       return;
     }
@@ -79,7 +83,7 @@ function HaveSN() {
 
   // Check if the form is valid
   const isFormValid = () => {
-    return productName && serialNumber && quantity && price && warehouse;
+    return productName && serialNumber && quantity && price && warehouse && room && rack;
   };
 
   return (
@@ -121,34 +125,44 @@ function HaveSN() {
               </Col>
             </Row>
 
-            {/* Row 2: Storage Location with dynamic dropdowns */}
+            {/* Row 2: Storage Location with dropdowns */}
             <Form.Group className="mb-3" controlId="storageLocation">
               <Form.Label>สถานที่จัดเก็บ</Form.Label>
               <Row>
                 <Col>
                   <Form.Select 
                     onChange={(e) => setWarehouse(e.target.value)} 
-                    aria-label="เลือกสถานที่จัดเก็บ"
+                    aria-label="เลือกโกดัง"
                     value={warehouse}
                   >
                     <option value="">เลือกโกดัง</option>
-                    <option value="โกดัง1">โกดัง1</option>
-                    <option value="โกดัง2">โกดัง2</option>
-                  </Form.Select>
-                </Col>
-                <Col>
-                  <Form.Select disabled={!warehouse} aria-label="เลือกตำแหน่ง">
-                    <option value="">เลือกตำแหน่ง</option>
-                    {warehouse && warehouseOptions[warehouse].map((option, index) => (
-                      <option key={index} value={option}>{option}</option>
+                    {warehouseOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
                     ))}
                   </Form.Select>
                 </Col>
                 <Col>
-                  <Form.Select aria-label="เลือกชั้นวาง">
+                  <Form.Select 
+                    disabled={!warehouse} 
+                    onChange={(e) => setRoom(e.target.value)}
+                    aria-label="เลือกห้อง"
+                    value={room}
+                  >
+                    <option value="">เลือกห้อง</option>
+                    {warehouse && roomOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col>
+                  <Form.Select 
+                    onChange={(e) => setRack(e.target.value)}
+                    aria-label="เลือกชั้นวาง"
+                    value={rack}
+                  >
                     <option value="">เลือกชั้นวาง</option>
-                    {rackOptions.map((rack, index) => (
-                      <option key={index} value={rack}>{rack}</option>
+                    {rackOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
                     ))}
                   </Form.Select>
                 </Col>

@@ -7,20 +7,24 @@ import './DonthaveSN.css';
 function DonthaveSN() {
   const [show, setShow] = useState(false);
   const [warehouse, setWarehouse] = useState('');
+  const [room, setRoom] = useState('');
+  const [rack, setRack] = useState('');
   const [productName, setProductName] = useState('');
   const [productCode, setProductCode] = useState('');
   const [unitName, setUnitName] = useState('');
-  const [quantity, setQuantity] = useState('');  // Changed addedBy to quantity
-  const [price, setPrice] = useState('');  // Changed expiryDate to price
+  const [quantity, setQuantity] = useState('');
+  const [price, setPrice] = useState('');
   const [formError, setFormError] = useState('');
 
   const resetForm = () => {
     setProductName('');
     setProductCode('');
     setUnitName('');
-    setQuantity('');  // Reset quantity
-    setPrice('');  // Reset price
+    setQuantity('');
+    setPrice('');
     setWarehouse('');
+    setRoom('');
+    setRack('');
     setFormError('');
   };
 
@@ -40,11 +44,9 @@ function DonthaveSN() {
     year: 'numeric',
   }).format(today);
 
-  const warehouseOptions = {
-    'โกดัง1': ['A', 'B', 'C'],
-    'โกดัง2': ['AA', 'BB', 'CC'],
-  };
-
+  // Options for dropdowns
+  const warehouseOptions = [1, 2];
+  const roomOptions = Array.from({ length: 4 }, (_, i) => i + 1);
   const rackOptions = Array.from({ length: 10 }, (_, i) => i + 1);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ function DonthaveSN() {
   }, [show]);
 
   const handleSave = () => {
-    if (!productName || !productCode || !unitName || !quantity || !price || !warehouse) {
+    if (!productName || !productCode || !unitName || !quantity || !price || !warehouse || !room || !rack) {
       setFormError('กรุณาใส่ข้อมูลให้ครบถ้วน');
       return;
     }
@@ -71,7 +73,7 @@ function DonthaveSN() {
   };
 
   const isFormValid = () => {
-    return productName && productCode && unitName && quantity && price && warehouse;
+    return productName && productCode && unitName && quantity && price && warehouse && room && rack;
   };
 
   const generateProductCode = () => {
@@ -127,40 +129,48 @@ function DonthaveSN() {
           </Row>
 
           {/* Row 2: Storage Location */}
-          <Row className="mb-3">
-            <Col>
-              <Form.Group controlId="warehouse">
-                <Form.Label>สถานที่จัดเก็บ</Form.Label>
-                <Form.Select onChange={(e) => setWarehouse(e.target.value)} value={warehouse}>
+          <Form.Group className="mb-3" controlId="storageLocation">
+            <Form.Label>สถานที่จัดเก็บ</Form.Label>
+            <Row>
+              <Col>
+                <Form.Select
+                  onChange={(e) => setWarehouse(e.target.value)}
+                  aria-label="เลือกโกดัง"
+                  value={warehouse}
+                >
                   <option value="">เลือกโกดัง</option>
-                  <option value="โกดัง1">โกดัง1</option>
-                  <option value="โกดัง2">โกดัง2</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="position">
-                <Form.Label>ตำแหน่ง</Form.Label>
-                <Form.Select disabled={!warehouse}>
-                  <option value="">เลือกตำแหน่ง</option>
-                  {warehouse && warehouseOptions[warehouse].map((option, index) => (
-                    <option key={index} value={option}>{option}</option>
+                  {warehouseOptions.map((option) => (
+                    <option key={option} value={option}>{option}</option>
                   ))}
                 </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="rack">
-                <Form.Label>ชั้นวาง</Form.Label>
-                <Form.Select>
+              </Col>
+              <Col>
+                <Form.Select
+                  disabled={!warehouse}
+                  onChange={(e) => setRoom(e.target.value)}
+                  aria-label="เลือกห้อง"
+                  value={room}
+                >
+                  <option value="">เลือกห้อง</option>
+                  {warehouse && roomOptions.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </Form.Select>
+              </Col>
+              <Col>
+                <Form.Select
+                  onChange={(e) => setRack(e.target.value)}
+                  aria-label="เลือกชั้นวาง"
+                  value={rack}
+                >
                   <option value="">เลือกชั้นวาง</option>
-                  {rackOptions.map((rack, index) => (
-                    <option key={index} value={rack}>{rack}</option>
+                  {rackOptions.map((option) => (
+                    <option key={option} value={option}>{option}</option>
                   ))}
                 </Form.Select>
-              </Form.Group>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          </Form.Group>
 
           {/* Row 3: Storage Date and Price */}
           <Row className="mb-3">
@@ -175,9 +185,9 @@ function DonthaveSN() {
                 <Form.Label>ราคาสินค้า</Form.Label>
                 <Form.Control
                   type="number"
+                  placeholder="กรอกราคาสินค้า"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  placeholder="กรอกราคาสินค้า"
                 />
               </Form.Group>
             </Col>
