@@ -3,10 +3,23 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import drilldown from "highcharts/modules/drilldown";
 import "./Dashboard.css";
+import productData from '../../Data/ProductData';
 
 drilldown(Highcharts);
 
 function Dashboard() {
+  const haveSNData = productData.filter(product => product.haveSN);
+  const noSNData = productData.filter(product => !product.haveSN);
+
+  // จำนวนสินค้าที่มี S/N
+  const countHaveSN = haveSNData.length;
+  const countBorrowedHaveSN = haveSNData.filter(product => product.outbound_date).length;
+
+  // จำนวนสินค้าที่ไม่มี S/N
+  const countNoSN = noSNData.length;
+  const countBorrowedNoSN = noSNData.filter(product => product.outbound_date).length;
+
+  
   const options = {
     chart: {
       type: "column"
@@ -126,10 +139,9 @@ function Dashboard() {
         </div>
 
         <div className="main-cards">
-          {/* การ์ดต่างๆ */}
           <div className="card card-1">
             <div className="card-details">
-              <p className="text-title">13</p>
+              <p className="text-title">{countHaveSN}</p>
               <p className="text-body">จำนวนสินค้าที่มีS/N</p>
             </div>
             <i className="bi bi-archive-fill"></i>
@@ -137,7 +149,7 @@ function Dashboard() {
           </div>
           <div className="card card-2">
             <div className="card-details">
-              <p className="text-title">13</p>
+              <p className="text-title">{countNoSN}</p>
               <p className="text-body">จำนวนสินค้าที่ไม่มีS/N</p>
             </div>
             <i className="bi bi-archive-fill"></i>
@@ -145,7 +157,7 @@ function Dashboard() {
           </div>
           <div className="card card-3">
             <div className="card-details">
-              <p className="text-title">13</p>
+              <p className="text-title">{countBorrowedHaveSN}</p>
               <p className="text-body">จำนวนการยืมสินค้าที่มีS/N</p>
             </div>
             <i class="bi bi-laptop"></i>
@@ -153,7 +165,7 @@ function Dashboard() {
           </div>
           <div className="card card-4">
             <div className="card-details">
-              <p className="text-title">13</p>
+              <p className="text-title">{countBorrowedNoSN}</p>
               <p className="text-body">จำนวนการยืมสินค้าที่ไม่มีS/N</p>
             </div>
             <i class="bi bi-boxes"></i>
