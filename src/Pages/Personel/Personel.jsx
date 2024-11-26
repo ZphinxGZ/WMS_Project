@@ -75,9 +75,13 @@ function Personel() {
   // Modal show handler
   const handleShow = () => {
     setEditingPersonel(null);
+    const nextId =
+      PersonelsRaw.length > 0
+        ? Math.max(...PersonelsRaw.map((p) => p.id)) + 1
+        : 1; // ถ้ายังไม่มีผู้ใช้ ID เริ่มที่ 1
     setNewId(PersonelsRaw.length + 1); // Set new ID
     setNewName("");
-    setNewUsername("");
+    setNewUsername(`user${nextId}`);
     setNewPassword("123456789");
     setNewTel("");
     setNewRole("Select Role");
@@ -183,6 +187,7 @@ function Personel() {
                       type="text"
                       placeholder="Username"
                       value={newUsername}
+                      disabled
                       onChange={(e) => setNewUsername(e.target.value)}
                     />
                   </Form.Group>
