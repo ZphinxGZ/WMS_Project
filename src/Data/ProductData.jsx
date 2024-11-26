@@ -15,6 +15,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 4857.73,
       haveSN: false,
+      approve: false,
     },
     {
       id: "002",
@@ -32,6 +33,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 26.02,
       haveSN: false,
+      approve: false,
     },
     {
       id: "003",
@@ -49,6 +51,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 3406.24,
       haveSN: true,
+      approve: false,
     },
     {
       id: "004",
@@ -66,6 +69,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 250.19,
       haveSN: true,
+      approve: false,
     },
     {
       id: "005",
@@ -83,6 +87,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 2653.35,
       haveSN: true,
+      approve: false,
     },
     {
       id: "006",
@@ -100,6 +105,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 547.2,
       haveSN: false,
+      approve: false,
     },
     {
       id: "007",
@@ -117,6 +123,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 4522.83,
       haveSN: true,
+      approve: false,
     },
     {
       id: "008",
@@ -134,6 +141,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 393.8,
       haveSN: false,
+      approve: false,
     },
     {
       id: "009",
@@ -151,6 +159,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 2446.97,
       haveSN: false,
+      approve: false,
     },
     {
       id: "010",
@@ -168,6 +177,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 2778.14,
       haveSN: false,
+      approve: false,
     },
     {
       id: "011",
@@ -185,6 +195,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1149.98,
       haveSN: true,
+      approve: false,
     },
     {
       id: "012",
@@ -202,6 +213,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 3953.9,
       haveSN: false,
+      approve: false,
     },
     {
       id: "013",
@@ -219,6 +231,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4643.54,
       haveSN: false,
+      approve: false,
     },
     {
       id: "014",
@@ -236,6 +249,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 4734.88,
       haveSN: false,
+      approve: false,
     },
     {
       id: "015",
@@ -253,6 +267,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4231.95,
       haveSN: false,
+      approve: false,
     },
     {
       id: "016",
@@ -270,6 +285,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 1820.16,
       haveSN: true,
+      approve: false,
     },
     {
       id: "017",
@@ -287,6 +303,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 3452.91,
       haveSN: false,
+      approve: false,
     },
     {
       id: "018",
@@ -304,6 +321,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 532.83,
       haveSN: true,
+      approve: false,
     },
     {
       id: "019",
@@ -321,6 +339,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1657.22,
       haveSN: false,
+      approve: false,
     },
     {
       id: "020",
@@ -338,6 +357,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 1366.74,
       haveSN: true,
+      approve: false,
     },
     {
       id: "021",
@@ -355,6 +375,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 3759.86,
       haveSN: false,
+      approve: false,
     },
     {
       id: "022",
@@ -372,6 +393,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 4998.96,
       haveSN: true,
+      approve: false,
     },
     {
       id: "023",
@@ -389,6 +411,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4066.79,
       haveSN: true,
+      approve: false,
     },
     {
       id: "024",
@@ -406,6 +429,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 4371.15,
       haveSN: false,
+      approve: false,
     },
     {
       id: "025",
@@ -423,6 +447,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 3187.01,
       haveSN: true,
+      approve: false,
     },
     {
       id: "026",
@@ -440,6 +465,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 4193.36,
       haveSN: false,
+      approve: false,
     },
     {
       id: "027",
@@ -457,6 +483,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4733.86,
       haveSN: true,
+      approve: false,
     },
     {
       id: "028",
@@ -474,6 +501,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 1763.29,
       haveSN: false,
+      approve: false,
     },
     {
       id: "029",
@@ -491,6 +519,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 547.88,
       haveSN: true,
+      approve: false,
     },
     {
       id: "030",
@@ -508,6 +537,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 3142.99,
       haveSN: false,
+      approve: false,
     },
     {
       id: "031",
@@ -525,6 +555,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 1828.15,
       haveSN: false,
+      approve: false,
     },
     {
       id: "032",
@@ -542,6 +573,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 4853.57,
       haveSN: false,
+      approve: false,
     },
     {
       id: "033",
@@ -559,6 +591,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 2333.49,
       haveSN: true,
+      approve: false,
     },
     {
       id: "034",
@@ -576,6 +609,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1442.69,
       haveSN: false,
+      approve: false,
     },
     {
       id: "035",
@@ -593,6 +627,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1886.15,
       haveSN: true,
+      approve: false,
     },
     {
       id: "036",
@@ -610,6 +645,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 2689.39,
       haveSN: true,
+      approve: false,
     },
     {
       id: "037",
@@ -627,6 +663,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 4705.52,
       haveSN: true,
+      approve: false,
     },
     {
       id: "038",
@@ -644,6 +681,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 2512.8,
       haveSN: true,
+      approve: false,
     },
     {
       id: "039",
@@ -661,6 +699,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 2800.63,
       haveSN: true,
+      approve: false,
     },
     {
       id: "040",
@@ -678,6 +717,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1176.71,
       haveSN: false,
+      approve: false,
     },
     {
       id: "041",
@@ -695,6 +735,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 185.93,
       haveSN: true,
+      approve: false,
     },
     {
       id: "042",
@@ -712,6 +753,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 3815.79,
       haveSN: false,
+      approve: false,
     },
     {
       id: "043",
@@ -729,6 +771,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 919.48,
       haveSN: true,
+      approve: false,
     },
     {
       id: "044",
@@ -746,6 +789,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 2103.0,
       haveSN: false,
+      approve: false,
     },
     {
       id: "045",
@@ -763,6 +807,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 4530.58,
       haveSN: true,
+      approve: false,
     },
     {
       id: "046",
@@ -780,6 +825,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4748.03,
       haveSN: false,
+      approve: false,
     },
     {
       id: "047",
@@ -797,6 +843,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 78.77,
       haveSN: false,
+      approve: false,
     },
     {
       id: "048",
@@ -814,6 +861,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 377.22,
       haveSN: false,
+      approve: false,
     },
     {
       id: "049",
@@ -831,6 +879,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 2540.41,
       haveSN: true,
+      approve: false,
     },
     {
       id: "050",
@@ -848,6 +897,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 4148.81,
       haveSN: true,
+      approve: false,
     },
     {
       id: "051",
@@ -865,6 +915,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1909.42,
       haveSN: true,
+      approve: false,
     },
     {
       id: "052",
@@ -882,6 +933,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 546.03,
       haveSN: true,
+      approve: false,
     },
     {
       id: "053",
@@ -899,6 +951,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 1010.06,
       haveSN: false,
+      approve: false,
     },
     {
       id: "054",
@@ -916,6 +969,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 1034.34,
       haveSN: false,
+      approve: false,
     },
     {
       id: "055",
@@ -933,6 +987,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 855.26,
       haveSN: true,
+      approve: false,
     },
     {
       id: "056",
@@ -950,6 +1005,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 450.4,
       haveSN: true,
+      approve: false,
     },
     {
       id: "057",
@@ -967,6 +1023,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4349.97,
       haveSN: true,
+      approve: false,
     },
     {
       id: "058",
@@ -984,6 +1041,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 4424.51,
       haveSN: false,
+      approve: false,
     },
     {
       id: "059",
@@ -1001,6 +1059,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 1178.36,
       haveSN: false,
+      approve: false,
     },
     {
       id: "060",
@@ -1018,6 +1077,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4426.5,
       haveSN: false,
+      approve: false,
     },
     {
       id: "061",
@@ -1035,6 +1095,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 216.5,
       haveSN: true,
+      approve: false,
     },
     {
       id: "062",
@@ -1052,6 +1113,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 3443.48,
       haveSN: true,
+      approve: false,
     },
     {
       id: "063",
@@ -1069,6 +1131,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 1140.78,
       haveSN: true,
+      approve: false,
     },
     {
       id: "064",
@@ -1086,6 +1149,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 3072.76,
       haveSN: true,
+      approve: false,
     },
     {
       id: "065",
@@ -1103,6 +1167,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 2820.13,
       haveSN: true,
+      approve: false,
     },
     {
       id: "066",
@@ -1120,6 +1185,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 411.77,
       haveSN: false,
+      approve: false,
     },
     {
       id: "067",
@@ -1137,6 +1203,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 3377.84,
       haveSN: true,
+      approve: false,
     },
     {
       id: "068",
@@ -1154,6 +1221,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 3561.85,
       haveSN: true,
+      approve: false,
     },
     {
       id: "069",
@@ -1171,6 +1239,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 393.17,
       haveSN: false,
+      approve: false,
     },
     {
       id: "070",
@@ -1188,6 +1257,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 488.72,
       haveSN: true,
+      approve: false,
     },
     {
       id: "071",
@@ -1205,6 +1275,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 2956.01,
       haveSN: true,
+      approve: false,
     },
     {
       id: "072",
@@ -1222,6 +1293,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 3787.12,
       haveSN: false,
+      approve: false,
     },
     {
       id: "073",
@@ -1239,6 +1311,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 1293.38,
       haveSN: true,
+      approve: false,
     },
     {
       id: "074",
@@ -1256,6 +1329,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 64.97,
       haveSN: true,
+      approve: false,
     },
     {
       id: "075",
@@ -1273,6 +1347,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 1755.97,
       haveSN: false,
+      approve: false,
     },
     {
       id: "076",
@@ -1290,6 +1365,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 932.01,
       haveSN: false,
+      approve: false,
     },
     {
       id: "077",
@@ -1307,6 +1383,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 55.66,
       haveSN: true,
+      approve: false,
     },
     {
       id: "078",
@@ -1324,6 +1401,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 3936.8,
       haveSN: false,
+      approve: false,
     },
     {
       id: "079",
@@ -1341,6 +1419,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 2581.66,
       haveSN: true,
+      approve: false,
     },
     {
       id: "080",
@@ -1358,6 +1437,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 2591.27,
       haveSN: true,
+      approve: false,
     },
     {
       id: "081",
@@ -1375,6 +1455,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 3586.8,
       haveSN: false,
+      approve: false,
     },
     {
       id: "082",
@@ -1392,6 +1473,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 2025.53,
       haveSN: false,
+      approve: false,
     },
     {
       id: "083",
@@ -1409,6 +1491,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1994.77,
       haveSN: true,
+      approve: false,
     },
     {
       id: "084",
@@ -1426,6 +1509,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 372.1,
       haveSN: true,
+      approve: false,
     },
     {
       id: "085",
@@ -1443,6 +1527,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 1770.53,
       haveSN: false,
+      approve: false,
     },
     {
       id: "086",
@@ -1460,6 +1545,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 2405.6,
       haveSN: true,
+      approve: false,
     },
     {
       id: "087",
@@ -1477,6 +1563,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 4204.9,
       haveSN: true,
+      approve: false,
     },
     {
       id: "088",
@@ -1494,6 +1581,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 824.96,
       haveSN: true,
+      approve: false,
     },
     {
       id: "089",
@@ -1511,6 +1599,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1963.81,
       haveSN: false,
+      approve: false,
     },
     {
       id: "090",
@@ -1528,6 +1617,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 4360.53,
       haveSN: true,
+      approve: false,
     },
     {
       id: "091",
@@ -1545,6 +1635,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4724.11,
       haveSN: false,
+      approve: false,
     },
     {
       id: "092",
@@ -1562,6 +1653,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 4847.82,
       haveSN: true,
+      approve: false,
     },
     {
       id: "093",
@@ -1579,6 +1671,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 2360.29,
       haveSN: true,
+      approve: false,
     },
     {
       id: "094",
@@ -1596,6 +1689,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 4075.89,
       haveSN: true,
+      approve: false,
     },
     {
       id: "095",
@@ -1613,6 +1707,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 3081.96,
       haveSN: false,
+      approve: false,
     },
     {
       id: "096",
@@ -1630,6 +1725,7 @@ const ProductData = [
       status: "ไม่อนุมัติ",
       price: 4609.12,
       haveSN: false,
+      approve: false,
     },
     {
       id: "097",
@@ -1647,6 +1743,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 1477.61,
       haveSN: true,
+      approve: false,
     },
     {
       id: "098",
@@ -1664,6 +1761,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 1447.47,
       haveSN: true,
+      approve: false,
     },
     {
       id: "099",
@@ -1681,6 +1779,7 @@ const ProductData = [
       status: "รออนุมัติ",
       price: 2636.68,
       haveSN: true,
+      approve: false,
     },
     {
       id: "100",
@@ -1698,6 +1797,7 @@ const ProductData = [
       status: "อนุมัติ",
       price: 3890.53,
       haveSN: true,
+      approve: false,
     },
     {
       id: "101",
@@ -1715,6 +1815,7 @@ const ProductData = [
       status: "", 
       price: 3890.53,
       haveSN: true,
+      approve: false,
     },
     {
       id: "102",
@@ -1732,6 +1833,7 @@ const ProductData = [
       status: "", 
       price: 3890.53,
       haveSN: true,
+      approve: false,
     },
   ];
   

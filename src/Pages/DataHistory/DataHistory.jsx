@@ -286,7 +286,7 @@ function DataHistory({ data_product }) {
         item={selectedItem}
         onClose={closeModal}
         onConfirm={handleStatusUpdate}
-        onDelete={handleDelete} // ส่งฟังก์ชันลบไปยัง Modal
+        onDelete={handleDelete}
         dataProduct={data_product}
       />
     </div>
