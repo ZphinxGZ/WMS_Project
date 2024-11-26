@@ -1799,45 +1799,6 @@ const ProductData = [
       haveSN: true,
       approve: false,
     },
-<<<<<<< HEAD
-=======
-    {
-      id: "101",
-      product_number: "P0028",
-      series_number: "NAY-5779",
-      product_name: "โน้ตบุ๊ค",
-      unit: "ชิ้น",
-      QTY: 25,
-      inbound_date: "2024-10-31",
-      outbound_date: "",
-      warehouse: 1,
-      room: 3,
-      state: 1,
-      approve_name: "",
-      status: "", 
-      price: 3890.53,
-      haveSN: true,
-      approve: false,
-    },
-    {
-      id: "102",
-      product_number: "P0028",
-      series_number: "NAY-4329",
-      product_name: "โน้ตบุ๊ค",
-      unit: "ชิ้น",
-      QTY: 15,
-      inbound_date: "2024-10-31",
-      outbound_date: "",
-      warehouse: 1,
-      room: 3,
-      state: 1,
-      approve_name: "",
-      status: "", 
-      price: 3890.53,
-      haveSN: true,
-      approve: false,
-    },
->>>>>>> 19db91b72b4d087ae1be48f15c626d639e90f647
   ];
   
   export default ProductData;
