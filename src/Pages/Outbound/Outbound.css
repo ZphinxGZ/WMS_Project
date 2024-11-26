@@ -169,14 +169,28 @@
   overflow-y: auto;   /* เปิดการเลื่อนในแนวตั้ง */
   margin-top: 20px;    /* เพิ่มระยะห่างจากด้านบน */
 }
-.quantity-control {
-  display: flex;
-  align-items: center; /* ให้ปุ่มจัดแนวแนวนอนในแนวกลาง */
-  justify-content: space-around; /* ให้วางอยู่ตรงกลาง */
-   /* เพิ่มช่องว่างระหว่างปุ่ม */
-}
+
+
 .sort-select{
   display: flex;
   align-items: center;
   margin-right: 5px;
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* กำหนดระยะห่างระหว่างปุ่ม */
+  margin-top: 20px; /* ระยะห่างจากตาราง */
+}
+.quantity-buttons-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px; /* ปรับระยะห่างตามต้องการ */
+}
+
+.quantity-button {
+  padding: 5px 10px;
+  font-size: 10px;
+  
 }

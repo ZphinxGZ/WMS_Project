@@ -4,7 +4,7 @@ import { Modal, Button, Form, Row, Col, Alert } from 'react-bootstrap';
 // STYLE
 import './DonthaveSN.css';
 
-function DonthaveSN() {
+function DonthaveSN({ addProduct }) {
   const [show, setShow] = useState(false);
   const [warehouse, setWarehouse] = useState('');
   const [room, setRoom] = useState('');
@@ -68,7 +68,24 @@ function DonthaveSN() {
       setFormError('กรุณาใส่ข้อมูลให้ครบถ้วน');
       return;
     }
-    setFormError('');
+
+    const newProduct = {
+      product_name: productName,
+      product_number: productCode,
+      unit: unitName,
+      QTY: parseInt(quantity, 10),
+      price: parseFloat(price),
+      warehouse,
+      room,
+      state: rack,
+      inbound_date: formattedToday,
+      haveSN: true,
+      approve: false,
+      status: 'รออนุมัติ',
+    };
+
+    addProduct(newProduct); // ส่งข้อมูลไปยังฟังก์ชันใน Inbound
+    resetForm();
     handleClose();
   };
 
@@ -77,14 +94,16 @@ function DonthaveSN() {
   };
 
   const generateProductCode = () => {
-    const randomCode = 'P' + Math.floor(1000 + Math.random() * 9000);
+    const randomCode = 'P' + Math.floor(1000 + Math.random() * 9000); // สุ่มรหัสสินค้า
     setProductCode(randomCode);
   };
 
   return (
     <div>
-      <div className='DonthaveSN-Link' onClick={handleShow}>
-        <span>เพิ่มสินค้าที่ไม่มี S/N <i className="bi bi-file-plus"></i></span>
+      <div className="DonthaveSN-Link" onClick={handleShow}>
+        <span>
+          เพิ่มสินค้าที่ไม่มี S/N <i className="bi bi-file-plus"></i>
+        </span>
       </div>
 
       <Modal show={show} onHide={handleClose}>
@@ -140,7 +159,9 @@ function DonthaveSN() {
                 >
                   <option value="">เลือกโกดัง</option>
                   {warehouseOptions.map((option) => (
-                    <option key={option} value={option}>{option}</option>
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
                   ))}
                 </Form.Select>
               </Col>
@@ -152,9 +173,12 @@ function DonthaveSN() {
                   value={room}
                 >
                   <option value="">เลือกห้อง</option>
-                  {warehouse && roomOptions.map((option) => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
+                  {warehouse &&
+                    roomOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
                 </Form.Select>
               </Col>
               <Col>
@@ -165,7 +189,9 @@ function DonthaveSN() {
                 >
                   <option value="">เลือกชั้นวาง</option>
                   {rackOptions.map((option) => (
-                    <option key={option} value={option}>{option}</option>
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
                   ))}
                 </Form.Select>
               </Col>
@@ -220,8 +246,12 @@ function DonthaveSN() {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>ยกเลิก</Button>
-          <Button variant="primary" onClick={handleSave} disabled={!isFormValid()}>บันทึก</Button>
+          <Button variant="secondary" onClick={handleClose}>
+            ยกเลิก
+          </Button>
+          <Button variant="primary" onClick={handleSave} disabled={!isFormValid()}>
+            บันทึก
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>
