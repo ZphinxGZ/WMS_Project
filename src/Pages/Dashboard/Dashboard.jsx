@@ -4,6 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import drilldown from "highcharts/modules/drilldown";
 import "./Dashboard.css";
 import productData from '../../Data/ProductData';
+import chartOptions from '../../Data/chartConfig';
 
 drilldown(Highcharts);
 
@@ -11,125 +12,11 @@ function Dashboard() {
   const haveSNData = productData.filter(product => product.haveSN);
   const noSNData = productData.filter(product => !product.haveSN);
 
-  // จำนวนสินค้าที่มี S/N
   const countHaveSN = haveSNData.length;
-  const countBorrowedHaveSN = haveSNData.filter(product => product.outbound_date).length;
+  const countApprovedHaveSN = haveSNData.filter(product => product.status === "อนุมัติ").length;
 
-  // จำนวนสินค้าที่ไม่มี S/N
   const countNoSN = noSNData.length;
-  const countBorrowedNoSN = noSNData.filter(product => product.outbound_date).length;
-
-  
-  const options = {
-    chart: {
-      type: "column"
-    },
-    title: {
-      text: "จำนวนครุภัณฑ์"
-    },
-    xAxis: {
-      type: "category"
-    },
-    yAxis: {
-      title: {
-        text: "จำนวน"
-      }
-    },
-    legend: {
-      enabled: false
-    },
-    plotOptions: {
-      series: {
-        borderWidth: 0,
-        dataLabels: {
-          enabled: true
-        }
-      }
-    },
-    series: [
-      {
-        name: "ครุภัณฑ์",
-        colorByPoint: true,
-        data: [
-          {
-            name: "ประเภท A",
-            y: 13,
-            drilldown: "A"
-          },
-          {
-            name: "ประเภท B",
-            y: 12,
-            drilldown: "B"
-          },
-          {
-            name: "ประเภท C",
-            y: 23,
-            drilldown: "C"
-          },
-          {
-            name: "ประเภท D",
-            y: 34,
-            drilldown: "D"
-          },
-          {
-            name: "ประเภท E",
-            y: 23,
-            drilldown: "E"
-          },
-          {
-            name: "ประเภท F",
-            y: 21,
-            drilldown: "F"
-          },
-          {
-            name: "ประเภท G",
-            y: 27,
-            drilldown: "G"
-          },
-          {
-            name: "ประเภท H",
-            y: 44,
-            drilldown: "H"
-          },
-          {
-            name: "ประเภท I",
-            y: 34,
-            drilldown: "I"
-          },
-          {
-            name: "ประเภท J",
-            y: 25,
-            drilldown: "J"
-          },
-          {
-            name: "ประเภท K",
-            y: 12,
-            drilldown: "K"
-          }
-        ]
-      }
-    ],
-    drilldown: {
-      // series: [
-      //   {
-      //     id: "A",
-      //     data: [["Sub A1", 5], ["Sub A2", 8]]
-      //   },
-      //   {
-      //     id: "B",
-      //     data: [["Sub B1", 6], ["Sub B2", 6]]
-      //   },
-      //   {
-      //     id: "C",
-      //     data: [["Sub C1", 11], ["Sub C2", 12]]
-      //   },
-      //   {
-      //     id: "D",
-      //     data: [["Sub D1", 15], ["Sub D2", 19]]
-      //   }
-      // ]
-    }
-  };
+  const countApprovedNoSN = noSNData.filter(product => product.status === "อนุมัติ").length;
 
   return (
     <div className="dashboard-container">
@@ -157,7 +44,7 @@ function Dashboard() {
           </div>
           <div className="card card-3">
             <div className="card-details">
-              <p className="text-title">{countBorrowedHaveSN}</p>
+              <p className="text-title">{countApprovedHaveSN}</p>
               <p className="text-body">จำนวนการยืมสินค้าที่มีS/N</p>
             </div>
             <i class="bi bi-laptop"></i>
@@ -165,7 +52,7 @@ function Dashboard() {
           </div>
           <div className="card card-4">
             <div className="card-details">
-              <p className="text-title">{countBorrowedNoSN}</p>
+              <p className="text-title">{countApprovedNoSN}</p>
               <p className="text-body">จำนวนการยืมสินค้าที่ไม่มีS/N</p>
             </div>
             <i class="bi bi-boxes"></i>
@@ -175,8 +62,8 @@ function Dashboard() {
         </div>
         
         <div className="chart-container">
-          <HighchartsReact highcharts={Highcharts} options={options} />
-          <HighchartsReact highcharts={Highcharts} options={options} />
+          <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+          <HighchartsReact highcharts={Highcharts} options={chartOptions} />
         </div>
       </div>
     </div>
