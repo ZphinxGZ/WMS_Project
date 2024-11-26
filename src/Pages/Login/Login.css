@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-image: url(../../../public/img/Desktop.png);
+  background-size: cover;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  text-align: center;
+  width: 300px;
+}
+
+.icon-container {
+  font-size: 50px;
+  margin-bottom: 60px;
+}
+
+.shopping-cart-icon {
+  color: white;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 25px;
+  
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  font-size: 16px;
+  opacity: 1;
+}
+
+.login-input::placeholder {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.input-icon {
+  position: absolute;
+  top: 51%;
+  right: 310px;
+  transform: translateY(-50%);
+  font-size: 25px;
+  opacity: 0.7;
+}
+
+.login-button {
+  padding: 10px;
+  background-color: white;
+  color: #2148C0;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: grey;
+}
+
+.forgot-password-link {
+  margin-top: 10px;
+  font-size: 14px;
+  color: lightgrey;
+  text-decoration: none;
+}
+
+.forgot-password-link:hover {
+  color: white;
+}

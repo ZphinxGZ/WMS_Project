@@ -16,10 +16,13 @@ import "./App.css";
 
 // data
 import ProductData from "./Data/ProductData";
+import Login from "./Pages/Login/Login";
 
 const initialTab = "home";
 
 function App() {
+  const [token, setToken] = useState("");
+
   const [tab, setTab] = useState("");
   const [products, setProducts] = useState(ProductData);
 
@@ -42,6 +45,11 @@ function App() {
       )
     );
   };
+
+   if (token === '' )  {
+  return (
+    <Login /> 
+  ) }else{
 
   return (
     <div>
@@ -72,6 +80,7 @@ function App() {
       </HashRouter>
     </div>
   );
+  }
 }
 
 export default App;
