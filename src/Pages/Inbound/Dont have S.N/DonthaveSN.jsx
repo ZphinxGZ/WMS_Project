@@ -70,10 +70,14 @@ function DonthaveSN({ addProduct, products }) {
       return;
     }
 
+    const latestID = products.length > 0 ? Math.max(...products.map(product => parseInt(product.id))) : 0;
+    const newID = (latestID + 1).toString();
+
     const newProduct = {
-      id: products.length > 0 ? products[products.length - 1].id + 1 : 1, // Generate ID based on the last product ID
+      id: newID, // Generate ID based on the last product ID
       product_name: productName,
       product_number: productCode,
+      series_number: "",
       unit: unitName,
       QTY: parseInt(quantity, 10),
       price: parseFloat(price),
@@ -81,6 +85,8 @@ function DonthaveSN({ addProduct, products }) {
       room,
       state: rack,
       inbound_date: formattedToday,
+      outbound_date: formattedToday,
+      approve_name: "คุณากร",
       haveSN: false, // Set haveSN to false
       approve: false,
       status: 'รออนุมัติ',

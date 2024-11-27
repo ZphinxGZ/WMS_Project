@@ -78,11 +78,11 @@ function HaveSN({ addProduct, products }) {
       unit: "ชิ้น",
       QTY: Number(quantity),
       inbound_date: today,
-      outbound_date: "", // Leave outbound_date empty for now
+      outbound_date: today, // Leave outbound_date empty for now
       warehouse: Number(warehouse),
       room: Number(room),
       state: Number(rack),
-      approve_name: "",
+      approve_name: "คุณากร",
       status: "รออนุมัติ",
       price: parseFloat(price),
       haveSN: true,
