@@ -6,7 +6,7 @@ function DataHistory({ data_product }) {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("รออนุมัติ");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [tableData, setTableData] = useState([]);
