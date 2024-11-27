@@ -16,10 +16,12 @@ import "./App.css";
 
 // data
 import ProductData from "./Data/ProductData";
+import Login from "./Pages/Login/Login";
 
 const initialTab = "home";
 
 function App() {
+  const [token, setToken] = useState(''); 
   const [tab, setTab] = useState(initialTab);
   const [products, setProducts] = useState(ProductData); // ข้อมูลสินค้าเดิม
   const [outboundProducts, setOutboundProducts] = useState([]); // ข้อมูลที่ได้รับจาก Outbound
@@ -59,6 +61,11 @@ function App() {
     ]);
   };
 
+  if (token === '' )  {
+    return (
+      <Login setToken={setToken} />    
+    ) }else{
+  
   return (
     <div>
       <HashRouter>
@@ -101,5 +108,5 @@ function App() {
     </div>
   );
 }
-
+}
 export default App;

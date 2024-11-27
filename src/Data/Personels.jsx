@@ -39,9 +39,11 @@ const Personels = [
   { 
     id: 5,
     name: "Methaphon Thongnak",
+    pass: " ",
     role: "admin",
     completed: true,
     tel: "0856789012",
+    token: "name",
   },
 ];
 
