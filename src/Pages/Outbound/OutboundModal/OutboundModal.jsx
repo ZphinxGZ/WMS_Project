@@ -8,7 +8,8 @@ function OutboundModal({
   handleIncreaseQuantity,
   handleDecreaseQuantity,
   handleCancelItem,
-  handleConfirm
+  handleConfirm,
+  outboundItems,
 }) {
   return (
     <Modal
@@ -24,7 +25,7 @@ function OutboundModal({
         <Table striped bordered hover responsive>
           <thead>
             <tr>
-              <th>รหัสสินค้า</th>
+              <th style={{ width: "10%" }}>รหัสสินค้า</th>
               <th>รายการ</th>
               <th>จำนวน</th>
               <th>หน่วย</th>
@@ -39,27 +40,31 @@ function OutboundModal({
                 <td>{item.productNumber}</td>
                 <td>{item.name}</td>
                 <td>
-                  <div className="quantity-controls">
-                    <Button
-                      variant="outline-success"
-                      onClick={() => handleIncreaseQuantity(item)}
-                      disabled={item.quantity >= item.maxQuantity}
-                    >
-                      +
-                    </Button>
-                    {item.quantity}
-                    <Button
-                      variant="outline-danger"
-                      onClick={() => handleDecreaseQuantity(item)}
-                      disabled={item.quantity <= 1}
-                    >
-                      -
-                    </Button>
-                  </div>
+                  <Button
+                    variant="outline-success"
+                    onClick={() => handleIncreaseQuantity(item)}
+                    style={{ marginRight: "10px" }} // ระยะห่างระหว่างปุ่ม "+" และตัวเลข
+                  >
+                    +
+                  </Button>
+                  <span style={{ margin: "0 10px" }}>{item.quantity}</span>{" "}
+                  {/* ระยะห่างระหว่างปุ่มและตัวเลข */}
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => handleDecreaseQuantity(item)}
+                    style={{ marginLeft: "10px" }} // ระยะห่างระหว่างตัวเลขและปุ่ม "-"
+                  >
+                    -
+                  </Button>
                 </td>
+
                 <td>{item.unit}</td>
-                <td>{item.price || "-"}</td>
-                <td>{item.warehouse}</td>
+                <td>{item.price}</td>
+                <td>
+                  {outboundItems.find((product) => product.id === item.id)
+                    ?.quantity || 0}
+                </td>
+
                 <td>
                   <Button
                     variant="danger"
@@ -74,16 +79,10 @@ function OutboundModal({
         </Table>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="secondary"
-          onClick={() => setShowModal(false)}
-        >
+        <Button variant="secondary" onClick={() => setShowModal(false)}>
           ยกเลิก
         </Button>
-        <Button
-          variant="primary"
-          onClick={handleConfirm}
-        >
+        <Button variant="primary" onClick={handleConfirm}>
           ยืนยัน
         </Button>
       </Modal.Footer>

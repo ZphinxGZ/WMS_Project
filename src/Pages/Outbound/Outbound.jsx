@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Outbound.css";
 import { Button, Pagination } from "react-bootstrap";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaSearch } from "react-icons/fa"; // Add FaSearch here
 import OutboundModal from "./OutboundModal/OutboundModal";
 
 function Outbound({ products, handleOutboundUpdate }) {
@@ -11,6 +11,7 @@ function Outbound({ products, handleOutboundUpdate }) {
   const [selectedItemsForConfirmation, setSelectedItemsForConfirmation] =
     useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const outboundItems = products.map((product) => ({
     id: product.id,
@@ -99,9 +100,20 @@ function Outbound({ products, handleOutboundUpdate }) {
     setSelectedItemsForConfirmation(updatedCart);
   };
 
-  // Pagination logic
-  const totalPages = Math.ceil(outboundItems.length / itemsPerPage);
-  const currentItems = outboundItems.slice(
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to first page on search
+  };
+
+  const filteredItems = outboundItems.filter(
+    (item) =>
+      item.id.toString().includes(searchQuery) ||
+      item.productNumber?.toString().includes(searchQuery) ||
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const currentItems = filteredItems.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -117,33 +129,46 @@ function Outbound({ products, handleOutboundUpdate }) {
 
   return (
     <div className="outbound-container">
-      <div className="search-cart-row">
-        <div className="items-per-page-select">
-          <label htmlFor="itemsPerPage">แสดง:</label>
-          <select
-            id="itemsPerPage"
-            value={itemsPerPage}
-            onChange={handleItemsPerPageChange}
-            className="form-select"
-          >
-            <option value={10}>10 รายการ</option>
-            <option value={20}>20 รายการ</option>
-            <option value={50}>50 รายการ</option>
-            <option value={100}>100 รายการ</option>
-          </select>
-        </div>
+     <div className="search-cart-row">
+  <div className="items-per-page-select">
+    <label htmlFor="itemsPerPage">แสดง:</label>
+    <select
+      id="itemsPerPage"
+      value={itemsPerPage}
+      onChange={handleItemsPerPageChange}
+      className="form-select"
+    >
+      <option value={10}>10 รายการ</option>
+      <option value={20}>20 รายการ</option>
+      <option value={50}>50 รายการ</option>
+      <option value={100}>100 รายการ</option>
+    </select>
+  </div>
 
-        <Button className="item-list-button" onClick={handleShowCart}>
-          รายการ
-        </Button>
+  <input
+    type="text"
+    placeholder="ค้นหา (ID, รหัสสินค้า, ชื่อ)"
+    value={searchQuery}
+    onChange={handleSearchChange}
+    className="form-control search-input"
+  />
 
-        <div className="cart-icon-container">
-          <FaShoppingCart size={28} color="#007bff" />
-          {cart.length > 0 && (
-            <span className="badge bg-danger">{cart.length}</span>
-          )}
-        </div>
-      </div>
+  <div className="search-icon-container">
+    <FaSearch size={20} />
+  </div>
+
+  <Button className="item-list-button" onClick={handleShowCart}>
+    รายการ
+  </Button>
+
+  <div className="cart-icon-container">
+    <FaShoppingCart size={28} color="#007bff" />
+    {cart.length > 0 && (
+      <span className="badge bg-danger">{cart.length}</span>
+    )}
+  </div>
+</div>
+
 
       <div className="outbound-table-container">
         <table className="outbound-table">
@@ -213,8 +238,10 @@ function Outbound({ products, handleOutboundUpdate }) {
         handleDecreaseQuantity={handleDecreaseQuantity}
         handleCancelItem={handleCancelItem}
         handleConfirm={handleConfirm}
+        outboundItems={outboundItems}
       />
     </div>
   );
 }
+
 export default Outbound;
