@@ -58,7 +58,7 @@ function App() {
       ...newData,
     ]);
   };
-  
+
   return (
     <div>
       <HashRouter>
