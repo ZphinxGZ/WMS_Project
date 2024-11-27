@@ -21,7 +21,7 @@ function OutboundModal({
         <Modal.Title>ยืนยันการเลือกสินค้า</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>รหัสสินค้า</th>
@@ -39,22 +39,26 @@ function OutboundModal({
                 <td>{item.productNumber}</td>
                 <td>{item.name}</td>
                 <td>
-                  <Button
-                    variant="outline-success"
-                    onClick={() => handleIncreaseQuantity(item)}
-                  >
-                    +
-                  </Button>
-                  {item.quantity}
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => handleDecreaseQuantity(item)}
-                  >
-                    -
-                  </Button>
+                  <div className="quantity-controls">
+                    <Button
+                      variant="outline-success"
+                      onClick={() => handleIncreaseQuantity(item)}
+                      disabled={item.quantity >= item.maxQuantity}
+                    >
+                      +
+                    </Button>
+                    {item.quantity}
+                    <Button
+                      variant="outline-danger"
+                      onClick={() => handleDecreaseQuantity(item)}
+                      disabled={item.quantity <= 1}
+                    >
+                      -
+                    </Button>
+                  </div>
                 </td>
                 <td>{item.unit}</td>
-                <td>{item.price}</td>
+                <td>{item.price || "-"}</td>
                 <td>{item.warehouse}</td>
                 <td>
                   <Button

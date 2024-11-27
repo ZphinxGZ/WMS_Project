@@ -24,6 +24,7 @@ function App() {
   const [products, setProducts] = useState(ProductData); // ข้อมูลสินค้าเดิม
   const [outboundProducts, setOutboundProducts] = useState([]); // ข้อมูลที่ได้รับจาก Outbound
 
+  // ใช้ useEffect หากต้องการทำบางอย่างเมื่อแอปเริ่มต้น
   useEffect(() => {
     setTab(initialTab);
   }, []);
@@ -46,6 +47,12 @@ function App() {
 
   // Function to add or update outbound product data
   const handleOutboundUpdate = (newData) => {
+    // ตรวจสอบว่า newData มีข้อมูลหรือไม่
+    if (newData.length === 0) {
+      alert("ไม่มีข้อมูลใหม่ที่จะบันทึก");
+      return;
+    }
+
     setOutboundProducts((prevOutboundProducts) => [
       ...prevOutboundProducts,
       ...newData,
@@ -75,7 +82,11 @@ function App() {
             />
             <Route
               path="/datahistory"
-              element={<DataHistory data_product={[...products, ...outboundProducts]} />} // ส่งข้อมูลรวมกันไปที่ DataHistory
+              element={
+                <DataHistory
+                  data_product={[...products, ...outboundProducts,...outboundProducts]} // ส่งข้อมูลจาก outboundProducts ไปที่ DataHistory
+                />
+              }
             />
             <Route path="/personel" element={<Personel />} />
             <Route path="/settings" element={<Setting />} />

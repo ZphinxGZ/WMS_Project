@@ -23,26 +23,46 @@ function Outbound({ products, handleOutboundUpdate }) {
     price: product.price,
     warehouse: product.warehouse,
     status: product.status,
+    maxQuantity: product.QTY // สมมุติว่า QTY คือจำนวนสินค้าคงเหลือ
   }));
 
+  // Add item to cart
   const handleAddToCart = (item) => {
     if (!cart.some((cartItem) => cartItem.id === item.id)) {
       setCart([...cart, { ...item, quantity: 1 }]);
     }
   };
 
+  // Handle displaying cart for confirmation
   const handleShowCart = () => {
     setSelectedItemsForConfirmation(cart);
     setShowModal(true);
   };
 
+  // Confirm cart items and update outbound
   const handleConfirm = () => {
     alert("สินค้าถูกยืนยันแล้ว");
     setShowModal(false);
-    setCart([]);
-    handleOutboundUpdate(cart);
-  };
+    
+    // สร้าง array ใหม่เพื่อส่งข้อมูลไปยัง datahistory
+    const outboundHistory = cart.map((item) => ({
+      productNumber: item.productNumber,
+      name: item.name,
+      quantity: item.quantity,
+      unit: item.unit,
+      price: item.price,
+      warehouse: item.warehouse,
+      status: item.status,
+      timestamp: new Date().toISOString(),  // เพิ่ม timestamp เพื่อระบุเวลาที่บันทึก
+    }));
 
+    // ส่งข้อมูลไปยัง handleOutboundUpdate
+    handleOutboundUpdate(outboundHistory);
+
+    setCart([]); // Clear cart after confirmation
+};
+
+  // Remove item from cart
   const handleCancelItem = (item) => {
     const updatedCart = selectedItemsForConfirmation.filter(
       (cartItem) => cartItem.id !== item.id
@@ -52,6 +72,7 @@ function Outbound({ products, handleOutboundUpdate }) {
     alert(`สินค้าชื่อ "${item.name}" ถูกลบออกจากตะกร้า`);
   };
 
+  // Increase item quantity in cart
   const handleIncreaseQuantity = (item) => {
     const availableItem = outboundItems.find((product) => product.id === item.id);
     if (availableItem && item.quantity < availableItem.quantity) {
@@ -67,6 +88,7 @@ function Outbound({ products, handleOutboundUpdate }) {
     }
   };
 
+  // Decrease item quantity in cart
   const handleDecreaseQuantity = (item) => {
     const updatedCart = cart.map((cartItem) =>
       cartItem.id === item.id && cartItem.quantity > 1
@@ -77,6 +99,7 @@ function Outbound({ products, handleOutboundUpdate }) {
     setSelectedItemsForConfirmation(updatedCart);
   };
 
+  // Pagination logic
   const totalPages = Math.ceil(outboundItems.length / itemsPerPage);
   const currentItems = outboundItems.slice(
     (currentPage - 1) * itemsPerPage,
