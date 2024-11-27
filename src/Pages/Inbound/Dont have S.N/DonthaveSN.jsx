@@ -4,7 +4,7 @@ import { Modal, Button, Form, Row, Col, Alert } from 'react-bootstrap';
 // STYLE
 import './DonthaveSN.css';
 
-function DonthaveSN({ addProduct }) {
+function DonthaveSN({ addProduct, products }) {
   const [show, setShow] = useState(false);
   const [warehouse, setWarehouse] = useState('');
   const [room, setRoom] = useState('');
@@ -49,6 +49,7 @@ function DonthaveSN({ addProduct }) {
   const roomOptions = Array.from({ length: 4 }, (_, i) => i + 1);
   const rackOptions = Array.from({ length: 10 }, (_, i) => i + 1);
 
+  // Handle key events for modal
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -69,9 +70,14 @@ function DonthaveSN({ addProduct }) {
       return;
     }
 
+    const latestID = products.length > 0 ? Math.max(...products.map(product => parseInt(product.id))) : 0;
+    const newID = (latestID + 1).toString();
+
     const newProduct = {
+      id: newID, // Generate ID based on the last product ID
       product_name: productName,
       product_number: productCode,
+      series_number: "",
       unit: unitName,
       QTY: parseInt(quantity, 10),
       price: parseFloat(price),
@@ -79,7 +85,9 @@ function DonthaveSN({ addProduct }) {
       room,
       state: rack,
       inbound_date: formattedToday,
-      haveSN: true,
+      outbound_date: formattedToday,
+      approve_name: "คุณากร",
+      haveSN: false, // Set haveSN to false
       approve: false,
       status: 'รออนุมัติ',
     };

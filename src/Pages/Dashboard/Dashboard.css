@@ -102,4 +102,7 @@
   padding: 1rem;
   justify-content: center;
   margin-top: 2rem;
+  .chart{
+    margin: 50px;
+  }
 }

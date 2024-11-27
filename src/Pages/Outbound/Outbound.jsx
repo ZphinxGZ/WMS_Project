@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import "./Outbound.css";
-import { Button, Modal, Table } from "react-bootstrap";
-import { FaShoppingCart, FaSearch } from "react-icons/fa";
-import ProductData from "../../Data/ProductData"; // นำเข้าข้อมูลสินค้า
+import { Button, Pagination } from "react-bootstrap";
+import { FaShoppingCart } from "react-icons/fa";
+import OutboundModal from "./OutboundModal/OutboundModal";
 
-function fetchProducts() {
-  return ProductData.map((product) => ({
+function Outbound({ products, handleOutboundUpdate }) {
+  const [cart, setCart] = useState([]);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItemsForConfirmation, setSelectedItemsForConfirmation] =
+    useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const outboundItems = products.map((product) => ({
     id: product.id,
     name: product.product_name,
     quantity: product.QTY,
@@ -17,19 +24,6 @@ function fetchProducts() {
     warehouse: product.warehouse,
     status: product.status,
   }));
-}
-
-function Outbound() {
-  const [outboundItems, setOutboundItems] = useState(fetchProducts());
-  const [cart, setCart] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedItemsForConfirmation, setSelectedItemsForConfirmation] =
-    useState([]);
-  const [sortOrder, setSortOrder] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
 
   const handleAddToCart = (item) => {
     if (!cart.some((cartItem) => cartItem.id === item.id)) {
@@ -46,6 +40,7 @@ function Outbound() {
     alert("สินค้าถูกยืนยันแล้ว");
     setShowModal(false);
     setCart([]);
+    handleOutboundUpdate(cart);
   };
 
   const handleCancelItem = (item) => {
@@ -82,26 +77,8 @@ function Outbound() {
     setSelectedItemsForConfirmation(updatedCart);
   };
 
-  const filteredItems = outboundItems.filter(
-    (item) =>
-      (item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.id.toString().includes(searchQuery)) &&
-      (selectedCategory === "" ||
-        (selectedCategory === "has-series" && item.haveSN) ||
-        (selectedCategory === "no-series" && !item.haveSN))
-  );
-
-  const sortedItems = [...filteredItems].sort((a, b) => {
-    if (sortOrder === "asc") {
-      return a.quantity - b.quantity;
-    } else if (sortOrder === "desc") {
-      return b.quantity - a.quantity;
-    }
-    return 0;
-  });
-
-  const totalPages = Math.ceil(sortedItems.length / itemsPerPage);
-  const currentItems = sortedItems.slice(
+  const totalPages = Math.ceil(outboundItems.length / itemsPerPage);
+  const currentItems = outboundItems.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -114,11 +91,6 @@ function Outbound() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
 
   return (
     <div className="outbound-container">
@@ -136,42 +108,6 @@ function Outbound() {
             <option value={50}>50 รายการ</option>
             <option value={100}>100 รายการ</option>
           </select>
-        </div>
-
-        <div className="category-select">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="form-select"
-          >
-            <option value="">ทั้งหมด</option>
-            <option value="has-series">มีs/n</option>
-            <option value="no-series">ไม่มีs/n</option>
-          </select>
-        </div>
-
-        <div className="sort-select">
-          <label htmlFor="itemsPerPage">จำนวน:</label>
-          <select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
-            className="form-select"
-          >
-            <option value="">เรียงตามจำนวน</option>
-            <option value="asc">น้อยไปมาก</option>
-            <option value="desc">มากไปน้อย</option>
-          </select>
-        </div>
-
-        <div className="search-bar">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="ค้นหาสินค้า..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <FaSearch className="search-icon" />
         </div>
 
         <Button className="item-list-button" onClick={handleShowCart}>
@@ -200,9 +136,9 @@ function Outbound() {
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((item, index) => (
+            {currentItems.map((item) => (
               <tr key={item.id}>
-                <td>{index + 1}</td>
+                <td>{item.id}</td>
                 <td>{item.haveSN ? item.seriesNumber : item.productNumber}</td>
                 <td>{item.name}</td>
                 <td>{item.quantity}</td>
@@ -224,133 +160,37 @@ function Outbound() {
         </table>
       </div>
 
-      {/* เพิ่ม Pagination พร้อมตัวเลข */}
       <div className="pagination-container">
-        <Button
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          ก่อนหน้า
-        </Button>
-
-        {/* แสดงตัวเลขของหน้า */}
-        {pageNumbers.map((number) => (
-          <Button
-            key={number}
-            onClick={() => handlePageChange(number)}
-            className={`page-number-button ${
-              currentPage === number ? "active" : ""
-            }`}
-          >
-            {number}
-          </Button>
-        ))}
-
-        <Button
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          ถัดไป
-        </Button>
+        <Pagination>
+          <Pagination.Prev
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          />
+          {Array.from({ length: totalPages }, (_, i) => (
+            <Pagination.Item
+              key={i + 1}
+              active={i + 1 === currentPage}
+              onClick={() => handlePageChange(i + 1)}
+            >
+              {i + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          />
+        </Pagination>
       </div>
 
-      <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        centered
-        size="lg"
-        style={{
-          maxWidth: "100%",
-          marginTop: "2%",
-        }}
-      >
-        <Modal.Header closeButton className="bg-primary text-white">
-          <Modal.Title>ยืนยันการเลือกสินค้า</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th style={{ width: "10%" }}>รหัสสินค้า</th>
-                <th>รายการ</th>
-                <th>จำนวน</th>
-                <th>หน่วย</th>
-                <th>ราคา/หน่วย</th>
-                <th>คลัง</th>
-                <th>จัดการ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedItemsForConfirmation.length > 0 ? (
-                selectedItemsForConfirmation.map((item) => {
-                  const availableItem = outboundItems.find(
-                    (product) => product.id === item.id
-                  );
-                  return (
-                    <tr key={item.id}>
-                      <td>
-                        {item.haveSN ? item.seriesNumber : item.productNumber}
-                      </td>
-                      <td style={{ width: "20%" }}>{item.name}</td>
-                      <td style={{ width: "18%" }}>
-                        <div className="quantity-buttons-container">
-                          <Button
-                            variant="secondary"
-                            className="quantity-button"
-                            onClick={() => handleDecreaseQuantity(item)}
-                          >
-                            -
-                          </Button>
-                          {item.quantity}
-                          <Button
-                            variant="secondary"
-                            className="quantity-button"
-                            onClick={() => handleIncreaseQuantity(item)}
-                            disabled={
-                              availableItem &&
-                              item.quantity >= availableItem.quantity
-                            }
-                          >
-                            +
-                          </Button>
-                        </div>
-                      </td>
-
-                      <td>{item.unit}</td>
-                      <td>{item.price}</td>
-                      <td>
-                        {availableItem ? availableItem.quantity : "ไม่มีข้อมูล"}
-                      </td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          onClick={() => handleCancelItem(item)}
-                        >
-                          ยกเลิก
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan="7" className="text-center">
-                    ไม่มีสินค้าในตะกร้า
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            ยกเลิก
-          </Button>
-          <Button variant="primary" onClick={handleConfirm}>
-            ยืนยัน
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <OutboundModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        selectedItemsForConfirmation={selectedItemsForConfirmation}
+        handleIncreaseQuantity={handleIncreaseQuantity}
+        handleDecreaseQuantity={handleDecreaseQuantity}
+        handleCancelItem={handleCancelItem}
+        handleConfirm={handleConfirm}
+      />
     </div>
   );
 }

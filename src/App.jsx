@@ -20,8 +20,9 @@ import ProductData from "./Data/ProductData";
 const initialTab = "home";
 
 function App() {
-  const [tab, setTab] = useState("");
-  const [products, setProducts] = useState(ProductData);
+  const [tab, setTab] = useState(initialTab);
+  const [products, setProducts] = useState(ProductData); // ข้อมูลสินค้าเดิม
+  const [outboundProducts, setOutboundProducts] = useState([]); // ข้อมูลที่ได้รับจาก Outbound
 
   useEffect(() => {
     setTab(initialTab);
@@ -43,6 +44,14 @@ function App() {
     );
   };
 
+  // Function to add or update outbound product data
+  const handleOutboundUpdate = (newData) => {
+    setOutboundProducts((prevOutboundProducts) => [
+      ...prevOutboundProducts,
+      ...newData,
+    ]);
+  };
+
   return (
     <div>
       <HashRouter>
@@ -54,16 +63,19 @@ function App() {
               path="/inbound"
               element={<Inbound products={products} addProduct={addProduct} />}
             />
-            {/* ส่ง products และ updateProduct ไปที่ Outbound */}
             <Route
               path="/outbound"
               element={
-                <Outbound products={products} updateProduct={updateProduct} />
+                <Outbound
+                  products={products}
+                  updateProduct={updateProduct}
+                  handleOutboundUpdate={handleOutboundUpdate} // ส่งฟังก์ชันให้ Outbound
+                />
               }
             />
             <Route
               path="/datahistory"
-              element={<DataHistory data_product={products} />}
+              element={<DataHistory data_product={[...products, ...outboundProducts]} />} // ส่งข้อมูลรวมกันไปที่ DataHistory
             />
             <Route path="/personel" element={<Personel />} />
             <Route path="/settings" element={<Setting />} />
