@@ -20,7 +20,6 @@ import ProductData from "./Data/ProductData";
 const initialTab = "home";
 
 function App() {
-  const [token, setToken] = useState('x'); 
   const [tab, setTab] = useState(initialTab);
   const [products, setProducts] = useState(ProductData); // ข้อมูลสินค้าเดิม
   const [outboundProducts, setOutboundProducts] = useState([]); // ข้อมูลที่ได้รับจาก Outbound
@@ -59,10 +58,7 @@ function App() {
       ...newData,
     ]);
   };
-  if (token === '' )  {
-    return (
-      <Login setToken={setToken} />    
-    ) }else{
+  
   return (
     <div>
       <HashRouter>
@@ -104,7 +100,6 @@ function App() {
       </HashRouter>
     </div>
   );
-}
 }
 
 export default App;
