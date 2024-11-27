@@ -58,7 +58,12 @@ function App() {
         <Routes>
           <Route element={<Layouts tab={tab} setTab={setTab} />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard products={products} />} />
+            <Route
+              path="/dashboard"
+              element={<Dashboard products={products} />}
+            />
+
             <Route
               path="/inbound"
               element={<Inbound products={products} addProduct={addProduct} />}
@@ -75,7 +80,11 @@ function App() {
             />
             <Route
               path="/datahistory"
-              element={<DataHistory data_product={[...products, ...outboundProducts]} />} // ส่งข้อมูลรวมกันไปที่ DataHistory
+              element={
+                <DataHistory
+                  data_product={[...products, ...outboundProducts]}
+                />
+              } // ส่งข้อมูลรวมกันไปที่ DataHistory
             />
             <Route path="/personel" element={<Personel />} />
             <Route path="/settings" element={<Setting />} />
