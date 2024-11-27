@@ -16,16 +16,16 @@ import "./App.css";
 
 // data
 import ProductData from "./Data/ProductData";
-import Login from "./Pages/Login/Login";
 
 const initialTab = "home";
 
 function App() {
   const [token, setToken] = useState('x'); 
+  const [tab, setTab] = useState(initialTab);
+  const [products, setProducts] = useState(ProductData); // ข้อมูลสินค้าเดิม
+  const [outboundProducts, setOutboundProducts] = useState([]); // ข้อมูลที่ได้รับจาก Outbound
 
-  const [tab, setTab] = useState("");
-  const [products, setProducts] = useState(ProductData);
-
+  // ใช้ useEffect หากต้องการทำบางอย่างเมื่อแอปเริ่มต้น
   useEffect(() => {
     setTab(initialTab);
   }, []);
@@ -46,32 +46,56 @@ function App() {
     );
   };
 
-   if (token === '' )  {
-  return (
-    <Login setToken={setToken} />    
-  ) }else{
+  // Function to add or update outbound product data
+  const handleOutboundUpdate = (newData) => {
+    // ตรวจสอบว่า newData มีข้อมูลหรือไม่
+    if (newData.length === 0) {
+      alert("ไม่มีข้อมูลใหม่ที่จะบันทึก");
+      return;
+    }
 
+    setOutboundProducts((prevOutboundProducts) => [
+      ...prevOutboundProducts,
+      ...newData,
+    ]);
+  };
+  if (token === '' )  {
+    return (
+      <Login setToken={setToken} />    
+    ) }else{
   return (
     <div>
       <HashRouter>
         <Routes>
-          <Route element={<Layouts tab={tab} setTab={setTab} setToken={setToken} />}>
+          <Route element={<Layouts tab={tab} setTab={setTab} />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard products={products} />} />
+            <Route
+              path="/dashboard"
+              element={<Dashboard products={products} />}
+            />
+
             <Route
               path="/inbound"
               element={<Inbound products={products} addProduct={addProduct} />}
             />
-            {/* ส่ง products และ updateProduct ไปที่ Outbound */}
             <Route
               path="/outbound"
               element={
-                <Outbound products={products} updateProduct={updateProduct} />
+                <Outbound
+                  products={products}
+                  updateProduct={updateProduct}
+                  handleOutboundUpdate={handleOutboundUpdate} // ส่งฟังก์ชันให้ Outbound
+                />
               }
             />
             <Route
               path="/datahistory"
-              element={<DataHistory data_product={products} />}
+              element={
+                <DataHistory
+                  data_product={[...products, ...outboundProducts]}
+                />
+              } // ส่งข้อมูลรวมกันไปที่ DataHistory
             />
             <Route path="/personel" element={<Personel />} />
             <Route path="/settings" element={<Setting />} />
@@ -80,7 +104,7 @@ function App() {
       </HashRouter>
     </div>
   );
-  }
+}
 }
 
 export default App;
