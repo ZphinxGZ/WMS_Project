@@ -8,7 +8,8 @@ function OutboundModal({
   handleIncreaseQuantity,
   handleDecreaseQuantity,
   handleCancelItem,
-  handleConfirm
+  handleConfirm,
+  outboundItems,
 }) {
   return (
     <Modal
@@ -24,7 +25,7 @@ function OutboundModal({
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>รหัสสินค้า</th>
+              <th style={{ width: "10%" }}>รหัสสินค้า</th>
               <th>รายการ</th>
               <th>จำนวน</th>
               <th>หน่วย</th>
@@ -42,20 +43,28 @@ function OutboundModal({
                   <Button
                     variant="outline-success"
                     onClick={() => handleIncreaseQuantity(item)}
+                    style={{ marginRight: "10px" }} // ระยะห่างระหว่างปุ่ม "+" และตัวเลข
                   >
                     +
                   </Button>
-                  {item.quantity}
+                  <span style={{ margin: "0 10px" }}>{item.quantity}</span>{" "}
+                  {/* ระยะห่างระหว่างปุ่มและตัวเลข */}
                   <Button
                     variant="outline-danger"
                     onClick={() => handleDecreaseQuantity(item)}
+                    style={{ marginLeft: "10px" }} // ระยะห่างระหว่างตัวเลขและปุ่ม "-"
                   >
                     -
                   </Button>
                 </td>
+
                 <td>{item.unit}</td>
                 <td>{item.price}</td>
-                <td>{item.warehouse}</td>
+                <td>
+                  {outboundItems.find((product) => product.id === item.id)
+                    ?.quantity || 0}
+                </td>
+
                 <td>
                   <Button
                     variant="danger"
@@ -70,16 +79,10 @@ function OutboundModal({
         </Table>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="secondary"
-          onClick={() => setShowModal(false)}
-        >
+        <Button variant="secondary" onClick={() => setShowModal(false)}>
           ยกเลิก
         </Button>
-        <Button
-          variant="primary"
-          onClick={handleConfirm}
-        >
+        <Button variant="primary" onClick={handleConfirm}>
           ยืนยัน
         </Button>
       </Modal.Footer>
