@@ -21,7 +21,7 @@ import Login from "./Pages/Login/Login";
 const initialTab = "home";
 
 function App() {
-  const [token, setToken] = useState(''); 
+  const [token, setToken] = useState('x'); 
 
   const [tab, setTab] = useState("");
   const [products, setProducts] = useState(ProductData);
@@ -48,14 +48,14 @@ function App() {
 
    if (token === '' )  {
   return (
-    <Login setToken={setToken} /> 
+    <Login setToken={setToken} />    
   ) }else{
 
   return (
     <div>
       <HashRouter>
         <Routes>
-          <Route element={<Layouts tab={tab} setTab={setTab} />}>
+          <Route element={<Layouts tab={tab} setTab={setTab} setToken={setToken} />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route

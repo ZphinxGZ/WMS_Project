@@ -1,4 +1,5 @@
 const Personels = [
+  
   {
     id: 1,
     name: "Nattanicha Prueprang",
@@ -19,7 +20,7 @@ const Personels = [
   },
   {
     id: 3,
-    name: "Nitiphon Udomphot",
+    name: "Nitiphon",
     pass: "123456789",
     role: "admin",
     completed: true,
@@ -35,10 +36,10 @@ const Personels = [
     tel: "0845678901",
     token: "name",
   },
-  {
+  { 
     id: 5,
     name: "Methaphon Thongnak",
-    pass: "123456789",
+    pass: " ",
     role: "admin",
     completed: true,
     tel: "0856789012",

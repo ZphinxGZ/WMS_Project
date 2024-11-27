@@ -45,7 +45,7 @@ const Login = ({ setToken }) => {
           </div>
         </div>
         <div className="input-container">
-          <input
+          <input  
             type="password"
             placeholder="PASSWORD"
             className="login-input"
@@ -59,9 +59,9 @@ const Login = ({ setToken }) => {
           LOGIN
         </button>
       </form>
-      <a href="/forgot-password" className="forgot-password-link">
+      {/* <a href="/forgot-password" className="forgot-password-link">
         Forgot password?
-      </a>
+      </a> */}
     </div>
   );
 };

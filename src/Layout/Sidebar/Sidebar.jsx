@@ -5,37 +5,41 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function MyVerticallyCenteredModal(props) {
+function MyVerticallyCenteredModal({ show, onHide, setToken }) {
   return (
     <Modal
-      {...props}
+      show={show}
+      onHide={onHide}
       className='modal-logout'
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton
-      style={{ backgroundColor: '#74bdbc', color: 'white' }}>
+      <Modal.Header closeButton style={{ backgroundColor: '#74bdbc', color: 'white' }}>
         <Modal.Title id="contained-modal-title-vcenter">
-        ออกจากระบบ
-        </Modal.Title>  
+          ออกจากระบบ
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <h4>ยืนยันการออกจากระบบ?</h4>
-        <p>
-          
-        </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button className='btn btn-primary' onClick={props.onHide}>Ok</Button>
-        <Button className='btn btn-danger' onClick={props.onHide}>Cancel</Button>
+        <Button 
+          className='btn btn-primary' 
+          onClick={() => {
+            setToken('');  // Clear token
+            onHide();      // Close the modal after logging out
+          }}
+        >
+          Ok
+        </Button>
+        <Button className='btn btn-danger' onClick={onHide}>Cancel</Button>
       </Modal.Footer>
     </Modal>
   );
 }
 
-
-function Sidebar({ tab, setTab, isActive, setIsActive }) {
+function Sidebar({ tab, setTab, isActive, setIsActive, setToken }) {
   const [modalShow, setModalShow] = React.useState(false);
   const location = useLocation();
 
@@ -54,7 +58,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
         setTab('datahistory');
         break;
       case '/personel':
-        setTab('personel'); 
+        setTab('personel');
         break;
       case '/settings':
         setTab('settings');
@@ -66,7 +70,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
 
   const toggleSidebar = () => {
     setIsActive(!isActive);
-  };  
+  };
 
   return (
     <div className={`sidebar ${isActive ? 'active' : ''}`}>
@@ -119,14 +123,6 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
           </Link>
           <span className="tooltip">Personel Information</span>
         </li>
-
-        {/* <li className={tab === 'settings' ? 'active' : ''}>
-          <Link to="/settings">
-            <i className="bi bi-gear-fill"></i>
-            <span className="link_name">Setting</span>
-          </Link>
-          <span className="tooltip">Setting</span>
-        </li> */}
       </ul>
 
       {/* Profile */}
@@ -141,9 +137,10 @@ function Sidebar({ tab, setTab, isActive, setIsActive }) {
           </div>
           <i className="bi bi-door-closed" id="log_out" onClick={() => setModalShow(true)}></i>
           <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />  
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            setToken={setToken}  // Pass setToken to the modal
+          />
         </div>
       </div>
     </div>
