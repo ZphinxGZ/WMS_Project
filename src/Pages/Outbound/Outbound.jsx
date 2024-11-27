@@ -217,5 +217,4 @@ function Outbound({ products, handleOutboundUpdate }) {
     </div>
   );
 }
-
 export default Outbound;
