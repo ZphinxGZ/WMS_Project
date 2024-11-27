@@ -21,7 +21,7 @@ import Login from "./Pages/Login/Login";
 const initialTab = "home";
 
 function App() {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState("x");
 
   const [tab, setTab] = useState("");
   const [products, setProducts] = useState(ProductData);
