@@ -22,7 +22,7 @@ function OutboundModal({
         <Modal.Title>ยืนยันการเลือกสินค้า</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th style={{ width: "10%" }}>รหัสสินค้า</th>
