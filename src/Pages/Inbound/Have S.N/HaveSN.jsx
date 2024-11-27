@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal, Button, Form, Row, Col, Alert } from "react-bootstrap";
 
 // STYLE
 import "./HaveSN.css";
 
-function HaveSN({ addProduct }) {
+function HaveSN({ addProduct, products }) {
   const [show, setShow] = useState(false);
   const [warehouse, setWarehouse] = useState("");
   const [room, setRoom] = useState("");
@@ -65,17 +65,20 @@ function HaveSN({ addProduct }) {
 
     setFormError("");
 
+    // Get the latest ID from the existing products array and increment it
+    const latestID = products.length > 0 ? Math.max(...products.map(product => parseInt(product.id))) : 0;
+    const newID = (latestID + 1).toString();
+
     // Prepare new product object
     const newProduct = {
-      id: Date.now().toString(), // Unique ID based on timestamp
-      product_number: `P${Math.floor(Math.random() * 10000)
-        .toString()
-        .padStart(4, "0")}`, // Generate a random product number
+      id: newID, // Unique ID based on the latest ID
+      product_number: "", // Leave product_number as empty string
       series_number: serialNumber,
       product_name: productName,
       unit: "ชิ้น",
       QTY: Number(quantity),
       inbound_date: today,
+      outbound_date: "", // Leave outbound_date empty for now
       warehouse: Number(warehouse),
       room: Number(room),
       state: Number(rack),
