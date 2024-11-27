@@ -354,5 +354,4 @@ function Outbound() {
     </div>
   );
 }
-
 export default Outbound;
