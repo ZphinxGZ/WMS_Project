@@ -70,7 +70,7 @@ function App() {
     <div>
       <HashRouter>
         <Routes>
-          <Route element={<Layouts tab={tab} setTab={setTab} />}>
+          <Route element={<Layouts tab={tab} setTab={setTab} setToken={setToken}/>}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/" element={<Dashboard products={products} />} />
             <Route
