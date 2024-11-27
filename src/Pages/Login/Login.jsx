@@ -7,25 +7,23 @@ const Login = ({ setToken }) => {
   const passRef = useRef();
 
   const handleLogin = (e) => {
-    // ป้องกันไม่ให้ฟอร์มรีเฟรช
     e.preventDefault();
 
     const name = usernameRef.current.value.trim();
     const pass = passRef.current.value.trim();
 
-    // รีเซ็ตค่าในฟอร์ม
+    // รีเซ็ตค่าหลังจากตรวจสอบ
     usernameRef.current.value = "";
     passRef.current.value = "";
 
     // ตรวจสอบข้อมูลผู้ใช้
     const userInfo = verifyUser(name, pass);
 
-    // ถ้าผู้ใช้ไม่ถูกต้อง จะแสดง alert
     if (userInfo === null) {
       alert("Wrong username or password");
-      usernameRef.current.focus();  // ย้าย focus ไปที่ช่องกรอกชื่อผู้ใช้
+      usernameRef.current.focus();
     } else {
-      setToken(userInfo.token);  // ถ้าผ่าน จะส่ง token
+      setToken(userInfo.token);  // ส่ง token ที่ถูกต้อง
     }
   };
 
@@ -40,7 +38,6 @@ const Login = ({ setToken }) => {
             type="text" 
             placeholder="USERNAME" 
             className="login-input" 
-            id="username"
             ref={usernameRef}
           />
           <div className="input-icon">
@@ -52,7 +49,6 @@ const Login = ({ setToken }) => {
             type="password"
             placeholder="PASSWORD"
             className="login-input"
-            id="pass"
             ref={passRef}
           />
           <div className="input-icon">

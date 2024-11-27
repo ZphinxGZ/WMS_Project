@@ -37,7 +37,7 @@ const Personels = [
   },
   {
     id: 5,
-    name: "Itsara Boonma",
+    name: "Methaphon Thongnak",
     pass: "123456789",
     role: "admin",
     completed: true,

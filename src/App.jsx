@@ -21,7 +21,7 @@ import Login from "./Pages/Login/Login";
 const initialTab = "home";
 
 function App() {
-  const [token, setToken] = useState("x");
+  const [token, setToken] = useState(''); 
 
   const [tab, setTab] = useState("");
   const [products, setProducts] = useState(ProductData);
@@ -48,7 +48,7 @@ function App() {
 
    if (token === '' )  {
   return (
-    <Login /> 
+    <Login setToken={setToken} /> 
   ) }else{
 
   return (
