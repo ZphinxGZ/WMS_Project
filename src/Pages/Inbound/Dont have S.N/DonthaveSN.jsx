@@ -77,6 +77,7 @@ function DonthaveSN({ addProduct, products }) {
       id: newID, // Generate ID based on the last product ID
       product_name: productName,
       product_number: productCode,
+      series_number: "",
       unit: unitName,
       QTY: parseInt(quantity, 10),
       price: parseFloat(price),
@@ -84,6 +85,8 @@ function DonthaveSN({ addProduct, products }) {
       room,
       state: rack,
       inbound_date: formattedToday,
+      outbound_date: formattedToday,
+      approve_name: "คุณากร",
       haveSN: false, // Set haveSN to false
       approve: false,
       status: 'รออนุมัติ',
