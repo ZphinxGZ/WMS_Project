@@ -22,6 +22,8 @@ const initialTab = "home";
 
 function App() {
   const [token, setToken] = useState(''); 
+  const [role, setRole] = useState(null);
+  const [username, setUsername] = useState("");
   const [tab, setTab] = useState(initialTab);
   const [products, setProducts] = useState(ProductData); // ข้อมูลสินค้าเดิม
   const [outboundProducts, setOutboundProducts] = useState([]); // ข้อมูลที่ได้รับจาก Outbound
@@ -63,14 +65,14 @@ function App() {
 
   if (token === '' )  {
     return (
-      <Login setToken={setToken} />    
+      <Login setToken={setToken} setRole={setRole} setUsername={setUsername} />    
     ) }else{
   
   return (
     <div>
       <HashRouter>
         <Routes>
-          <Route element={<Layouts tab={tab} setTab={setTab} setToken={setToken}/>}>
+          <Route element={<Layouts tab={tab} setTab={setTab} setToken={setToken} role={role} username={username}/>}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/" element={<Dashboard products={products} />} />
             <Route

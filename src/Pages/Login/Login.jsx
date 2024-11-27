@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./Login.css";
 import { verifyUser } from "../../Data/Personels";
 
-const Login = ({ setToken }) => {
+const Login = ({ setToken, setRole }) => {
   const usernameRef = useRef();
   const passRef = useRef();
 
@@ -24,6 +24,8 @@ const Login = ({ setToken }) => {
       usernameRef.current.focus();
     } else {
       setToken(userInfo.token);  // ส่ง token ที่ถูกต้อง
+      setRole(userInfo.role);     // ส่ง role ไปยัง Layouts
+      setUsername(name);          // ส่ง username ไปยัง Layouts
     }
   };
 
@@ -59,9 +61,6 @@ const Login = ({ setToken }) => {
           LOGIN
         </button>
       </form>
-      {/* <a href="/forgot-password" className="forgot-password-link">
-        Forgot password?
-      </a> */}
     </div>
   );
 };

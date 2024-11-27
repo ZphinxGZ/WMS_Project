@@ -39,7 +39,7 @@ function MyVerticallyCenteredModal({ show, onHide, setToken }) {
   );
 }
 
-function Sidebar({ tab, setTab, isActive, setIsActive, setToken }) {
+function Sidebar({ tab, setTab, isActive, setIsActive, setToken, role, username  }) {
   const [modalShow, setModalShow] = React.useState(false);
   const location = useLocation();
 
@@ -77,13 +77,14 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken }) {
       <div className="logo_content">
         <div className="logo">
           <img src="../../public/img/m.png" alt="Metthier Logo" style={{ height: '70px' }} />
-          <div className="logo_name"></div>
         </div>
         <i className="bi bi-list" id="btn" onClick={toggleSidebar}></i>
       </div>
 
       {/* Sidebar Menu */}
       <ul className="nav_list">
+        {/* Dashboard */}
+        {role === 'superadmin' && (
         <li className={tab === 'dashboard' ? 'active' : ''}>
           <Link to="/dashboard">
             <i className="bi bi-bar-chart-line-fill"></i>
@@ -91,7 +92,9 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken }) {
           </Link>
           <span className="tooltip">Dashboard</span>
         </li>
+        )}
 
+        {/* Inbound (Visible for both admin and superadmin) */}
         <li className={tab === 'inbound' ? 'active' : ''}>
           <Link to="/inbound">
             <i className="bi bi-box-seam-fill"></i>
@@ -100,6 +103,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken }) {
           <span className="tooltip">Inbound</span>
         </li>
 
+        {/* Outbound (Visible for both admin and superadmin) */}
         <li className={tab === 'outbound' ? 'active' : ''}>
           <Link to="/outbound">
             <i className="bi bi-box-arrow-up"></i>
@@ -108,21 +112,38 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken }) {
           <span className="tooltip">Outbound</span>
         </li>
 
-        <li className={tab === 'datahistory' ? 'active' : ''}>
-          <Link to="/datahistory">
-            <i className="bi bi-file-earmark-spreadsheet-fill"></i>
-            <span className="link_name">DataHistory</span>
-          </Link>
-          <span className="tooltip">DataHistory</span>
-        </li>
+        {/* Data History (Only visible for superadmin) */}
+        {role === 'superadmin' && (
+          <li className={tab === 'datahistory' ? 'active' : ''}>
+            <Link to="/datahistory">
+              <i className="bi bi-file-earmark-spreadsheet-fill"></i>
+              <span className="link_name">DataHistory</span>
+            </Link>
+            <span className="tooltip">DataHistory</span>
+          </li>
+        )}
 
-        <li className={tab === 'personel' ? 'active' : ''}>
-          <Link to="/personel">
-            <i className="bi bi-person-fill"></i>
-            <span className="link_name">Personel Information</span>
-          </Link>
-          <span className="tooltip">Personel Information</span>
-        </li>
+        {/* Personnel Information (Only visible for superadmin) */}
+        {role === 'superadmin' && (
+          <li className={tab === 'personel' ? 'active' : ''}>
+            <Link to="/personel">
+              <i className="bi bi-person-fill"></i>
+              <span className="link_name">Personnel Information</span>
+            </Link>
+            <span className="tooltip">Personnel Information</span>
+          </li>
+        )}
+
+        {/* Settings (Only visible for superadmin) */}
+        {role === 'superadmin' && (
+          <li className={tab === 'settings' ? 'active' : ''}>
+            <Link to="/settings">
+              <i className="bi bi-gear-fill"></i>
+              <span className="link_name">Settings</span>
+            </Link>
+            <span className="tooltip">Settings</span>
+          </li>
+        )}
       </ul>
 
       {/* Profile */}
@@ -131,8 +152,8 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken }) {
           <div className="profile_details">
             <img src="public/img/OIP (1).jpg" alt="Profile" />
             <div className="name_job">
-              <div className="name">Nitiphon</div>
-              <div className="job">Super Admin</div>
+              <div className="name">{username}</div>
+              <div className="job">{role}</div>
             </div>
           </div>
           <i className="bi bi-door-closed" id="log_out" onClick={() => setModalShow(true)}></i>
