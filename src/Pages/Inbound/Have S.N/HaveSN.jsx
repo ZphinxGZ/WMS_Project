@@ -58,6 +58,15 @@ function HaveSN({ addProduct, products }) {
       setScannedData(data); // Store scanned QR code or barcode data
       setSerialNumber(data); // Set the serial number automatically from scan
       setIsScanning(false);  // Stop scanning after data is captured
+
+      // Here you can simulate filling the form with scanned data
+      // This is an example, adjust it according to the QR data structure
+      setProductName("ตัวอย่างสินค้า");  // Set product name (simulate)
+      setQuantity(10);                  // Set quantity (simulate)
+      setPrice(99.99);                  // Set price (simulate)
+      setWarehouse(1);                  // Set warehouse (simulate)
+      setRoom(2);                       // Set room (simulate)
+      setRack(3);                       // Set rack (simulate)
     }
   };
 
@@ -188,6 +197,20 @@ function HaveSN({ addProduct, products }) {
               />
             )}
 
+            {/* Display Scanned Data */}
+            {scannedData && (
+              <div className="scanned-data">
+                <h5>ข้อมูลที่สแกน:</h5>
+                <p>ข้อมูล S/N: {scannedData}</p>
+                <p>ชื่อสินค้า: {productName}</p>
+                <p>จำนวน: {quantity}</p>
+                <p>ราคา: {price} บาท</p>
+                <p>โกดัง: {warehouse}</p>
+                <p>ห้อง: {room}</p>
+                <p>ชั้นวาง: {rack}</p>
+              </div>
+            )}
+
             {/* Row 2: Storage Location with dropdowns */}
             <Form.Group className="mb-3" controlId="storageLocation">
               <Form.Label>สถานที่จัดเก็บ</Form.Label>
@@ -243,33 +266,22 @@ function HaveSN({ addProduct, products }) {
             <Row className="mb-3">
               <Col>
                 <Form.Group controlId="storageDate">
-                  <Form.Label>วันที่เก็บสินค้า</Form.Label>
-                  <Form.Control type="text" value={today} readOnly />
+                  <Form.Label>วันที่บันทึก</Form.Label>
+                  <Form.Control type="date" value={today} disabled />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="price">
-                  <Form.Label>ราคาสินค้า</Form.Label>
+                  <Form.Label>ราคา</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder="กรอกราคาสินค้า"
+                    placeholder="กรอกราคา"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                   />
                 </Form.Group>
               </Col>
             </Row>
-
-            {/* Row 4: Quantity */}
-            <Form.Group className="mb-3" controlId="quantity">
-              <Form.Label>จำนวนสินค้า</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="กรอกจำนวนสินค้า"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-              />
-            </Form.Group>
 
             {/* Error Message */}
             {formError && <Alert variant="danger">{formError}</Alert>}
