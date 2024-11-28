@@ -33,6 +33,11 @@ function App() {
     setTab(initialTab);
   }, []);
 
+  const handleLogin = (name, pass) => {
+    // นี่คือที่ที่คุณจะรับค่าชื่อผู้ใช้ (name) จาก Login
+    setUsername(name);
+  };
+
   // Function to add new product data
   const addProduct = (newProduct) => {
     setProducts((prevProducts) => [...prevProducts, newProduct]);

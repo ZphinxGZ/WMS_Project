@@ -152,7 +152,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken, role, username 
           <div className="profile_details">
             <img src="public/img/OIP (1).jpg" alt="Profile" />
             <div className="name_job">
-              <div className="name">{username}</div>
+              <div className="name">{username.split(' ')[0]}</div>
               <div className="job">{role}</div>
             </div>
           </div>

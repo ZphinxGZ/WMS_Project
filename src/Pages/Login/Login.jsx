@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import "./Login.css";
 import { verifyUser } from "../../Data/Personels";
 
-const Login = ({ setToken, setRole }) => {
+const Login = ({ setToken, setRole, setUsername }) => {
   const usernameRef = useRef();
   const passRef = useRef();
 

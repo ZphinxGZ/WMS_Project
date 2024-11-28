@@ -255,6 +255,12 @@ body {
   cursor: pointer;
 }
 
+.name{
+  /* border: 1px solid #fd6e2b; */
+  width: 6rem;
+  font-size: 2rem;
+}
+
 .modal-logout{
   position: absolute;
   top: 0;

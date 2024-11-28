@@ -4,7 +4,7 @@ const Personels = [
     id: 1,
     name: "Nattanicha Prueprang",
     pass: "123456789",
-    role: "admin",
+    role: "Admin",
     completed: true,
     tel: "0812345678",
     token: "name",
@@ -31,7 +31,7 @@ const Personels = [
     id: 4,
     name: "Teeraphan Thienpromthong",
     pass: "123456789",
-    role: "admin",
+    role: "Admin",
     completed: true,
     tel: "0845678901",
     token: "name",
@@ -40,7 +40,7 @@ const Personels = [
     id: 5,
     name: "Methaphon Thongnak",
     pass: "123",
-    role: "admin",
+    role: "Admin",
     completed: true,
     tel: "0856789012",
     token: "name",
@@ -57,5 +57,5 @@ export function fetchPersonels() {
 
 export function verifyUser(name, password) {
   const userFound = Personels.find((personel) => personel.name === name && personel.pass === password);  
-  return userFound ? { role: userFound.role, token: userFound.token } : null; 
+  return userFound ? { role: userFound.role, token: userFound.token , username: userFound.name } : null; 
 }
