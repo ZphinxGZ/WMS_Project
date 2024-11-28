@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Row, Col, Alert } from "react-bootstrap";
+import QRBarcodeScanner from "react-qr-barcode-scanner";  // Import the QRBarcodeScanner
 
 // STYLE
 import "./HaveSN.css";
@@ -14,6 +15,8 @@ function HaveSN({ addProduct, products }) {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [formError, setFormError] = useState("");
+  const [isScanning, setIsScanning] = useState(false); // State to manage scanning mode
+  const [scannedData, setScannedData] = useState(""); // State to store scanned data
 
   // Function to reset all form fields and error message
   const resetForm = () => {
@@ -25,6 +28,7 @@ function HaveSN({ addProduct, products }) {
     setRoom("");
     setRack("");
     setFormError("");
+    setScannedData("");  // Reset scanned data
   };
 
   const handleClose = () => {
@@ -47,6 +51,19 @@ function HaveSN({ addProduct, products }) {
 
   // Format today's date as YYYY-MM-DD
   const today = new Date().toISOString().split("T")[0];
+
+  // Handle QR code or barcode scan result
+  const handleScan = (data) => {
+    if (data) {
+      setScannedData(data); // Store scanned QR code or barcode data
+      setSerialNumber(data); // Set the serial number automatically from scan
+      setIsScanning(false);  // Stop scanning after data is captured
+    }
+  };
+
+  const handleError = (err) => {
+    console.error(err);
+  };
 
   // Handle form submission (save data)
   const handleSave = () => {
@@ -152,8 +169,24 @@ function HaveSN({ addProduct, products }) {
                     onChange={(e) => setSerialNumber(e.target.value)}
                   />
                 </Form.Group>
+                <Button
+                  variant="secondary"
+                  onClick={() => setIsScanning(true)}  // Open the QR or Barcode scanning mode
+                >
+                  สแกน S/N
+                </Button>
               </Col>
             </Row>
+
+            {/* QR Scanner */}
+            {isScanning && (
+              <QRBarcodeScanner
+                delay={300}
+                style={{ width: "100%" }}
+                onError={handleError}
+                onScan={handleScan}
+              />
+            )}
 
             {/* Row 2: Storage Location with dropdowns */}
             <Form.Group className="mb-3" controlId="storageLocation">
@@ -238,18 +271,18 @@ function HaveSN({ addProduct, products }) {
               />
             </Form.Group>
 
-            {/* Show error message if form is incomplete */}
+            {/* Error Message */}
             {formError && <Alert variant="danger">{formError}</Alert>}
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            ยกเลิก
+            ปิด
           </Button>
           <Button
             variant="primary"
             onClick={handleSave}
-            disabled={!isFormValid()} // Disable if form is invalid
+            disabled={!isFormValid()}
           >
             บันทึก
           </Button>
