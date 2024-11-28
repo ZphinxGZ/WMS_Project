@@ -15,7 +15,7 @@ function Layouts({ tab, setTab, setToken, role }) {
         isActive={isActive} 
         setIsActive={setIsActive} 
         setToken={setToken} 
-        role={role}  // Pass role to Sidebar
+        role={role}
       />
       <div className={`main-content ${isActive ? 'content-shifted' : ''}`}>
         <Header isActive={isActive} />

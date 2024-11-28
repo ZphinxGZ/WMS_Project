@@ -135,7 +135,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken, role, username 
         )}
 
         {/* Settings (Only visible for superadmin) */}
-        {role === 'superadmin' && (
+        {/* {role === 'superadmin' && (
           <li className={tab === 'settings' ? 'active' : ''}>
             <Link to="/settings">
               <i className="bi bi-gear-fill"></i>
@@ -143,7 +143,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken, role, username 
             </Link>
             <span className="tooltip">Settings</span>
           </li>
-        )}
+        )} */}
       </ul>
 
       {/* Profile */}
