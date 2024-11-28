@@ -11,8 +11,8 @@ const Personels = [
   },
   {
     id: 2,
-    name: "Kunakorn Khamcharoen",
-    pass: "123456789",
+    name: "Kunakorn",
+    pass: "123",
     role: "superadmin",
     completed: false,
     tel: "0823456789",
@@ -21,7 +21,7 @@ const Personels = [
   {
     id: 3,
     name: "Nitiphon",
-    pass: "123456789",
+    pass: "123",
     role: "admin",
     completed: true,
     tel: "0834567890",

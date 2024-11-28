@@ -15,7 +15,7 @@ function MyVerticallyCenteredModal({ show, onHide, setToken }) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton style={{ backgroundColor: '#74bdbc', color: 'white' }}>
+      <Modal.Header closeButton style={{ backgroundColor: '#473366', color: 'white' }}>
         <Modal.Title id="contained-modal-title-vcenter">
           ออกจากระบบ
         </Modal.Title>
@@ -84,7 +84,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken, role, username 
       {/* Sidebar Menu */}
       <ul className="nav_list">
         {/* Dashboard */}
-        {role === 'superadmin' && (
+        
         <li className={tab === 'dashboard' ? 'active' : ''}>
           <Link to="/dashboard">
             <i className="bi bi-bar-chart-line-fill"></i>
@@ -92,7 +92,7 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken, role, username 
           </Link>
           <span className="tooltip">Dashboard</span>
         </li>
-        )}
+      
 
         {/* Inbound (Visible for both admin and superadmin) */}
         <li className={tab === 'inbound' ? 'active' : ''}>
