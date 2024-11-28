@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
 
-function Layouts({ tab, setTab, setToken, role }) {
+function Layouts({ tab, setTab, setToken, role, username }) {
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -16,6 +16,7 @@ function Layouts({ tab, setTab, setToken, role }) {
         setIsActive={setIsActive} 
         setToken={setToken} 
         role={role}
+        username={username}
       />
       <div className={`main-content ${isActive ? 'content-shifted' : ''}`}>
         <Header isActive={isActive} />

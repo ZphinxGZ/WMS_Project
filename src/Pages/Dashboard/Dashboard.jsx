@@ -34,7 +34,7 @@ function Dashboard({ products = [] }) {
     <div className="dashboard-container">
       <div className="main-container">
         <div className="main-title">
-          <h2>DASHBOARD</h2>
+          {/* <h2>DASHBOARD</h2> */}
         </div>
 
         <div className="main-cards">

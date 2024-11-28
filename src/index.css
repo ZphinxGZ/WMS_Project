@@ -2,4 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-optical-sizing: auto;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 350 !important;
 }

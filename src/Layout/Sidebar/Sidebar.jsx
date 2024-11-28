@@ -113,18 +113,18 @@ function Sidebar({ tab, setTab, isActive, setIsActive, setToken, role, username 
         </li>
 
         {/* Data History (Only visible for superadmin) */}
-        {role === 'superadmin' && (
+        {role === 'SuperAdmin' && (
           <li className={tab === 'datahistory' ? 'active' : ''}>
             <Link to="/datahistory">
               <i className="bi bi-file-earmark-spreadsheet-fill"></i>
-              <span className="link_name">DataHistory</span>
+              <span className="link_name">History</span>
             </Link>
-            <span className="tooltip">DataHistory</span>
+            <span className="tooltip">History</span>
           </li>
         )}
 
         {/* Personnel Information (Only visible for superadmin) */}
-        {role === 'superadmin' && (
+        {role === 'SuperAdmin' && (
           <li className={tab === 'personel' ? 'active' : ''}>
             <Link to="/personel">
               <i className="bi bi-person-fill"></i>
